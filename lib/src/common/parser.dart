@@ -13,8 +13,15 @@ abstract class HtmlParserBase<Result extends ParsedResultBase<D>,
   Result parse(String html);
 
   /// Registers a parser for the given tag.
-  void register(String tag, D Function() builder) {
-    parsers[tag] = builder();
+  void register(String tag, D builder) {
+    parsers[tag] = builder;
+  }
+
+  /// Registers parser for the given tags.
+  void registerAll(List<String> tag, D builder) {
+    for (var t in tag) {
+      register(t, builder);
+    }
   }
 
   /// Unregisters the parser for the given tag.
