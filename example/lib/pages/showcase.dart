@@ -20,28 +20,28 @@ class HtmlShowcase extends StatelessWidget {
           children: [
             FilledButton(
               onPressed: () {
-                context.pushNamed('/basic-example');
+                context.push('/example/basic');
               },
               child: const Text('Basic Example'),
             ),
             const SizedBox(height: 16.0),
             FilledButton(
               onPressed: () {
-                context.pushNamed('/advanced-example');
+                context.push('/example/advanced');
               },
               child: const Text('Advanced Example'),
             ),
             const SizedBox(height: 16.0),
             FilledButton(
               onPressed: () {
-                context.pushNamed('/blog-post-example');
+                context.push('/example/blog-post');
               },
               child: const Text('Blog Post Example'),
             ),
             const SizedBox(height: 16.0),
             FilledButton(
               onPressed: () {
-                context.pushNamed('/custom-example');
+                context.push('/example/custom');
               },
               child: const Text('Custom Example'),
             ),
