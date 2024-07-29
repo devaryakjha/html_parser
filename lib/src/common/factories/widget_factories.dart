@@ -23,8 +23,11 @@ abstract class WidgetFactories {
       (factory) => node is dom.Element
           ? factory.tags.contains(node.localName)
           : factory.tags.contains('p'),
-      orElse: () => throw UnimplementedError(
-          'No factory for ${node is dom.Element ? node.localName : 'p'}'),
+      orElse: () => kDebugMode
+          ? UnsupportedWidgetFactory(
+              node is dom.Element ? node.localName ?? 'p' : 'p')
+          : throw UnimplementedError(
+              'No factory for ${node is dom.Element ? node.localName : 'p'}'),
     );
 
     return factory.create(node);
