@@ -1,7 +1,7 @@
 name: html_to_flutter
 description: "A new Flutter plugin project."
 version: 0.0.1
-homepage:
+homepage: https://example.com
 
 environment:
   sdk: '>=3.4.4 <4.0.0'
