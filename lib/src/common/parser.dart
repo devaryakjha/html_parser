@@ -3,7 +3,14 @@ import 'package:html_to_flutter/html_to_flutter.dart';
 
 /// Abstract class for parsing HTML content.
 abstract class HtmlParserBase {
-  HtmlParsed parse(String html);
+  /// The input HTML content.
+  final String input;
+
+  /// Create a new HTML parser.
+  const HtmlParserBase({required this.input});
+
+  /// Parse the HTML content.
+  HtmlParsed parse();
 }
 
 final class HtmlParsed {
@@ -14,7 +21,7 @@ final class HtmlParsed {
   final String source;
 
   /// Create a new parsed HTML content.
-  const HtmlParsed(this.items, this.source);
+  const HtmlParsed({required this.items, required this.source});
 
   const HtmlParsed.empty()
       : items = const [],
@@ -22,8 +29,10 @@ final class HtmlParsed {
 
   int get length => items.length;
 
+  /// Returns the item at the given index.
   HtmlItem operator [](int index) => items[index];
 
+  /// Whether this collection has no elements
   bool get isEmpty => items.isEmpty;
 
   bool get isNotEmpty => items.isNotEmpty;
