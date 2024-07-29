@@ -4,10 +4,13 @@ import 'package:html_to_flutter/html_to_flutter.dart';
 /// The base class for parsed data.
 @immutable
 abstract class ParsedResultBase<T extends HtmlWidgetBuilder> {
-  const ParsedResultBase(this.data);
+  const ParsedResultBase(this.data, {this.source = ''});
 
   /// The parsed data.
   final List<T> data;
+
+  /// The source of the parsed data.
+  final String source;
 
   /// Whether the parsed data is empty.
   bool get hasData => data.isNotEmpty;
