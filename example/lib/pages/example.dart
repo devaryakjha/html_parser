@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:html_to_flutter/html_to_flutter.dart';
 
 class ExamplePage extends StatelessWidget {
   const ExamplePage({
@@ -15,7 +16,9 @@ class ExamplePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
-      body: Text(input),
+      body: HtmlWidget(
+        parser: BlogParser(input),
+      ),
     );
   }
 }
