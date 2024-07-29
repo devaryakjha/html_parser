@@ -9,7 +9,21 @@ final class BlogTextBuilder extends HtmlWidgetBuilder {
 
   @override
   factory BlogTextBuilder.fromNode(dom.Node node) {
-    return const BlogTextBuilder(TextSpan(text: ''));
+    final span = _createRecurssiveSpan(node);
+    return BlogTextBuilder(span);
+  }
+
+  static InlineSpan _createRecurssiveSpan(dom.Node node) {
+    return switch (node) {
+      (dom.Text text) => TextSpan(text: text.text),
+      (dom.Element element) when element.localName == 'br' =>
+        const TextSpan(text: '\n'),
+      (dom.Element element) when element.localName != 'br' => (() {
+          final children = element.nodes.map(_createRecurssiveSpan).toList();
+          return TextSpan(children: children);
+        })(),
+      _ => throw UnimplementedError('Unsupported node type: $node'),
+    };
   }
 
   static const List<String> tags = ['p', 'span'];
