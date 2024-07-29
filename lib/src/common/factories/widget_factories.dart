@@ -15,14 +15,16 @@ abstract class WidgetFactories {
 
   /// Create a widget from the given HTML content.
   HtmlItem create(dom.Node node) {
-    if (node is! dom.Element || node is! dom.Text) {
+    if (node is! dom.Element && node is! dom.Text) {
       throw UnimplementedError('No factory for ${node.runtimeType}');
     }
 
     final factory = factories.firstWhere(
-      (factory) => factory.tags.contains(node.localName),
-      orElse: () =>
-          throw UnimplementedError('No factory for ${node.localName}'),
+      (factory) => node is dom.Element
+          ? factory.tags.contains(node.localName)
+          : factory.tags.contains('p'),
+      orElse: () => throw UnimplementedError(
+          'No factory for ${node is dom.Element ? node.localName : 'p'}'),
     );
 
     return factory.create(node);
