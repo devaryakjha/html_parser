@@ -1,4 +1,5 @@
-import 'package:flutter/foundation.dart';
+import 'package:collection/collection.dart';
+import 'package:flutter/widgets.dart';
 import 'package:html/dom.dart' as dom show Node, Element, Text;
 import 'package:html_to_flutter/html_to_flutter.dart';
 

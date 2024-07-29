@@ -13,16 +13,13 @@ abstract class WidgetFactory {
   HtmlItem create(dom.Node node);
 }
 
-class UnsupportedWidgetFactory implements WidgetFactory {
-  const UnsupportedWidgetFactory(this.tag);
+class UnsupportedWidgetFactory extends WidgetFactory {
+  UnsupportedWidgetFactory(this.tag) : super([tag]);
 
   final String tag;
 
   @override
   HtmlItem create(dom.Node node) {
-    throw HtmlSupportedItem(tag: tag);
+    return HtmlSupportedItem(tag: tag);
   }
-
-  @override
-  List<String> get tags => [tag];
 }

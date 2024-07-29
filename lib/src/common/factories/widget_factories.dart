@@ -19,16 +19,14 @@ abstract class WidgetFactories {
       throw UnimplementedError('No factory for ${node.runtimeType}');
     }
 
-    final factory = factories.firstWhere(
-      (factory) => node is dom.Element
-          ? factory.tags.contains(node.localName)
-          : factory.tags.contains('p'),
-      orElse: () => kDebugMode
-          ? UnsupportedWidgetFactory(
-              node is dom.Element ? node.localName ?? 'p' : 'p')
-          : throw UnimplementedError(
-              'No factory for ${node is dom.Element ? node.localName : 'p'}'),
-    );
+    final WidgetFactory factory = factories.firstWhereOrNull(
+          (factory) => node is dom.Element
+              ? factory.tags.contains(node.localName)
+              : factory.tags.contains('p'),
+        ) ??
+        UnsupportedWidgetFactory(
+          node is dom.Element ? node.localName ?? '' : 'p',
+        );
 
     return factory.create(node);
   }

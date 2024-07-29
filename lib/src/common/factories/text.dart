@@ -5,7 +5,7 @@ final class TextFactory implements WidgetFactory {
 
   @override
   HtmlItem create(dom.Node node) {
-    throw UnimplementedError();
+    return HtmlTextItem(span: TextSpan(text: node.text));
   }
 
   @override
