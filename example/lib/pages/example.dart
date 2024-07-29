@@ -17,6 +17,7 @@ class ExamplePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
       ),
+      body: Text(input),
     );
   }
 }
