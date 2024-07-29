@@ -10,7 +10,7 @@ abstract class ParsedResultBase<T> {
   bool get hasNoData => !hasData;
 
   /// Whether the parsed data has a single element.
-  bool get hasSingleData => data.length == 1;
+  bool get hasSingleData => length == 1;
 
   /// The single parsed data.
   T get singleData => data.first;
