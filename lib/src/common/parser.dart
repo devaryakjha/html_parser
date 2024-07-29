@@ -1,4 +1,6 @@
 import 'package:flutter/widgets.dart';
+import 'package:html/dom.dart' as dom show Node;
+import 'package:html/parser.dart' as parser;
 import 'package:html_to_flutter/html_to_flutter.dart';
 
 /// Abstract class for parsing HTML content.
@@ -6,13 +8,30 @@ abstract class HtmlParserBase {
   /// The input HTML content.
   final String input;
 
+  /// The widget factories to use.
+  final WidgetFactories widgetFactories;
+
   /// Create a new HTML parser.
-  const HtmlParserBase({required this.input});
+  const HtmlParserBase({
+    required this.input,
+    this.widgetFactories = const BlogWidgetFactories(),
+  });
+
+  List<dom.Node> createNodes() {
+    final parsed = parser.parse(input);
+    final nodes = parsed.body?.nodes;
+    return nodes ?? [];
+  }
 
   /// Parse the HTML content.
-  HtmlParsed parse();
+  HtmlParsed parse() {
+    final nodes = createNodes();
+    final items = nodes.map(widgetFactories.create).toList();
+    return HtmlParsed(items: items, source: input);
+  }
 }
 
+@immutable
 final class HtmlParsed {
   /// The parsed HTML content.
   final List<HtmlItem> items;

@@ -1,6 +1,8 @@
 part of 'factories.dart';
 
 final class TextFactory implements WidgetFactory {
+  const TextFactory();
+
   @override
   HtmlItem create(dom.Node node) {
     throw UnimplementedError();

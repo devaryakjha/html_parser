@@ -7,6 +7,10 @@ class HtmlWidget extends StatefulWidget {
     required this.parser,
   });
 
+  /// Creates a new [HtmlWidget] instance for a blog.
+  factory HtmlWidget.blog(final String html) =>
+      HtmlWidget(parser: BlogParser(input: html));
+
   final HtmlParserBase parser;
 
   @override

@@ -16,9 +16,7 @@ class ExamplePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
-      body: HtmlWidget(
-        parser: BlogParser(input),
-      ),
+      body: HtmlWidget.blog(input),
     );
   }
 }

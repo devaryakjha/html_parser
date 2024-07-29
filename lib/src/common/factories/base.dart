@@ -10,5 +10,5 @@ abstract class WidgetFactory {
   final List<String> tags;
 
   /// Create a widget from the given HTML content.
-  Widget create(dom.Node node);
+  HtmlItem create(dom.Node node);
 }
