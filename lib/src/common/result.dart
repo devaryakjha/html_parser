@@ -1,6 +1,8 @@
+import 'package:flutter/widgets.dart';
 import 'package:html_to_flutter/html_to_flutter.dart';
 
 /// The base class for parsed data.
+@immutable
 abstract class ParsedResultBase<T extends HtmlWidgetBuilder> {
   /// The parsed data.
   List<T> get data;
