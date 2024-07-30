@@ -30,6 +30,10 @@ final class BlogTextBuilder extends HtmlWidgetBuilder {
 
   @override
   Widget build(BuildContext context) {
+    if (span.toPlainText().trim().isEmpty) {
+      return const SizedBox.shrink();
+    }
+
     return DefaultTextStyle(
       style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 16) ??
           const TextStyle(fontSize: 16),
