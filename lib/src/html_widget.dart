@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:html_to_flutter/html_to_flutter.dart';
 
-class HtmlWidget extends StatefulWidget {
+class HtmlWidget extends StatelessWidget {
   const HtmlWidget({
     super.key,
     required this.parser,
@@ -13,20 +13,10 @@ class HtmlWidget extends StatefulWidget {
   final String input;
 
   @override
-  State<HtmlWidget> createState() => _HtmlWidgetState();
-}
-
-class _HtmlWidgetState extends State<HtmlWidget> {
-  late final ParsedResultBase result;
-  @override
-  void initState() {
-    super.initState();
-    result = widget.parser.parse(widget.input);
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final result = parser.parse(input);
     return ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       itemCount: result.length,
       itemBuilder: (context, index) {
         final item = result[index];

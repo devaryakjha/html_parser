@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html_to_flutter/html_to_flutter.dart';
 
@@ -30,6 +30,10 @@ final class BlogTextBuilder extends HtmlWidgetBuilder {
 
   @override
   Widget build(BuildContext context) {
-    return Text.rich(span);
+    return DefaultTextStyle(
+      style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 16) ??
+          const TextStyle(fontSize: 16),
+      child: Text.rich(span),
+    );
   }
 }
