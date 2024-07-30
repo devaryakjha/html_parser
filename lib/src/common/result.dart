@@ -36,3 +36,7 @@ abstract class ParsedResultBase<T extends HtmlWidgetBuilder> {
   /// The length of the parsed data.
   int get length => data.length;
 }
+
+class ParsedResult extends ParsedResultBase<HtmlWidgetBuilder> {
+  const ParsedResult(super.data, {super.source});
+}

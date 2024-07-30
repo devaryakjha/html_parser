@@ -1,22 +1,14 @@
 import 'package:html/dom.dart' as dom;
 import 'package:html_to_flutter/html_to_flutter.dart';
 
-final class BlogParser
-    extends HtmlParserBase<BlogParsedResult, HtmlWidgetBuilder> {
-  const BlogParser();
+final class HtmlParser extends HtmlParserBase<ParsedResult, HtmlWidgetBuilder> {
+  const HtmlParser();
 
   @override
   Map<String, HtmlWidgetBuilder Function(dom.Node)> get parsers {
     return Map.fromEntries([
-      ...BlogTextBuilder.tags.map((t) => MapEntry(t, BlogTextBuilder.fromNode)),
+      ...HtmlTextBuilder.tags.map((t) => MapEntry(t, HtmlTextBuilder.fromNode)),
     ]);
-  }
-
-  @override
-  BlogParsedResult parse(String html) {
-    final nodes = createNodes(html);
-    final parsed = parseNodes(nodes);
-    return BlogParsedResult(parsed, source: html);
   }
 
   @override
@@ -30,9 +22,16 @@ final class BlogParser
           items.add(builder(node));
         }
       } else if (node is dom.Text) {
-        items.add(BlogTextBuilder.fromNode(node));
+        items.add(HtmlTextBuilder.fromNode(node));
       }
     }
     return items;
+  }
+
+  @override
+  ParsedResult parse(String html) {
+    final nodes = createNodes(html);
+    final builders = parseNodes(nodes);
+    return ParsedResult(builders, source: html);
   }
 }

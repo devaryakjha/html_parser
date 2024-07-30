@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:html_to_flutter/blog.dart';
+import 'package:html_to_flutter/html_to_flutter.dart';
 
 class ExamplePage extends StatelessWidget {
   const ExamplePage({
@@ -17,7 +17,7 @@ class ExamplePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
       body: HtmlWidget(
-        parser: const BlogParser(),
+        parser: const HtmlParser(),
         input: input,
       ),
     );

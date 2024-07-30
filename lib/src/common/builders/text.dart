@@ -34,10 +34,6 @@ final class HtmlTextBuilder extends HtmlWidgetBuilder {
       return const SizedBox.shrink();
     }
 
-    return DefaultTextStyle(
-      style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 16) ??
-          const TextStyle(fontSize: 16),
-      child: Text.rich(span),
-    );
+    return Text.rich(span);
   }
 }
