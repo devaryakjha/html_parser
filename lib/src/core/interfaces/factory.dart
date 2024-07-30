@@ -1,22 +1,15 @@
 import 'package:html/dom.dart' as dom;
-import 'package:html/parser.dart' as parser;
 import 'package:html_to_flutter/html_to_flutter.dart' show IHtmlWidget;
 
 /// An interface for creating instances of [IHtmlWidget].
-abstract interface class IHtmlWidgetFactory {
+abstract interface class IHtmlWidgetFactory<Widget extends IHtmlWidget> {
   /// Creates a new instance of [IHtmlWidgetFactory].
-  const IHtmlWidgetFactory();
+  const IHtmlWidgetFactory(this.widget);
 
-  /// Creates a new instance of [HtmlWidget].
-  Widget create<Widget extends IHtmlWidget>(
-    final String html, {
-    final String? sourceUrl,
-  });
+  /// Creates a new instance of [IHtmlWidget] from the given [node].
+  final Widget widget;
 
-  /// Parses the given HTML content. Returns the parsed data.
-  List<dom.Node> createNodes(final String html, {final String? sourceUrl}) {
-    final parsed = parser.parse(html, sourceUrl: sourceUrl);
-    final nodes = parsed.body?.nodes;
-    return nodes ?? [];
-  }
+  /// Creates a new instance of [IHtmlWidgetFactory] from the given [node].
+  const IHtmlWidgetFactory.fromNode(final dom.Node node)
+      : widget = const IHtmlWidget.placeholder() as Widget;
 }
