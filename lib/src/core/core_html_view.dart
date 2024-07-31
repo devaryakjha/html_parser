@@ -47,11 +47,7 @@ class _HtmlState extends State<Html> {
   Widget build(BuildContext context) {
     final factories = kDebugMode ? parser.parse(input) : _widgetsFactories;
     return DefaultTextStyle(
-      style: TextStyle(
-        fontSize: 16,
-        height: 1.4,
-        color: Theme.of(context).colorScheme.onSurface,
-      ),
+      style: widget.config.defaultTextStyle,
       child: HtmlConfigProvider(
         config: widget.config,
         child: ListView.builder(

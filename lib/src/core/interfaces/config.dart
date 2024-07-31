@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:html_to_flutter/html_to_flutter.dart';
 
 @immutable
@@ -18,18 +18,39 @@ final class HtmlConfig extends Equatable {
   /// A callback that is called when a link is tapped.
   final OnLinkTap? onLinkTap;
 
+  /// The default text style to use.
+  ///
+  /// This helps to ensure that all text has a consistent style.
+  ///
+  /// if not provided, a default text style with a font size of 16 and a line
+  /// height of 1.4 will be used.
+  final TextStyle defaultTextStyle;
+
   /// Creates a new instance of [HtmlConfig].
   HtmlConfig({
     WidgetFactoryMap customFactories = const {},
     this.styles = const IHtmlStyles.emptyStyles(),
     this.onLinkTap,
-  }) : _factories = {
-          ...Map.fromEntries(TextHtmlWidgetFactory.tags.map((tag) {
-            return MapEntry(tag, TextHtmlWidgetFactory.fromNode);
-          })),
-          'hr': HrHtmlWidgetFactory.fromNode,
-          ...customFactories,
-        };
+    this.defaultTextStyle = const TextStyle(
+      fontSize: 16,
+      height: 1.4,
+      color: Color(0xFF444444),
+      fontWeight: FontWeight.normal,
+    ),
+  }) : _factories = _createDefaultFactories(customFactories);
+
+  /// generates the default factories.
+  ///
+  /// and merges them with the custom factories.
+  static WidgetFactoryMap _createDefaultFactories(WidgetFactoryMap? custom) {
+    return {
+      ...Map.fromEntries(TextHtmlWidgetFactory.tags.map((tag) {
+        return MapEntry(tag, TextHtmlWidgetFactory.fromNode);
+      })),
+      'hr': HrHtmlWidgetFactory.fromNode,
+      ...?custom,
+    };
+  }
 
   static HtmlConfig? maybeOf(BuildContext context) {
     return context
