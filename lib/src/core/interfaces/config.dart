@@ -7,11 +7,14 @@ typedef UnsupportedParser = IHtmlWidgetFactory<IHtmlWidget>? Function(
   dom.Node node,
   HtmlConfig config,
 );
+
 typedef WidgetFactoryMapValue = IHtmlWidgetFactory Function(
   dom.Node,
   UnsupportedParser,
 );
+
 typedef WidgetFactoryKey = String;
+
 typedef WidgetFactoryMap = Map<WidgetFactoryKey, WidgetFactoryMapValue>;
 
 @immutable

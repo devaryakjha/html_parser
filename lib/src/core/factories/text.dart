@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html_to_flutter/html_to_flutter.dart';
@@ -44,6 +47,16 @@ final class TextHtmlWidgetFactory
       );
     }
 
+    if (node.isAnchor) {
+      return TextSpan(
+        text: node.text,
+        recognizer: TapGestureRecognizer()
+          ..onTap = () {
+            log('Tapped on anchor: ${node.attributes['href']}');
+          },
+      );
+    }
+
     if (node.isBreak) return const TextSpan(text: '\n');
 
     final children = node.nodes
@@ -61,6 +74,7 @@ final class TextHtmlWidgetFactory
   bool? get stringify => true;
 
   static const List<String> tags = [
+    'a',
     'text',
     'p',
     'h1',
@@ -86,4 +100,7 @@ extension on dom.Element {
 
   /// Whether the element is a paragraph.
   bool get isUnspported => !TextHtmlWidgetFactory.tags.contains(localName);
+
+  /// Whether the element is a paragraph.
+  bool get isAnchor => localName == 'a';
 }
