@@ -17,9 +17,9 @@ final class BlogStyles implements IHtmlStyles {
 
   TextStyle _getDefaultTextStyle(String fontFamily) {
     try {
-      return GoogleFonts.getFont(fontFamily, height: 1.4);
+      return GoogleFonts.getFont(fontFamily);
     } catch (e) {
-      return GoogleFonts.getFont(defaultFontFamily, height: 1.4);
+      return GoogleFonts.getFont(defaultFontFamily);
     }
   }
 
@@ -29,7 +29,7 @@ final class BlogStyles implements IHtmlStyles {
     return switch (tag) {
       'p' => Styles(
           margin: const EdgeInsets.only(top: 10, bottom: 20),
-          textStyle: defaultTextStyle.copyWith(fontSize: 16),
+          textStyle: defaultTextStyle,
         ),
       'a' => Styles(
           textStyle: defaultTextStyle.copyWith(
@@ -74,7 +74,7 @@ final class BlogStyles implements IHtmlStyles {
         ),
       'hr' => const Styles(),
       _ => Styles(
-          textStyle: defaultTextStyle.copyWith(fontSize: 16),
+          textStyle: defaultTextStyle,
         ),
     };
   }
