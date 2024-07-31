@@ -16,6 +16,7 @@ final class HrHtmlWidgetFactory implements IHtmlWidgetFactory {
     return HrHtmlWidgetFactory(
       (context) => const Divider(
         thickness: 2,
+        height: 1,
         color: Colors.black,
       ),
     );
