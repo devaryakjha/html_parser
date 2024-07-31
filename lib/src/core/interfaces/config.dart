@@ -1,8 +1,9 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:html_to_flutter/html_to_flutter.dart';
 
 @immutable
-final class HtmlConfig {
+final class HtmlConfig extends Equatable {
   /// A list of factories for creating instances of [IHtmlWidget].
   ///
   /// The key is the tag name of the element, and the value is the factory for
@@ -17,9 +18,8 @@ final class HtmlConfig {
 
   /// Creates a new instance of [HtmlConfig].
   const HtmlConfig({
-    this.factories = const {},
     this.customFactories = const {},
-  });
+  }) : factories = const {};
 
   static HtmlConfig? maybeOf(BuildContext context) {
     return context
@@ -37,21 +37,10 @@ final class HtmlConfig {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is HtmlConfig &&
-        other.factories == factories &&
-        other.customFactories == customFactories;
-  }
+  List<Object?> get props => [factories, customFactories];
 
   @override
-  int get hashCode => Object.hashAll([factories, customFactories]);
-
-  @override
-  String toString() {
-    return 'HtmlConfig(factories: $factories, customFactories: $customFactories)';
-  }
+  bool? get stringify => true;
 }
 
 /// A provider for the [HtmlConfig].
