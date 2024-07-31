@@ -15,4 +15,10 @@ final class TextHtmlWidgetFactory
   factory TextHtmlWidgetFactory.fromNode(final dom.Node node) {
     return TextHtmlWidgetFactory(TextHtmlWidget(TextSpan(text: node.text)));
   }
+
+  @override
+  List<Object?> get props => [widget];
+
+  @override
+  bool? get stringify => true;
 }
