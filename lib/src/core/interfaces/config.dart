@@ -51,6 +51,7 @@ final class HtmlConfig extends Equatable {
       'figure': FigureHtmlWidgetFactory.fromNode,
       'img': ImageHtmlWidgetFactory.fromNode,
       'div': ContainerHtmlWidgetFactory.fromNode,
+      'table': TableHtmlWidgetFactory.fromNode,
       ...?custom,
     };
   }

@@ -146,7 +146,13 @@ final class TextHtmlWidgetFactory
     'strong',
     'i',
     'em',
-    'br'
+    'br',
+    // table
+    'tr',
+    'td',
+    'th',
+    'tbody',
+    'thead',
   ];
 }
 
