@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart' show IterableNullableExtension;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html_to_flutter/html_to_flutter.dart';
@@ -14,7 +16,26 @@ final class TextHtmlWidgetFactory
   @override
   factory TextHtmlWidgetFactory.fromNode(final dom.Node node) {
     return TextHtmlWidgetFactory(
-        (context) => TextHtmlWidget(TextSpan(text: node.text)));
+      (context) => TextHtmlWidget(_createSpan(node, context)!),
+    );
+  }
+
+  static InlineSpan? _createSpan(
+    final dom.Node node,
+    final BuildContext context,
+  ) {
+    if (node is dom.Text) {
+      return TextSpan(text: node.text);
+    }
+
+    if (node is! dom.Element) return null;
+
+    final children = node.nodes
+        .map((node) => _createSpan(node, context))
+        .whereNotNull()
+        .toList();
+
+    return TextSpan(children: children);
   }
 
   @override
@@ -33,6 +54,13 @@ final class TextHtmlWidgetFactory
     'h6',
     'span',
     'sup',
-    'sub'
+    'sub',
+    'b',
+    'strong',
+    'i',
+    'em',
+    'br'
   ];
 }
+
+extension on dom.Element {}
