@@ -49,28 +49,28 @@ final class BlogStyles implements IHtmlStyles {
           margin: const EdgeInsets.only(top: 30),
           textStyle: defaultTextStyle.copyWith(
             fontSize: 2.3 * baseFontSize,
-            height: 3,
+            fontWeight: FontWeight.w600,
           ),
         ),
       'h2' => Styles(
           margin: const EdgeInsets.only(top: 30),
           textStyle: defaultTextStyle.copyWith(
             fontSize: 1.7 * baseFontSize,
-            height: 2.1,
+            fontWeight: FontWeight.w600,
           ),
         ),
       'h3' => Styles(
           margin: const EdgeInsets.only(top: 30),
           textStyle: defaultTextStyle.copyWith(
             fontSize: 1.5 * baseFontSize,
-            height: 1.9,
+            fontWeight: FontWeight.w600,
           ),
         ),
       'h4' => Styles(
           margin: const EdgeInsets.only(top: 30),
           textStyle: defaultTextStyle.copyWith(
             fontSize: 1.1 * baseFontSize,
-            height: 1.5,
+            fontWeight: FontWeight.w600,
           ),
         ),
       'hr' => const Styles(),
