@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:html/dom.dart' as dom;
 import 'package:html_to_flutter/html_to_flutter.dart';
 
 final class BlogStyles implements IHtmlStyles {
@@ -24,8 +23,10 @@ final class BlogStyles implements IHtmlStyles {
   }
 
   @override
-  Styles? getStyle(String? tag, dom.Node node) {
+  Styles? getStyle(String? tag, TextStyle defaultStyle) {
     final defaultTextStyle = _getDefaultTextStyle(getFontFamily(tag!));
+    final baseFontSize = defaultStyle.fontSize ?? 16;
+
     return switch (tag) {
       'p' => Styles(
           margin: const EdgeInsets.only(top: 10, bottom: 20),
@@ -47,28 +48,28 @@ final class BlogStyles implements IHtmlStyles {
       'h1' => Styles(
           margin: const EdgeInsets.only(top: 30),
           textStyle: defaultTextStyle.copyWith(
-            fontSize: 2.3 * 16,
+            fontSize: 2.3 * baseFontSize,
             height: 3,
           ),
         ),
       'h2' => Styles(
           margin: const EdgeInsets.only(top: 30),
           textStyle: defaultTextStyle.copyWith(
-            fontSize: 1.7 * 16,
+            fontSize: 1.7 * baseFontSize,
             height: 2.1,
           ),
         ),
       'h3' => Styles(
           margin: const EdgeInsets.only(top: 30),
           textStyle: defaultTextStyle.copyWith(
-            fontSize: 1.5 * 16,
+            fontSize: 1.5 * baseFontSize,
             height: 1.9,
           ),
         ),
       'h4' => Styles(
           margin: const EdgeInsets.only(top: 30),
           textStyle: defaultTextStyle.copyWith(
-            fontSize: 1.1 * 16,
+            fontSize: 1.1 * baseFontSize,
             height: 1.5,
           ),
         ),

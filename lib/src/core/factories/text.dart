@@ -20,8 +20,9 @@ final class TextHtmlWidgetFactory
   ) {
     return TextHtmlWidgetFactory(
       (context) {
+        final config = HtmlConfig.of(context);
         final styles = node is dom.Element
-            ? HtmlConfig.of(context).styles.getStyle(node.localName, node)
+            ? config.styles.getStyle(node.localName, config.defaultTextStyle)
             : null;
 
         return TextHtmlWidget(
@@ -45,7 +46,8 @@ final class TextHtmlWidgetFactory
             config.onLinkTap?.call(href);
           })
         : null;
-    final style = config.styles.getStyle(node.localName, node);
+    final style =
+        config.styles.getStyle(node.localName, config.defaultTextStyle);
     final children = node.nodes
         .map((node) {
           return _createSpan(node, context, unsupportedParser, recogniser);
@@ -87,7 +89,8 @@ final class TextHtmlWidgetFactory
 
     if (node is! dom.Element) return null;
 
-    final style = config.styles.getStyle(node.localName, node);
+    final style =
+        config.styles.getStyle(node.localName, config.defaultTextStyle);
 
     if (node.isUnspported) {
       return WidgetSpan(
