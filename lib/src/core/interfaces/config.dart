@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
+import 'package:html/dom.dart' as dom;
 import 'package:html_to_flutter/html_to_flutter.dart';
 
 @immutable
@@ -8,18 +9,22 @@ final class HtmlConfig extends Equatable {
   ///
   /// The key is the tag name of the element, and the value is the factory for
   /// creating instances of [IHtmlWidget].
-  final Map<String, IHtmlWidgetFactory> factories;
+  final Map<String, IHtmlWidgetFactory Function(dom.Node)> factories;
 
   /// A map of custom factories for creating instances of [IHtmlWidget].
   ///
   /// If a factory is provided for a tag name, it will be used instead of the
   /// default factory.
-  final Map<String, IHtmlWidgetFactory> customFactories;
+  final Map<String, IHtmlWidgetFactory Function(dom.Node)> customFactories;
 
   /// Creates a new instance of [HtmlConfig].
-  const HtmlConfig({
+  HtmlConfig({
     this.customFactories = const {},
-  }) : factories = const {};
+  }) : factories = {
+          ...Map.fromEntries(TextHtmlWidgetFactory.tags.map((tag) {
+            return MapEntry(tag, TextHtmlWidgetFactory.fromNode);
+          })),
+        };
 
   static HtmlConfig? maybeOf(BuildContext context) {
     return context

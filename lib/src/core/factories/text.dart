@@ -4,21 +4,35 @@ import 'package:html_to_flutter/html_to_flutter.dart';
 
 final class TextHtmlWidgetFactory
     implements IHtmlWidgetFactory<TextHtmlWidget> {
-  const TextHtmlWidgetFactory(this._widget);
+  const TextHtmlWidgetFactory(this._builder);
 
-  final TextHtmlWidget _widget;
+  final TextHtmlWidget Function(BuildContext) _builder;
 
   @override
-  TextHtmlWidget get widget => _widget;
+  WidgetBuilder get builder => _builder;
 
   @override
   factory TextHtmlWidgetFactory.fromNode(final dom.Node node) {
-    return TextHtmlWidgetFactory(TextHtmlWidget(TextSpan(text: node.text)));
+    return TextHtmlWidgetFactory(
+        (context) => TextHtmlWidget(TextSpan(text: node.text)));
   }
 
   @override
-  List<Object?> get props => [widget];
+  List<Object?> get props => [builder];
 
   @override
   bool? get stringify => true;
+
+  static const List<String> tags = [
+    'p',
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'h6',
+    'span',
+    'sup',
+    'sub'
+  ];
 }
