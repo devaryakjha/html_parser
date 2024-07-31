@@ -48,6 +48,7 @@ final class HtmlConfig extends Equatable {
         return MapEntry(tag, TextHtmlWidgetFactory.fromNode);
       })),
       'hr': HrHtmlWidgetFactory.fromNode,
+      'figure': FigureHtmlWidgetFactory.fromNode,
       ...?custom,
     };
   }

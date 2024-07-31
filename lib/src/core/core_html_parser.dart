@@ -31,14 +31,15 @@ final class HtmlParser implements IHtmlParser {
     final HtmlConfig config,
   ) {
     if (node is dom.Text) {
-      return config.getFactory('text')!(node, _createFactory);
+      return config.getFactory('text')!(
+          node, (node) => _createFactory(node, config));
     }
 
     if (node is dom.Element) {
       final tag = node.localName;
       final factory = config.getFactory(tag);
       if (factory != null) {
-        return factory(node, _createFactory);
+        return factory(node, (node) => _createFactory(node, config));
       }
     }
 

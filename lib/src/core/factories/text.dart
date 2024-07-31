@@ -49,9 +49,7 @@ final class TextHtmlWidgetFactory
     final style =
         config.styles.getStyle(node.localName, config.defaultTextStyle);
     final children = node.nodes
-        .map((node) {
-          return _createSpan(node, context, unsupportedParser, recogniser);
-        })
+        .map((_) => _createSpan(_, context, unsupportedParser, recogniser))
         .whereNotNull()
         .toList();
     return TextSpan(
@@ -95,7 +93,7 @@ final class TextHtmlWidgetFactory
     if (node.isUnspported) {
       return WidgetSpan(
         child: Builder(builder: (context) {
-          final child = unsupportedParser(node, config)?.builder(context);
+          final child = unsupportedParser(node)?.builder(context);
           return _wrapInGestureDetectorIfNeed(
             child ?? Text('Unsupported tag: ${node.localName}'),
             recognizer,
