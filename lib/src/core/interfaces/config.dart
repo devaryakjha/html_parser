@@ -49,6 +49,7 @@ final class HtmlConfig extends Equatable {
       })),
       'hr': HrHtmlWidgetFactory.fromNode,
       'figure': FigureHtmlWidgetFactory.fromNode,
+      'img': ImageHtmlWidgetFactory.fromNode,
       ...?custom,
     };
   }
