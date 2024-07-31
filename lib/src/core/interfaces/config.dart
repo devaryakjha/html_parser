@@ -10,12 +10,6 @@ final class HtmlConfig extends Equatable {
   /// creating instances of [IHtmlWidget].
   final WidgetFactoryMap _factories;
 
-  /// A map of custom factories for creating instances of [IHtmlWidget].
-  ///
-  /// If a factory is provided for a tag name, it will be used instead of the
-  /// default factory.
-  final WidgetFactoryMap _customFactories;
-
   /// The styles to use for the widgets.
   ///
   /// If a tag is not found in the styles, no styles will be used.
@@ -29,12 +23,12 @@ final class HtmlConfig extends Equatable {
     WidgetFactoryMap customFactories = const {},
     this.styles = const IHtmlStyles.defaultStyles(),
     this.onLinkTap,
-  })  : _customFactories = customFactories,
-        _factories = {
+  }) : _factories = {
           ...Map.fromEntries(TextHtmlWidgetFactory.tags.map((tag) {
             return MapEntry(tag, TextHtmlWidgetFactory.fromNode);
           })),
           'hr': HrHtmlWidgetFactory.fromNode,
+          ...customFactories,
         };
 
   static HtmlConfig? maybeOf(BuildContext context) {
@@ -54,11 +48,11 @@ final class HtmlConfig extends Equatable {
 
   WidgetFactoryMapValue? getFactory(String? tag) {
     if (tag == null) return null;
-    return _customFactories[tag] ?? _factories[tag];
+    return _factories[tag];
   }
 
   @override
-  List<Object?> get props => [_factories, _customFactories];
+  List<Object?> get props => [_factories];
 
   @override
   bool? get stringify => true;
