@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:html_to_flutter/html_to_flutter.dart';
 
@@ -44,12 +45,13 @@ class _HtmlState extends State<Html> {
 
   @override
   Widget build(BuildContext context) {
+    final factories = kDebugMode ? parser.parse(input) : _widgetsFactories;
     return HtmlConfigProvider(
       config: widget.config,
       child: ListView.builder(
-        itemCount: parser.parse(input).length,
+        itemCount: factories.length,
         itemBuilder: (context, index) {
-          final factory = _widgetsFactories[index];
+          final factory = factories[index];
           return factory.builder(context);
         },
       ),
