@@ -1,4 +1,3 @@
-// A widget than can handle div and accept children and based on whether it is a column or row, it will render the children accordingly
 import 'package:flutter/material.dart';
 import 'package:html_to_flutter/html_to_flutter.dart';
 
