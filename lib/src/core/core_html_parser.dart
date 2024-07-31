@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 import 'package:html_to_flutter/html_to_flutter.dart'
@@ -40,6 +41,12 @@ final class HtmlParser implements IHtmlParser {
         return factory(node, _createFactory);
       }
     }
+
+    if (kDebugMode) {
+      print('Unsupported node: $node');
+      return IHtmlWidgetFactory.unsupported(node);
+    }
+
     return null;
   }
 
