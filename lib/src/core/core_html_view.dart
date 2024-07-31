@@ -49,7 +49,8 @@ class _HtmlState extends State<Html> {
     return HtmlConfigProvider(
       config: widget.config,
       child: ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+        padding:
+            const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 48),
         itemCount: factories.length,
         itemBuilder: (context, index) {
           final factory = factories[index];

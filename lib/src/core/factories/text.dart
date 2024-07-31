@@ -13,16 +13,20 @@ final class TextHtmlWidgetFactory
   @override
   WidgetBuilder get builder => _builder;
 
-  @override
-  factory TextHtmlWidgetFactory.fromNode(final dom.Node node) {
+  factory TextHtmlWidgetFactory.fromNode(
+    final dom.Node node,
+    final UnsupportedParser unsupportedParser,
+  ) {
     return TextHtmlWidgetFactory(
-      (context) => TextHtmlWidget(_createSpan(node, context)!),
+      (context) =>
+          TextHtmlWidget(_createSpan(node, context, unsupportedParser)!),
     );
   }
 
   static InlineSpan? _createSpan(
     final dom.Node node,
     final BuildContext context,
+    final UnsupportedParser unsupportedParser,
   ) {
     if (node is dom.Text) {
       return TextSpan(text: node.text);
@@ -30,8 +34,20 @@ final class TextHtmlWidgetFactory
 
     if (node is! dom.Element) return null;
 
+    if (node.isUnspported) {
+      return WidgetSpan(
+        child: Builder(builder: (context) {
+          final config = HtmlConfig.of(context);
+          final child = unsupportedParser(node, config)?.builder(context);
+          return child ?? Text('Unsupported tag: ${node.localName}');
+        }),
+      );
+    }
+
+    if (node.isBreak) return const TextSpan(text: '\n');
+
     final children = node.nodes
-        .map((node) => _createSpan(node, context))
+        .map((node) => _createSpan(node, context, unsupportedParser))
         .whereNotNull()
         .toList();
 
@@ -45,6 +61,7 @@ final class TextHtmlWidgetFactory
   bool? get stringify => true;
 
   static const List<String> tags = [
+    'text',
     'p',
     'h1',
     'h2',
@@ -63,4 +80,10 @@ final class TextHtmlWidgetFactory
   ];
 }
 
-extension on dom.Element {}
+extension on dom.Element {
+  /// Whether the element is a line break.
+  bool get isBreak => localName == 'br';
+
+  /// Whether the element is a paragraph.
+  bool get isUnspported => !TextHtmlWidgetFactory.tags.contains(localName);
+}

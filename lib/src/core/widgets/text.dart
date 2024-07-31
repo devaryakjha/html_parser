@@ -19,4 +19,13 @@ final class TextHtmlWidget extends Text implements IHtmlWidget {
     super.textHeightBehavior,
     super.selectionColor,
   }) : super.rich();
+
+  @override
+  Widget build(BuildContext context) {
+    if (textSpan!.toPlainText().trim().isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    return super.build(context);
+  }
 }

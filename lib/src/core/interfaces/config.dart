@@ -3,26 +3,40 @@ import 'package:flutter/widgets.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html_to_flutter/html_to_flutter.dart';
 
+typedef UnsupportedParser = IHtmlWidgetFactory<IHtmlWidget>? Function(
+  dom.Node node,
+  HtmlConfig config,
+);
+typedef WidgetFactoryMapValue = IHtmlWidgetFactory Function(
+  dom.Node,
+  UnsupportedParser,
+);
+typedef WidgetFactoryKey = String;
+typedef WidgetFactoryMap = Map<WidgetFactoryKey, WidgetFactoryMapValue>;
+
 @immutable
 final class HtmlConfig extends Equatable {
   /// A list of factories for creating instances of [IHtmlWidget].
   ///
   /// The key is the tag name of the element, and the value is the factory for
   /// creating instances of [IHtmlWidget].
-  final Map<String, IHtmlWidgetFactory Function(dom.Node)> factories;
+  final WidgetFactoryMap _factories;
 
   /// A map of custom factories for creating instances of [IHtmlWidget].
   ///
   /// If a factory is provided for a tag name, it will be used instead of the
   /// default factory.
-  final Map<String, IHtmlWidgetFactory Function(dom.Node)> customFactories;
+  final WidgetFactoryMap _customFactories;
 
   /// Creates a new instance of [HtmlConfig].
   HtmlConfig({
-    this.customFactories = const {},
-  }) : factories = {
+    WidgetFactoryMap customFactories = const {},
+  })  : _customFactories = customFactories,
+        _factories = {
           ...Map.fromEntries(TextHtmlWidgetFactory.tags.map((tag) {
-            return MapEntry(tag, TextHtmlWidgetFactory.fromNode);
+            return MapEntry(tag, (node, config) {
+              return TextHtmlWidgetFactory.fromNode(node, config);
+            });
           })),
         };
 
@@ -41,8 +55,13 @@ final class HtmlConfig extends Equatable {
     return config;
   }
 
+  WidgetFactoryMapValue? getFactory(String? tag) {
+    if (tag == null) return null;
+    return _customFactories[tag] ?? _factories[tag];
+  }
+
   @override
-  List<Object?> get props => [factories, customFactories];
+  List<Object?> get props => [_factories, _customFactories];
 
   @override
   bool? get stringify => true;

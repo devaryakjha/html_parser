@@ -16,7 +16,7 @@ final class HtmlParser implements IHtmlParser {
     final nodes = _createNodes(html);
     final items = <IHtmlWidgetFactory<IHtmlWidget>>[];
     for (final node in nodes) {
-      final factory = _createFactory(node);
+      final factory = _createFactory(node, config);
       if (factory != null) {
         items.add(factory);
       }
@@ -24,12 +24,20 @@ final class HtmlParser implements IHtmlParser {
     return items;
   }
 
-  IHtmlWidgetFactory<IHtmlWidget>? _createFactory(dom.Node node) {
+  /// Creates a factory for the given [node].
+  IHtmlWidgetFactory<IHtmlWidget>? _createFactory(
+    final dom.Node node,
+    final HtmlConfig config,
+  ) {
+    if (node is dom.Text) {
+      return config.getFactory('text')!(node, _createFactory);
+    }
+
     if (node is dom.Element) {
       final tag = node.localName;
-      final factory = config.customFactories[tag] ?? config.factories[tag];
+      final factory = config.getFactory(tag);
       if (factory != null) {
-        return factory(node);
+        return factory(node, _createFactory);
       }
     }
     return null;

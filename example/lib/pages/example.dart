@@ -17,6 +17,8 @@ class ExamplePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
+        centerTitle: false,
+        surfaceTintColor: Colors.black,
         scrolledUnderElevation: 10,
       ),
       body: Html(input),
