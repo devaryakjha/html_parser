@@ -58,7 +58,7 @@ final class ImageHtmlWidget extends StatelessWidget implements IHtmlWidget {
             duration: const Duration(milliseconds: 500),
             curve: Curves.easeOut,
             opacity: frame == null ? 0 : 1,
-            child: child,
+            child: FullScreenWidget(child: child),
           ),
         );
       },
