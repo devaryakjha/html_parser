@@ -22,8 +22,10 @@ final class BlogStyles implements IHtmlStyles {
             textStyle: TextStyle(fontWeight: FontWeight.bold),
           ),
         'h2' => const Styles(
+            margin: EdgeInsets.only(top: 30),
             textStyle: TextStyle(fontSize: 27.2),
           ),
+        'hr' => const Styles(),
         _ => const Styles(
             textStyle: TextStyle(fontSize: 16),
           ),

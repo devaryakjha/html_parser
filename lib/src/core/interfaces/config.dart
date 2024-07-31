@@ -34,6 +34,7 @@ final class HtmlConfig extends Equatable {
           ...Map.fromEntries(TextHtmlWidgetFactory.tags.map((tag) {
             return MapEntry(tag, TextHtmlWidgetFactory.fromNode);
           })),
+          'hr': HrHtmlWidgetFactory.fromNode,
         };
 
   static HtmlConfig? maybeOf(BuildContext context) {
