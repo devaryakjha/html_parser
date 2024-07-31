@@ -5,11 +5,9 @@ import 'package:html_to_flutter/html_to_flutter.dart';
 
 final class FigureHtmlWidgetFactory
     implements IHtmlWidgetFactory<FigureHtmlWidget> {
-  const FigureHtmlWidgetFactory(this._builder, [this.children = const []]);
+  const FigureHtmlWidgetFactory(this._builder);
 
   final WidgetBuilder _builder;
-
-  final List<IHtmlWidgetFactory> children;
 
   factory FigureHtmlWidgetFactory.fromNode(
     final dom.Node node,
@@ -25,9 +23,9 @@ final class FigureHtmlWidgetFactory
 
         return FigureHtmlWidget(
           style: styles,
+          children: children.map((e) => e.builder).toList(),
         );
       },
-      children,
     );
   }
 

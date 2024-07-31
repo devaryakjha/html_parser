@@ -5,15 +5,18 @@ final class FigureHtmlWidget extends StatelessWidget implements IHtmlWidget {
   const FigureHtmlWidget({
     super.key,
     this.style,
+    this.children = const [],
   });
 
   /// The [Styles] to use for the widget.
   final Styles? style;
+  final List<WidgetBuilder> children;
 
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'Figure',
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: children.map((e) => e(context)).toList(),
     );
   }
 
