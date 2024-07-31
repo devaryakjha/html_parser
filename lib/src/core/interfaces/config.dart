@@ -21,7 +21,7 @@ final class HtmlConfig extends Equatable {
   /// Creates a new instance of [HtmlConfig].
   HtmlConfig({
     WidgetFactoryMap customFactories = const {},
-    this.styles = const IHtmlStyles.defaultStyles(),
+    this.styles = const IHtmlStyles.emptyStyles(),
     this.onLinkTap,
   }) : _factories = {
           ...Map.fromEntries(TextHtmlWidgetFactory.tags.map((tag) {

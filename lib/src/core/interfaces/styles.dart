@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:html/dom.dart' as dom;
@@ -8,7 +9,7 @@ abstract interface class IHtmlStyles with EquatableMixin {
 
   const IHtmlStyles(this.styles);
 
-  const factory IHtmlStyles.defaultStyles() = _DefaultStyles;
+  const factory IHtmlStyles.emptyStyles() = _DefaultStyles;
 
   Styles? getStyle(String? tag, dom.Node node);
 }
@@ -51,4 +52,16 @@ final class Styles with EquatableMixin {
 
   @override
   List<Object?> get props => [margin, padding, textStyle];
+
+  Styles copyWith({
+    EdgeInsets? margin,
+    EdgeInsets? padding,
+    TextStyle? textStyle,
+  }) {
+    return Styles(
+      margin: margin ?? this.margin,
+      padding: padding ?? this.padding,
+      textStyle: textStyle ?? this.textStyle,
+    );
+  }
 }
