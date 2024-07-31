@@ -7,6 +7,7 @@ final class BlogStyles implements IHtmlStyles {
   const BlogStyles();
 
   static const String defaultFontFamily = 'Inter';
+
   static String getFontFamily(String tag) {
     return switch (tag) {
       'h1' || 'h2' || 'h3' || 'h4' || 'h5' || 'h6' => 'Source Serif 4',
@@ -16,9 +17,9 @@ final class BlogStyles implements IHtmlStyles {
 
   TextStyle _getDefaultTextStyle(String fontFamily) {
     try {
-      return GoogleFonts.getFont(fontFamily);
+      return GoogleFonts.getFont(fontFamily, height: 1.4);
     } catch (e) {
-      return GoogleFonts.getFont(defaultFontFamily);
+      return GoogleFonts.getFont(defaultFontFamily, height: 1.4);
     }
   }
 
@@ -37,15 +38,39 @@ final class BlogStyles implements IHtmlStyles {
             decorationColor: const Color(0xff1669c9),
           ),
         ),
-      'em' || 'i' => Styles(
-          textStyle: defaultTextStyle.copyWith(fontStyle: FontStyle.italic),
+      'em' || 'i' => const Styles(
+          textStyle: TextStyle(fontStyle: FontStyle.italic),
         ),
-      'b' || 'strong' => Styles(
-          textStyle: defaultTextStyle.copyWith(fontWeight: FontWeight.bold),
+      'b' || 'strong' => const Styles(
+          textStyle: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      'h1' => Styles(
+          margin: const EdgeInsets.only(top: 30),
+          textStyle: defaultTextStyle.copyWith(
+            fontSize: 2.3 * 16,
+            height: 3,
+          ),
         ),
       'h2' => Styles(
           margin: const EdgeInsets.only(top: 30),
-          textStyle: defaultTextStyle.copyWith(fontSize: 27.2),
+          textStyle: defaultTextStyle.copyWith(
+            fontSize: 1.7 * 16,
+            height: 2.1,
+          ),
+        ),
+      'h3' => Styles(
+          margin: const EdgeInsets.only(top: 30),
+          textStyle: defaultTextStyle.copyWith(
+            fontSize: 1.5 * 16,
+            height: 1.9,
+          ),
+        ),
+      'h4' => Styles(
+          margin: const EdgeInsets.only(top: 30),
+          textStyle: defaultTextStyle.copyWith(
+            fontSize: 1.1 * 16,
+            height: 1.5,
+          ),
         ),
       'hr' => const Styles(),
       _ => Styles(
