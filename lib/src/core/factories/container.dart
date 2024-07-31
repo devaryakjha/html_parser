@@ -28,14 +28,10 @@ final class ContainerHtmlWidgetFactory
     final UnsupportedParser unsupportedParser,
   ) {
     final children = node.nodes.map(unsupportedParser).whereNotNull().toList();
-    return ContainerHtmlWidgetFactory((context) {
-      final type = _createContainerType(node);
-
-      return ContainerHtmlWidget(
-        children: children.map((e) => e.builder).toList(),
-        type: type,
-      );
-    });
+    return ContainerHtmlWidgetFactory((context) => ContainerHtmlWidget(
+          children: children.map((e) => e.builder).toList(),
+          type: _createContainerType(node),
+        ));
   }
 
   /// The [WidgetBuilder] to use for the widget.
