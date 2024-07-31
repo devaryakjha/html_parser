@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
+import 'package:html/dom.dart' as dom;
 import 'package:html_to_flutter/html_to_flutter.dart';
 
 abstract interface class IHtmlStyles with EquatableMixin {
@@ -9,14 +10,14 @@ abstract interface class IHtmlStyles with EquatableMixin {
 
   const factory IHtmlStyles.defaultStyles() = _DefaultStyles;
 
-  Styles? getStyle(String? tag);
+  Styles? getStyle(String? tag, dom.Node node);
 }
 
 final class _DefaultStyles implements IHtmlStyles {
   const _DefaultStyles();
 
   @override
-  Styles? getStyle(String? tag) {
+  Styles? getStyle(String? tag, dom.Node node) {
     return null;
   }
 
