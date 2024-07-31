@@ -6,10 +6,13 @@ class FullScreenWidget extends StatelessWidget {
   /// Creates a [FullScreenWidget].
   const FullScreenWidget({
     required this.child,
+    required this.heroTag,
     super.key,
     this.backgroundColor = Colors.black,
     this.backgroundIsTransparent = true,
   });
+
+  final Object heroTag;
 
   /// The child widget to display in full screen.
   final Widget child;
@@ -19,6 +22,13 @@ class FullScreenWidget extends StatelessWidget {
 
   /// Whether the background of the full screen page is transparent.
   final bool backgroundIsTransparent;
+
+  Hero _buildHero(Widget child) {
+    return Hero(
+      tag: heroTag,
+      child: child,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +44,13 @@ class FullScreenWidget extends StatelessWidget {
               return FullScreenPage(
                 backgroundColor: backgroundColor,
                 backgroundIsTransparent: backgroundIsTransparent,
-                child: child,
+                child: _buildHero(child),
               );
             },
           ),
         );
       },
-      child: child,
+      child: _buildHero(child),
     );
   }
 }
