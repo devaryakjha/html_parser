@@ -15,7 +15,10 @@ class ExamplePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(
+        title: Text(title),
+        scrolledUnderElevation: 10,
+      ),
       body: Html(input),
     );
   }

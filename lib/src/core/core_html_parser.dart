@@ -16,21 +16,12 @@ final class HtmlParser implements IHtmlParser {
     final nodes = _createNodes(html);
     final items = <IHtmlWidgetFactory<IHtmlWidget>>[];
     for (final node in nodes) {
-      items.addAll(createFactoryRecursive(node));
+      final factory = _createFactory(node);
+      if (factory != null) {
+        items.add(factory);
+      }
     }
     return items;
-  }
-
-  List<IHtmlWidgetFactory<IHtmlWidget>> createFactoryRecursive(dom.Node node) {
-    final factories = <IHtmlWidgetFactory<IHtmlWidget>>[];
-    final factory = _createFactory(node);
-    if (factory != null) {
-      factories.add(factory);
-    }
-    for (final child in node.nodes) {
-      factories.addAll(createFactoryRecursive(child));
-    }
-    return factories;
   }
 
   IHtmlWidgetFactory<IHtmlWidget>? _createFactory(dom.Node node) {
