@@ -74,6 +74,9 @@ final class BlogStyles implements IHtmlStyles {
           ),
         ),
       'hr' => const Styles(),
+      'figure' => Styles(
+          margin: EdgeInsets.only(bottom: baseFontSize),
+        ),
       _ => Styles(
           textStyle: defaultTextStyle,
         ),

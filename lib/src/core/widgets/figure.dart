@@ -14,14 +14,17 @@ final class FigureHtmlWidget extends StatelessWidget implements IHtmlWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: children.map((e) => e(context)).toList(),
+    return Padding(
+      padding: margin,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: children.map((e) => e(context)).toList(),
+      ),
     );
   }
 
   @override
-  EdgeInsets? get margin => style?.margin;
+  EdgeInsets get margin => style?.margin ?? EdgeInsets.zero;
 
   @override
   EdgeInsets? get padding => style?.padding;
