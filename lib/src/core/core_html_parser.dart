@@ -43,7 +43,6 @@ final class HtmlParser implements IHtmlParser {
     }
 
     if (kDebugMode) {
-      print('Unsupported node: $node');
       return IHtmlWidgetFactory.unsupported(node);
     }
 
