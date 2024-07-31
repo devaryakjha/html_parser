@@ -50,7 +50,9 @@ final class ImageHtmlWidget extends StatelessWidget implements IHtmlWidget {
       },
       frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
         if (wasSynchronouslyLoaded) {
-          return _wrapInAspectRation(child);
+          return _wrapInAspectRation(
+            FullScreenWidget(heroTag: src!, child: child),
+          );
         }
 
         return _wrapInAspectRation(
@@ -60,6 +62,7 @@ final class ImageHtmlWidget extends StatelessWidget implements IHtmlWidget {
             opacity: frame == null ? 0 : 1,
             child: FullScreenWidget(
               heroTag: src!,
+              title: title ?? alt,
               child: child,
             ),
           ),

@@ -10,9 +10,14 @@ class FullScreenWidget extends StatelessWidget {
     super.key,
     this.backgroundColor = Colors.black,
     this.backgroundIsTransparent = true,
+    this.title,
   });
 
+  /// The hero tag to use for the full screen page.
   final Object heroTag;
+
+  /// The title of the full screen page.
+  final String? title;
 
   /// The child widget to display in full screen.
   final Widget child;
@@ -30,40 +35,49 @@ class FullScreenWidget extends StatelessWidget {
     );
   }
 
+  void _onTap(BuildContext context) {
+    try {
+      Navigator.push(
+        context,
+        PageRouteBuilder<void>(
+          opaque: false,
+          barrierColor:
+              backgroundIsTransparent ? Colors.transparent : backgroundColor,
+          pageBuilder: (BuildContext context, _, __) {
+            return _FullScreenPage(
+              backgroundColor: backgroundColor,
+              backgroundIsTransparent: backgroundIsTransparent,
+              title: title,
+              child: _buildHero(child),
+            );
+          },
+        ),
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          PageRouteBuilder<void>(
-            opaque: false,
-            barrierColor:
-                backgroundIsTransparent ? Colors.transparent : backgroundColor,
-            pageBuilder: (BuildContext context, _, __) {
-              return FullScreenPage(
-                backgroundColor: backgroundColor,
-                backgroundIsTransparent: backgroundIsTransparent,
-                child: _buildHero(child),
-              );
-            },
-          ),
-        );
-      },
+      onTap: () => _onTap(context),
       child: _buildHero(child),
     );
   }
 }
 
 ///
-class FullScreenPage extends StatelessWidget {
+class _FullScreenPage extends StatelessWidget {
   ///
-  const FullScreenPage({
+  const _FullScreenPage({
     required this.child,
-    super.key,
+    this.title,
     this.backgroundColor = Colors.black,
     this.backgroundIsTransparent = true,
   });
+
+  final String? title;
 
   ///
   final Widget child;
@@ -82,8 +96,10 @@ class FullScreenPage extends StatelessWidget {
       backgroundColor: bgColor,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        title: title != null ? Text(title!) : null,
         leading: const CloseButton(color: Colors.white),
         backgroundColor: Colors.transparent,
+        foregroundColor: Colors.white,
       ),
       body: PhotoView.customChild(child: child),
     );
