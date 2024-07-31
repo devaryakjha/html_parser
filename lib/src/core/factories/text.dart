@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -21,50 +19,107 @@ final class TextHtmlWidgetFactory
     final UnsupportedParser unsupportedParser,
   ) {
     return TextHtmlWidgetFactory(
-      (context) =>
-          TextHtmlWidget(_createSpan(node, context, unsupportedParser)!),
+      (context) {
+        final styles = node is dom.Element
+            ? HtmlConfig.of(context).styles.getStyle(node.localName)
+            : null;
+
+        return TextHtmlWidget(
+          _createSpan(node, context, unsupportedParser)!,
+          styles: styles,
+        );
+      },
     );
+  }
+
+  static TextSpan _createAnchor(
+    final dom.Element node,
+    final BuildContext context,
+    final UnsupportedParser unsupportedParser,
+  ) {
+    final config = HtmlConfig.of(context);
+    final recogniser = config.onLinkTap != null
+        ? (TapGestureRecognizer()
+          ..onTap = () {
+            final href = node.attributes['href'];
+            config.onLinkTap?.call(href);
+          })
+        : null;
+    final style = config.styles.getStyle(node.localName);
+    final children = node.nodes
+        .map((node) {
+          return _createSpan(node, context, unsupportedParser, recogniser);
+        })
+        .whereNotNull()
+        .toList();
+    return TextSpan(
+      text: children.isEmpty ? node.text : null,
+      recognizer: children.isEmpty ? recogniser : null,
+      style: style?.textStyle,
+      children: children,
+    );
+  }
+
+  static Widget _wrapInGestureDetectorIfNeed(
+    final Widget child,
+    final GestureRecognizer? recognizer,
+  ) {
+    if (recognizer is TapGestureRecognizer) {
+      return GestureDetector(
+        onTap: recognizer.onTap,
+        child: child,
+      );
+    }
+    return child;
   }
 
   static InlineSpan? _createSpan(
     final dom.Node node,
     final BuildContext context,
-    final UnsupportedParser unsupportedParser,
-  ) {
+    final UnsupportedParser unsupportedParser, [
+    final GestureRecognizer? recognizer,
+  ]) {
+    final config = HtmlConfig.of(context);
+
     if (node is dom.Text) {
-      return TextSpan(text: node.text);
+      return TextSpan(text: node.text, recognizer: recognizer);
     }
 
     if (node is! dom.Element) return null;
 
+    final style = config.styles.getStyle(node.localName);
+
     if (node.isUnspported) {
       return WidgetSpan(
         child: Builder(builder: (context) {
-          final config = HtmlConfig.of(context);
           final child = unsupportedParser(node, config)?.builder(context);
-          return child ?? Text('Unsupported tag: ${node.localName}');
+          return _wrapInGestureDetectorIfNeed(
+            child ?? Text('Unsupported tag: ${node.localName}'),
+            recognizer,
+          );
         }),
-      );
-    }
-
-    if (node.isAnchor) {
-      return TextSpan(
-        text: node.text,
-        recognizer: TapGestureRecognizer()
-          ..onTap = () {
-            log('Tapped on anchor: ${node.attributes['href']}');
-          },
+        style: style?.textStyle,
       );
     }
 
     if (node.isBreak) return const TextSpan(text: '\n');
 
+    if (node.isAnchor) {
+      return _createAnchor(node, context, unsupportedParser);
+    }
+
     final children = node.nodes
-        .map((node) => _createSpan(node, context, unsupportedParser))
+        .map((node) {
+          return _createSpan(node, context, unsupportedParser, recognizer);
+        })
         .whereNotNull()
         .toList();
 
-    return TextSpan(children: children);
+    return TextSpan(
+      children: children,
+      style: style?.textStyle,
+      recognizer: recognizer,
+    );
   }
 
   @override

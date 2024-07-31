@@ -1,21 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
-import 'package:html/dom.dart' as dom;
 import 'package:html_to_flutter/html_to_flutter.dart';
-
-typedef UnsupportedParser = IHtmlWidgetFactory<IHtmlWidget>? Function(
-  dom.Node node,
-  HtmlConfig config,
-);
-
-typedef WidgetFactoryMapValue = IHtmlWidgetFactory Function(
-  dom.Node,
-  UnsupportedParser,
-);
-
-typedef WidgetFactoryKey = String;
-
-typedef WidgetFactoryMap = Map<WidgetFactoryKey, WidgetFactoryMapValue>;
 
 @immutable
 final class HtmlConfig extends Equatable {
@@ -31,15 +16,23 @@ final class HtmlConfig extends Equatable {
   /// default factory.
   final WidgetFactoryMap _customFactories;
 
+  /// The styles to use for the widgets.
+  ///
+  /// If a tag is not found in the styles, no styles will be used.
+  final IHtmlStyles styles;
+
+  /// A callback that is called when a link is tapped.
+  final OnLinkTap? onLinkTap;
+
   /// Creates a new instance of [HtmlConfig].
   HtmlConfig({
     WidgetFactoryMap customFactories = const {},
+    this.styles = const IHtmlStyles.defaultStyles(),
+    this.onLinkTap,
   })  : _customFactories = customFactories,
         _factories = {
           ...Map.fromEntries(TextHtmlWidgetFactory.tags.map((tag) {
-            return MapEntry(tag, (node, config) {
-              return TextHtmlWidgetFactory.fromNode(node, config);
-            });
+            return MapEntry(tag, TextHtmlWidgetFactory.fromNode);
           })),
         };
 
