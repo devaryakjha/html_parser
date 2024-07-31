@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:html_to_flutter/html_to_flutter.dart';
 
 /// A widget for displaying HTML content.
@@ -46,16 +46,23 @@ class _HtmlState extends State<Html> {
   @override
   Widget build(BuildContext context) {
     final factories = kDebugMode ? parser.parse(input) : _widgetsFactories;
-    return HtmlConfigProvider(
-      config: widget.config,
-      child: ListView.builder(
-        padding:
-            const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 48),
-        itemCount: factories.length,
-        itemBuilder: (context, index) {
-          final factory = factories[index];
-          return factory.builder(context);
-        },
+    return DefaultTextStyle(
+      style: TextStyle(
+        fontSize: 16,
+        height: 1.4,
+        color: Theme.of(context).colorScheme.onSurface,
+      ),
+      child: HtmlConfigProvider(
+        config: widget.config,
+        child: ListView.builder(
+          padding:
+              const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 48),
+          itemCount: factories.length,
+          itemBuilder: (context, index) {
+            final factory = factories[index];
+            return factory.builder(context);
+          },
+        ),
       ),
     );
   }
