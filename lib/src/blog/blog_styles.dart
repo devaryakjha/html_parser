@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:html_to_flutter/html_to_flutter.dart';
 
@@ -80,9 +81,11 @@ final class BlogStyles implements IHtmlStyles {
       'td' => Styles(
           textStyle: defaultTextStyle,
         ),
-      _ => Styles(
-          textStyle: defaultTextStyle,
+      'ol' || 'ul' => Styles(
+          margin: EdgeInsets.symmetric(vertical: baseFontSize),
+          padding: const EdgeInsets.only(left: 24),
         ),
+      _ => null,
     };
   }
 
