@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html_to_flutter/html_to_flutter.dart';
 
+/// A factory that is used to render a [ListHtmlWidget].
+///
+/// represents `<ol>` and `<ul>` tags.
 final class ListHtmlWidgetFactory
     implements IHtmlWidgetFactory<ListHtmlWidget> {
+  /// Creates a new instance of [ListHtmlWidgetFactory].
   const ListHtmlWidgetFactory(this._builder);
 
+  /// Creates a new instance of [ListHtmlWidgetFactory] from a [dom.Node].
   factory ListHtmlWidgetFactory.fromNode(dom.Node node) {
     if (node is! dom.Element) {
       throw UnsupportedError(
