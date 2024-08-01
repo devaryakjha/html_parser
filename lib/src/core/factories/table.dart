@@ -125,33 +125,51 @@ final class TableHtmlWidgetFactory
     final UnsupportedParser unsupportedParser, {
     bool omitFirstRow = false,
   }) {
-    final trs = nodes.nodes
-        .whereType<dom.Element>()
-        .where((e) => e.text.trim().isNotEmpty)
-        .toList();
+    final trs = nodes.nodes.whereType<dom.Element>().toList();
 
     if (omitFirstRow) {
       trs.removeAt(0);
     }
-    return trs
-        .map(
-          (tr) => DataRow(
-            cells: tr.nodes
-                .whereType<dom.Element>()
-                .map(
-                  (td) => DataCell(
-                    Builder(
-                      builder: (ctx) => Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: unsupportedParser(td)?.builder(ctx),
-                      ),
-                    ),
-                  ),
-                )
-                .toList(),
+
+    List<DataRow> rows = [];
+
+    Map<int, Map<int, DataCell>> fillWith = {};
+
+    for (final trIndexed in trs.indexed) {
+      final (index, tr) = trIndexed;
+      final tds = tr.nodes.whereType<dom.Element>().toList();
+      final List<DataCell> cells = fillWith[index]?.values.toList() ?? [];
+      for (final tdIndexed in tds.indexed) {
+        final (jindex, td) = tdIndexed;
+        final rowSpan = int.tryParse(td.attributes['rowspan'] ?? '1') ?? 1;
+        cells.add(
+          DataCell(
+            Builder(
+              builder: (ctx) => Padding(
+                padding: const EdgeInsets.all(8),
+                child: SizedBox(
+                  width: 200,
+                  child: unsupportedParser(td)?.builder(ctx),
+                ),
+              ),
+            ),
           ),
-        )
-        .toList();
+        );
+        if (rowSpan > 1) {
+          fillWith.addAll({
+            for (int i = 1; i < rowSpan; i++) ...{
+              index + i: {
+                ...fillWith[index + i] ?? {},
+                jindex: cells.last,
+              }
+            }
+          });
+        }
+      }
+      rows.add(DataRow(cells: cells));
+    }
+
+    return rows;
   }
 
   @override

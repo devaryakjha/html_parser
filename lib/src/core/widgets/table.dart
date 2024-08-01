@@ -16,6 +16,8 @@ final class TableHtmlWidget extends StatelessWidget implements IHtmlWidget {
         columns: columns,
         rows: rows,
         border: TableBorder.all(),
+        dataRowMinHeight: 100,
+        dataRowMaxHeight: 200,
       ),
     );
   }
