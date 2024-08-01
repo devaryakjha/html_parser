@@ -20,7 +20,7 @@ class HtmlInputs {
   static const Map<String, String> typeToInput = {
     'basic': basic,
     'advanced': basic,
-    'blog-post': blogPost5,
+    'blog-post': blogPost4,
     'custom': basic,
   };
 }
