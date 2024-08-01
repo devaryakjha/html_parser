@@ -1,6 +1,6 @@
-# html_to_flutter_example
+# widgets_from_html_example
 
-Demonstrates how to use the html_to_flutter plugin.
+Demonstrates how to use the widgets_from_html plugin.
 
 ## Getting Started
 

@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "html_to_flutter",
+            "name": "widgets_from_html",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "html_to_flutter (profile mode)",
+            "name": "widgets_from_html (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "html_to_flutter (release mode)",
+            "name": "widgets_from_html (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

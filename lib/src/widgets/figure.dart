@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:html_to_flutter/html_to_flutter.dart';
+import 'package:widgets_from_html/widgets_from_html.dart';
 
 /// A widget that is used to represent `figure` elements.
 final class FigureHtmlWidget extends StatelessWidget implements IHtmlWidget {

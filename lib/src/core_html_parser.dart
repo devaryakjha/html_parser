@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
-import 'package:html_to_flutter/html_to_flutter.dart'
+import 'package:widgets_from_html/widgets_from_html.dart'
     show HtmlConfig, IHtmlParser, IHtmlWidget, IHtmlWidgetFactory;
 
 /// {@template html_parser}

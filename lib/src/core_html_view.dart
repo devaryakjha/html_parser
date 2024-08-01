@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:html_to_flutter/html_to_flutter.dart';
+import 'package:widgets_from_html/widgets_from_html.dart';
 
 /// A widget for displaying HTML content.
 class Html extends StatefulWidget {

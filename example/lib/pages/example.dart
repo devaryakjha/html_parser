@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:html_to_flutter/html_to_flutter.dart';
-import 'package:html_to_flutter_example/utils/blog_config.dart';
+import 'package:widgets_from_html/widgets_from_html.dart';
+import 'package:widgets_from_html_example/utils/blog_config.dart';
 
 class ExamplePage extends StatefulWidget {
   const ExamplePage({

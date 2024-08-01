@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:html_to_flutter/html_to_flutter.dart';
+import 'package:widgets_from_html/widgets_from_html.dart';
 
 /// {@template html_config}
 /// A configuration for the HTML widget.

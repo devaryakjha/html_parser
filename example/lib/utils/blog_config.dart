@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:html_to_flutter/html_to_flutter.dart';
-import 'package:html_to_flutter_example/utils/blog_styles.dart';
+import 'package:widgets_from_html/widgets_from_html.dart';
+import 'package:widgets_from_html_example/utils/blog_styles.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 final class BlogConfig extends HtmlConfig {

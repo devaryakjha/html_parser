@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:html/dom.dart' as dom;
-import 'package:html_to_flutter/html_to_flutter.dart';
+import 'package:widgets_from_html/widgets_from_html.dart';
 
 ///  A factory for creating instances of [FigureHtmlWidgetFactory].
 ///

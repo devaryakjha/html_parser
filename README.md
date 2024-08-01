@@ -1,4 +1,4 @@
-# html_to_flutter
+# widgets_from_html
 
 A new Flutter plugin project.
 

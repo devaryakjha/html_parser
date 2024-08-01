@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:html_to_flutter/html_to_flutter.dart';
+import 'package:widgets_from_html/widgets_from_html.dart';
 
 /// The type of container to render.
 enum ContainerType {

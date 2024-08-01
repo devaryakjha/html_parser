@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:html_to_flutter/html_to_flutter.dart'
+import 'package:widgets_from_html/widgets_from_html.dart'
     show HtmlConfig, IHtmlWidget, IHtmlWidgetFactory;
 
 /// An interface for parsing HTML strings.

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:html/dom.dart' as dom;
-import 'package:html_to_flutter/html_to_flutter.dart';
+import 'package:widgets_from_html/widgets_from_html.dart';
 
 /// A factory that is used to render a [ListHtmlWidget].
 ///

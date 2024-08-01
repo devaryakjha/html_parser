@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:html/dom.dart' as dom;
-import 'package:html_to_flutter/html_to_flutter.dart' show IHtmlWidget;
+import 'package:widgets_from_html/widgets_from_html.dart' show IHtmlWidget;
 
 /// An interface for creating instances of [IHtmlWidget].
 abstract interface class IHtmlWidgetFactory<Widget extends IHtmlWidget>

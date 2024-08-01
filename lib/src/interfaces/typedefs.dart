@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:html/dom.dart' as dom;
-import 'package:html_to_flutter/html_to_flutter.dart';
+import 'package:widgets_from_html/widgets_from_html.dart';
 
 typedef UnsupportedParser = IHtmlWidgetFactory<IHtmlWidget>? Function(
   dom.Node node,

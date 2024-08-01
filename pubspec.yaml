@@ -1,6 +1,6 @@
-name: html_to_flutter
+name: widgets_from_html
 description: "A new Flutter plugin project."
-version: 0.0.1
+version: 0.0.1-dev.1
 homepage: https://example.com
 
 environment:
