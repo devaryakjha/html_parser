@@ -50,12 +50,22 @@ class _HtmlState extends State<Html> {
       style: widget.config.defaultTextStyle,
       child: HtmlConfigProvider(
         config: widget.config,
-        child: ListView.builder(
-          padding: EdgeInsets.zero,
-          itemCount: factories.length,
-          itemBuilder: (context, index) {
-            final factory = factories[index];
-            return factory.builder(context);
+        child: Builder(
+          builder: (context) {
+            final isSingle = factories.length == 1;
+            if (isSingle) {
+              final factory = factories.single;
+              return factory.builder(context);
+            }
+            return ListView.builder(
+              primary: false,
+              padding: EdgeInsets.zero,
+              itemCount: factories.length,
+              itemBuilder: (context, index) {
+                final factory = factories[index];
+                return factory.builder(context);
+              },
+            );
           },
         ),
       ),

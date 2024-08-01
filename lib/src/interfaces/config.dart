@@ -86,11 +86,7 @@ class HtmlConfig extends Equatable {
   /// and merges them with the custom factories.
   static WidgetFactoryMap _createDefaultFactories(WidgetFactoryMap? custom) {
     return {
-      ...Map.fromEntries(
-        TextHtmlWidgetFactory.tags.map((tag) {
-          return MapEntry(tag, TextHtmlWidgetFactory.fromNode);
-        }),
-      ),
+      ...TextHtmlWidgetFactory.createFactoryMap(),
       'hr': (_, __) => HrHtmlWidgetFactory.fromNode(),
       'figure': FigureHtmlWidgetFactory.fromNode,
       'img': (node, _) => ImageHtmlWidgetFactory.fromNode(node),

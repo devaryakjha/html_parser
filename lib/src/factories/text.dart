@@ -158,13 +158,19 @@ final class TextHtmlWidgetFactory
     'i',
     'em',
     'br',
-    // table
     'tr',
     'td',
     'th',
     'tbody',
     'thead',
   ];
+
+  /// Creates a map of factories for the supported tags.
+  static WidgetFactoryMap createFactoryMap() {
+    return {
+      for (final tag in tags) tag: TextHtmlWidgetFactory.fromNode,
+    };
+  }
 }
 
 extension on HtmlElement {
