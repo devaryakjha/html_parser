@@ -12,12 +12,18 @@ final class TableHtmlWidget extends StatelessWidget implements IHtmlWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: DataTable(
-        columns: columns,
-        rows: rows,
-        border: TableBorder.all(),
-        dataRowMinHeight: 100,
-        dataRowMaxHeight: 200,
+      child: Row(
+        children: [
+          Padding(padding: EdgeInsets.only(left: margin.left)),
+          DataTable(
+            columns: columns,
+            rows: rows,
+            border: TableBorder.all(),
+            dataRowMinHeight: 100,
+            dataRowMaxHeight: 150,
+          ),
+          Padding(padding: EdgeInsets.only(right: margin.right)),
+        ],
       ),
     );
   }

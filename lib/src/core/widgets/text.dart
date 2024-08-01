@@ -10,9 +10,9 @@ final class TextHtmlWidget extends Text implements IHtmlWidget {
     super.textDirection,
     super.locale,
     super.softWrap,
-    super.overflow,
+    super.overflow = TextOverflow.ellipsis,
     super.textScaler,
-    super.maxLines,
+    this.maxLinesAllowed,
     super.semanticsLabel,
     super.textWidthBasis,
     super.textHeightBehavior,
@@ -20,6 +20,12 @@ final class TextHtmlWidget extends Text implements IHtmlWidget {
     this.styles,
     this.textStyle,
   }) : super.rich();
+
+  /// The [TextSpan] to use for the text.
+  final int? maxLinesAllowed;
+
+  @override
+  int? get maxLines => maxLinesAllowed ?? styles?.maxLines;
 
   /// The [TextStyle] to use for the text.
   final TextStyle? textStyle;

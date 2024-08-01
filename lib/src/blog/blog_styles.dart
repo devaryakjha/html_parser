@@ -77,6 +77,10 @@ final class BlogStyles implements IHtmlStyles {
       'figure' => Styles(
           margin: EdgeInsets.only(bottom: baseFontSize),
         ),
+      'td' => Styles(
+          textStyle: defaultTextStyle,
+          maxLines: 5,
+        ),
       _ => Styles(
           textStyle: defaultTextStyle,
         ),
