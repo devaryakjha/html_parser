@@ -14,6 +14,7 @@ final class TableHtmlWidget extends StatelessWidget implements IHtmlWidget {
 
   @override
   Widget build(BuildContext context) {
+    final config = HtmlConfig.of(context);
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
@@ -22,7 +23,9 @@ final class TableHtmlWidget extends StatelessWidget implements IHtmlWidget {
           DataTable(
             columns: columns,
             rows: rows,
-            border: TableBorder.all(),
+            border: TableBorder.all(
+              color: config.defaultTextStyle.color ?? Colors.black,
+            ),
             dataRowMaxHeight: double.infinity,
           ),
           Padding(padding: EdgeInsets.only(right: margin.right)),
