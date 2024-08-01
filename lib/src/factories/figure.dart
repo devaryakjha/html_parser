@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
-import 'package:html/dom.dart' as dom;
 import 'package:widgets_from_html/widgets_from_html.dart';
 
 ///  A factory for creating instances of [FigureHtmlWidgetFactory].
@@ -10,16 +9,16 @@ final class FigureHtmlWidgetFactory
   /// Creates a new instance of [FigureHtmlWidgetFactory].
   const FigureHtmlWidgetFactory(this._builder);
 
-  /// Creates a new instance of [FigureHtmlWidgetFactory] from a [dom.Node].
+  /// Creates a new instance of [FigureHtmlWidgetFactory] from a [HtmlNode].
   factory FigureHtmlWidgetFactory.fromNode(
-    dom.Node node,
+    HtmlNode node,
     UnsupportedParser unsupportedParser,
   ) {
     final children = node.nodes.map(unsupportedParser).whereNotNull().toList();
     return FigureHtmlWidgetFactory(
       (context) {
         final config = HtmlConfig.of(context);
-        final styles = node is dom.Element
+        final styles = node is HtmlElement
             ? config.styles.getStyle(node.localName, config.defaultTextStyle)
             : null;
 

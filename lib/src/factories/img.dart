@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:html/dom.dart' as dom;
 import 'package:widgets_from_html/widgets_from_html.dart';
 
 /// A widget factory that is used to render and [ImageHtmlWidget]
@@ -10,8 +9,8 @@ final class ImageHtmlWidgetFactory
   /// Creates a new instance of [ImageHtmlWidgetFactory].
   const ImageHtmlWidgetFactory(this._builder);
 
-  /// Creates a new instance of [ImageHtmlWidgetFactory] from a [dom.Node].
-  factory ImageHtmlWidgetFactory.fromNode(dom.Node node) {
+  /// Creates a new instance of [ImageHtmlWidgetFactory] from a [HtmlNode].
+  factory ImageHtmlWidgetFactory.fromNode(HtmlNode node) {
     final src = node.attributes['src'];
     final alt = node.attributes['alt'];
     final title = node.attributes['title'];
@@ -21,7 +20,7 @@ final class ImageHtmlWidgetFactory
     return ImageHtmlWidgetFactory(
       (context) {
         final config = HtmlConfig.of(context);
-        final styles = node is dom.Element
+        final styles = node is HtmlElement
             ? config.styles.getStyle(node.localName, config.defaultTextStyle)
             : null;
 

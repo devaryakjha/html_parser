@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:html/dom.dart' as dom;
 import 'package:widgets_from_html/widgets_from_html.dart';
 
 /// A factory that is used to render a [ListHtmlWidget].
@@ -10,11 +9,11 @@ final class ListHtmlWidgetFactory
   /// Creates a new instance of [ListHtmlWidgetFactory].
   const ListHtmlWidgetFactory(this._builder);
 
-  /// Creates a new instance of [ListHtmlWidgetFactory] from a [dom.Node].
-  factory ListHtmlWidgetFactory.fromNode(dom.Node node) {
-    if (node is! dom.Element) {
+  /// Creates a new instance of [ListHtmlWidgetFactory] from a [HtmlNode].
+  factory ListHtmlWidgetFactory.fromNode(HtmlNode node) {
+    if (node is! HtmlElement) {
       throw UnsupportedError(
-        'ListHtmlWidgetFactory only supports dom.Element nodes',
+        'ListHtmlWidgetFactory only supports HtmlElement nodes',
       );
     }
 
@@ -26,7 +25,7 @@ final class ListHtmlWidgetFactory
         return ListHtmlWidget(
           styles:
               config.styles.getStyle(node.localName, config.defaultTextStyle),
-          children: node.nodes.whereType<dom.Element>().indexed.map((element) {
+          children: node.nodes.whereType<HtmlElement>().indexed.map((element) {
             final (index, node) = element;
             return ListItemHtmlWidget(
               title: node.text,

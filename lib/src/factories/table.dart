@@ -2,7 +2,6 @@ import 'dart:math' as math;
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:html/dom.dart' as dom;
 import 'package:widgets_from_html/widgets_from_html.dart';
 
 /// A factory that is used to render a [TableHtmlWidget].
@@ -13,12 +12,12 @@ final class TableHtmlWidgetFactory
   /// Creates a new instance of [TableHtmlWidgetFactory].
   const TableHtmlWidgetFactory(this._builder);
 
-  /// Creates a new instance of [TableHtmlWidgetFactory] from a [dom.Node].
+  /// Creates a new instance of [TableHtmlWidgetFactory] from a [HtmlNode].
   factory TableHtmlWidgetFactory.fromNode(
-    dom.Node node,
+    HtmlNode node,
     UnsupportedParser unsupportedParser,
   ) {
-    final allNodes = node.nodes.whereType<dom.Element>().toList();
+    final allNodes = node.nodes.whereType<HtmlElement>().toList();
     final thead = allNodes.firstWhereOrNull((e) => e.localName == 'thead');
     final tbody = allNodes.firstWhereOrNull((e) => e.localName == 'tbody');
     final columns = thead != null
@@ -81,13 +80,13 @@ final class TableHtmlWidgetFactory
 
   /// Creates the columns from the HTML nodes.
   static List<DataColumn> _createColumnsFromThead(
-    dom.Element nodes,
+    HtmlElement nodes,
     UnsupportedParser unsupportedParser,
   ) {
     final tr = nodes.nodes
-        .whereType<dom.Element>()
+        .whereType<HtmlElement>()
         .firstWhereOrNull((e) => e.localName == 'tr');
-    final allThs = tr?.nodes.whereType<dom.Element>().toList() ?? [];
+    final allThs = tr?.nodes.whereType<HtmlElement>().toList() ?? [];
     return allThs
         .map(
           (e) => DataColumn(
@@ -104,14 +103,14 @@ final class TableHtmlWidgetFactory
   }
 
   static List<DataColumn> _createColumnsFromTbody(
-    dom.Element nodes,
+    HtmlElement nodes,
     UnsupportedParser unsupportedParser,
   ) {
     final tr = nodes.nodes
-        .whereType<dom.Element>()
+        .whereType<HtmlElement>()
         .where((e) => e.text.trim().isNotEmpty)
         .firstWhereOrNull((e) => e.localName == 'tr');
-    final allTds = tr?.nodes.whereType<dom.Element>().toList() ?? [];
+    final allTds = tr?.nodes.whereType<HtmlElement>().toList() ?? [];
     return allTds
         .map(
           (td) => DataColumn(
@@ -130,11 +129,11 @@ final class TableHtmlWidgetFactory
   }
 
   static List<DataRow> _createRowsFromTbody(
-    dom.Element nodes,
+    HtmlElement nodes,
     UnsupportedParser unsupportedParser, {
     bool omitFirstRow = false,
   }) {
-    final trs = nodes.nodes.whereType<dom.Element>().toList();
+    final trs = nodes.nodes.whereType<HtmlElement>().toList();
 
     if (omitFirstRow) {
       trs.removeAt(0);
@@ -146,7 +145,7 @@ final class TableHtmlWidgetFactory
 
     for (final trIndexed in trs.indexed) {
       final (index, tr) = trIndexed;
-      final tds = tr.nodes.whereType<dom.Element>().toList();
+      final tds = tr.nodes.whereType<HtmlElement>().toList();
       final cells = fillRowWith[index]?.values.toList() ?? [];
       for (final tdIndexed in tds.indexed) {
         final (jindex, td) = tdIndexed;

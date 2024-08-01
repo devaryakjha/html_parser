@@ -2,7 +2,6 @@ import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
-import 'package:html/dom.dart' as dom;
 import 'package:widgets_from_html/widgets_from_html.dart';
 
 /// A factory for creating instances of [TextHtmlWidgetFactory].
@@ -17,15 +16,15 @@ final class TextHtmlWidgetFactory
   /// Creates a new instance of [TextHtmlWidgetFactory].
   const TextHtmlWidgetFactory(this._builder);
 
-  /// Creates a new instance of [TextHtmlWidgetFactory] from a [dom.Node].
+  /// Creates a new instance of [TextHtmlWidgetFactory] from a [HtmlNode].
   factory TextHtmlWidgetFactory.fromNode(
-    dom.Node node,
+    HtmlNode node,
     UnsupportedParser unsupportedParser,
   ) {
     return TextHtmlWidgetFactory(
       (context) {
         final config = HtmlConfig.of(context);
-        final styles = node is dom.Element
+        final styles = node is HtmlElement
             ? config.styles.getStyle(node.localName, config.defaultTextStyle)
             : null;
 
@@ -43,7 +42,7 @@ final class TextHtmlWidgetFactory
   WidgetBuilder get builder => _builder;
 
   static TextSpan _createAnchor(
-    dom.Element node,
+    HtmlElement node,
     BuildContext context,
     UnsupportedParser unsupportedParser,
   ) {
@@ -83,18 +82,18 @@ final class TextHtmlWidgetFactory
   }
 
   static InlineSpan? _createSpan(
-    dom.Node node,
+    HtmlNode node,
     BuildContext context,
     UnsupportedParser unsupportedParser, [
     GestureRecognizer? recognizer,
   ]) {
     final config = HtmlConfig.of(context);
 
-    if (node is dom.Text) {
+    if (node is HtmlText) {
       return TextSpan(text: node.text, recognizer: recognizer);
     }
 
-    if (node is! dom.Element) return null;
+    if (node is! HtmlElement) return null;
 
     final style =
         config.styles.getStyle(node.localName, config.defaultTextStyle);
@@ -168,7 +167,7 @@ final class TextHtmlWidgetFactory
   ];
 }
 
-extension on dom.Element {
+extension on HtmlElement {
   /// Whether the element is a line break.
   bool get isBreak => localName == 'br';
 

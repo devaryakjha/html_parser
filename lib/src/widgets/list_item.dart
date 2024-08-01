@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:html/dom.dart' as dom;
 import 'package:widgets_from_html/widgets_from_html.dart';
 
 /// A widget that is used to render a list item.
@@ -25,13 +24,13 @@ final class ListItemHtmlWidget extends StatelessWidget {
   final bool isOrdered;
 
   /// The source of the list item.
-  final dom.Node source;
+  final HtmlNode source;
 
   @override
   Widget build(BuildContext context) {
     final config = HtmlConfig.of(context);
     final style = config.styles.getStyle('li', config.defaultTextStyle);
-    final childrenSpans = source.nodes.whereType<dom.Element>().map((element) {
+    final childrenSpans = source.nodes.whereType<HtmlElement>().map((element) {
       return TextSpan(
         text: element.text,
         style: config.styles

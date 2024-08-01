@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:html/dom.dart' as dom;
 import 'package:widgets_from_html/widgets_from_html.dart';
 
 /// A widget that is used to render a horizontal rule.
@@ -12,7 +11,7 @@ final class HrHtmlWidgetFactory implements IHtmlWidgetFactory {
   /// Creates a new instance of [HrHtmlWidgetFactory].
   const HrHtmlWidgetFactory(this._builder);
 
-  /// Creates a new instance of [HrHtmlWidgetFactory] from a [dom.Node].
+  /// Creates a new instance of [HrHtmlWidgetFactory] from a [HtmlNode].
   factory HrHtmlWidgetFactory.fromNode() {
     return HrHtmlWidgetFactory(
       (context) => const Divider(

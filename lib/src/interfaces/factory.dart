@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:html/dom.dart' as dom;
-import 'package:widgets_from_html/widgets_from_html.dart' show IHtmlWidget;
+import 'package:widgets_from_html/widgets_from_html.dart'
+    show HtmlNode, IHtmlWidget;
 
 /// An interface for creating instances of [IHtmlWidget].
 abstract interface class IHtmlWidgetFactory<Widget extends IHtmlWidget>
@@ -10,10 +10,10 @@ abstract interface class IHtmlWidgetFactory<Widget extends IHtmlWidget>
   /// Creates a new instance of [IHtmlWidgetFactory].
   const IHtmlWidgetFactory(this.builder);
 
-  const factory IHtmlWidgetFactory.unsupported(dom.Node node) =
+  const factory IHtmlWidgetFactory.unsupported(HtmlNode node) =
       UnsupportedHtmlWidgetFactory;
 
-  /// Creates a new instance of [IHtmlWidget] from the given [dom.Node].
+  /// Creates a new instance of [IHtmlWidget] from the given [HtmlNode].
   final WidgetBuilder builder;
 
   @override
@@ -28,7 +28,7 @@ class UnsupportedHtmlWidgetFactory<T extends IHtmlWidget>
   const UnsupportedHtmlWidgetFactory(this.node);
 
   /// The node that is not supported.
-  final dom.Node node;
+  final HtmlNode node;
 
   @override
   WidgetBuilder get builder => (context) => kDebugMode

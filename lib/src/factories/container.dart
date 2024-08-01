@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:html/dom.dart' as dom;
 import 'package:widgets_from_html/widgets_from_html.dart';
 
 /// A factory for creating a [ContainerHtmlWidget].
@@ -9,9 +8,9 @@ final class ContainerHtmlWidgetFactory
   /// Creates a new instance of [ContainerHtmlWidgetFactory].
   const ContainerHtmlWidgetFactory(this._builder);
 
-  /// Creates a new instance of [ContainerHtmlWidgetFactory] from a [dom.Node].
+  /// Creates a new instance of [ContainerHtmlWidgetFactory] from a [HtmlNode].
   factory ContainerHtmlWidgetFactory.fromNode(
-    dom.Node node,
+    HtmlNode node,
     UnsupportedParser unsupportedParser,
   ) {
     final children = node.nodes.map(unsupportedParser).whereNotNull().toList();
@@ -23,7 +22,7 @@ final class ContainerHtmlWidgetFactory
     );
   }
 
-  static ContainerType _createContainerType(dom.Node node) {
+  static ContainerType _createContainerType(HtmlNode node) {
     final classses = node.attributes['class'];
     final styles = node.attributes['style'];
 
