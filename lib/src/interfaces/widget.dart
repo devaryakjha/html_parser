@@ -8,8 +8,10 @@ abstract interface class IHtmlWidget extends Widget {
   /// A placeholder widget.
   const factory IHtmlWidget.placeholder() = _Placeholder;
 
+  /// The margin of the widget.
   final EdgeInsets? margin;
 
+  /// The padding of the widget.
   final EdgeInsets? padding;
 }
 
