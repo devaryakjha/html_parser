@@ -1,9 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart' as url_launcher;
 import 'package:widgets_from_html/widgets_from_html.dart';
 import 'package:widgets_from_html_example/utils/blog_styles.dart';
-import 'package:url_launcher/url_launcher.dart' as url_launcher;
+import 'package:widgets_from_html_example/widgets/custom_image.dart';
 
 final class BlogConfig extends HtmlConfig {
   BlogConfig()
@@ -12,7 +13,9 @@ final class BlogConfig extends HtmlConfig {
         );
 
   static WidgetFactoryMap _createCustomFactories() {
-    return {};
+    return {
+      'img': (node, _) => CustomImageFactory.fromNode(node),
+    };
   }
 
   @override
