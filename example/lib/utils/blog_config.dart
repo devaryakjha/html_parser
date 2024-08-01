@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart' as url_launcher;
 import 'package:widgets_from_html/widgets_from_html.dart';
 import 'package:widgets_from_html_example/utils/blog_styles.dart';
 import 'package:widgets_from_html_example/widgets/custom_image.dart';
+import 'package:widgets_from_html_example/widgets/iframe.dart';
 
 final class BlogConfig extends HtmlConfig {
   BlogConfig()
@@ -15,6 +16,7 @@ final class BlogConfig extends HtmlConfig {
   static WidgetFactoryMap _createCustomFactories() {
     return {
       'img': (node, _) => CustomImageFactory.fromNode(node),
+      'iframe': (node, _) => IframeHtmlWidgetFactory.fromNode(node),
     };
   }
 
