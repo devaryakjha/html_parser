@@ -2,7 +2,6 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html_to_flutter/html_to_flutter.dart';
-import 'package:html_to_flutter/src/src.dart';
 
 final class ContainerHtmlWidgetFactory
     implements IHtmlWidgetFactory<ContainerHtmlWidget> {
