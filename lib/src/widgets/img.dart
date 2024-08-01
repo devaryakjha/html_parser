@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:html_to_flutter/html_to_flutter.dart';
 
+/// A widget that is used to render an image.
+///
+/// represents `<img>` tag.
 final class ImageHtmlWidget extends StatelessWidget implements IHtmlWidget {
+  /// Creates a new instance of [ImageHtmlWidget].
   const ImageHtmlWidget({
     super.key,
     this.style,
@@ -14,10 +18,20 @@ final class ImageHtmlWidget extends StatelessWidget implements IHtmlWidget {
 
   /// The [Styles] to use for the widget.
   final Styles? style;
+
+  /// The source of the image.
   final String? src;
+
+  /// The alternative text for the image.
   final String? alt;
+
+  /// The title of the image.
   final String? title;
+
+  /// The width of the image.
   final double? width;
+
+  /// The height of the image.
   final double? height;
 
   Widget _wrapInAspectRation(Widget child) {
@@ -82,6 +96,7 @@ final class ImageHtmlWidget extends StatelessWidget implements IHtmlWidget {
     );
   }
 
+  /// The aspect ratio of the image.
   double get aspectRatio =>
       width != null && height != null ? width! / height! : 16 / 9;
 
