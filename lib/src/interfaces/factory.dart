@@ -24,8 +24,10 @@ abstract interface class IHtmlWidgetFactory<Widget extends IHtmlWidget>
 ///
 class UnsupportedHtmlWidgetFactory<T extends IHtmlWidget>
     implements IHtmlWidgetFactory<T> {
+  /// Creates a new instance of [UnsupportedHtmlWidgetFactory].
   const UnsupportedHtmlWidgetFactory(this.node);
 
+  /// The node that is not supported.
   final dom.Node node;
 
   @override

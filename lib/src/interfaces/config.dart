@@ -120,6 +120,7 @@ class HtmlConfig extends Equatable {
     return config;
   }
 
+  /// Gets the factory for the given [tag].
   WidgetFactoryMapValue? getFactory(String? tag) {
     if (tag == null) return null;
     return _factories[tag];
