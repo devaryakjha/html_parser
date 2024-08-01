@@ -25,6 +25,7 @@ final class CustomImageFactory implements IHtmlWidgetFactory<ImageHtmlWidget> {
             : null;
 
         return FullScreenWidget(
+          title: alt ?? title,
           heroTag: src ?? UniqueKey(),
           child: ImageHtmlWidget(
             style: styles,
