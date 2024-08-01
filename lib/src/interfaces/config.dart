@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:html_to_flutter/html_to_flutter.dart';
 
 @immutable
-final class HtmlConfig extends Equatable {
+class HtmlConfig extends Equatable {
   /// A list of factories for creating instances of [IHtmlWidget].
   ///
   /// The key is the tag name of the element, and the value is the factory for
@@ -33,9 +33,7 @@ final class HtmlConfig extends Equatable {
     this.onLinkTap,
     this.defaultTextStyle = const TextStyle(
       fontSize: 16,
-      height: 1.4,
-      color: Color(0xFF444444),
-      fontWeight: FontWeight.normal,
+      color: Colors.black,
     ),
   }) : _factories = _createDefaultFactories(customFactories);
 

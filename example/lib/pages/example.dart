@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:html_to_flutter/html_to_flutter.dart';
-import 'package:html_to_flutter_example/utils/blog_styles.dart';
-import 'package:url_launcher/url_launcher.dart' as url_launcher;
+import 'package:html_to_flutter_example/utils/blog_config.dart';
 
 class ExamplePage extends StatefulWidget {
   const ExamplePage({
@@ -32,24 +29,7 @@ class _ExamplePageState extends State<ExamplePage> {
       ),
       body: Html(
         widget.input,
-        config: HtmlConfig(
-          styles: const BlogStyles(),
-          onLinkTap: (href) {
-            if (href != null) {
-              final uri = Uri.tryParse(href);
-              if (uri != null) {
-                url_launcher.canLaunchUrl(uri).then((canLaunch) {
-                  if (canLaunch) {
-                    url_launcher.launchUrl(uri);
-                  } else {
-                    log('Could not launch $href');
-                  }
-                });
-              }
-            }
-            log('Tapped on anchor: $href');
-          },
-        ),
+        config: BlogConfig(),
       ),
     );
   }
