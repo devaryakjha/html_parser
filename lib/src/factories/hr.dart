@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:html/dom.dart' as dom;
 import 'package:html_to_flutter/html_to_flutter.dart';
 
+/// A widget that is used to render a horizontal rule.
 typedef HrHtmlWidget = Divider Function(BuildContext);
 
+/// A factory for creating a horizontal rule widget.
+///
+/// represents `<hr>` tag.
 final class HrHtmlWidgetFactory implements IHtmlWidgetFactory {
+  /// Creates a new instance of [HrHtmlWidgetFactory].
   const HrHtmlWidgetFactory(this._builder);
 
+  /// Creates a new instance of [HrHtmlWidgetFactory] from a [dom.Node].
   factory HrHtmlWidgetFactory.fromNode() {
     return HrHtmlWidgetFactory(
       (context) => const Divider(
