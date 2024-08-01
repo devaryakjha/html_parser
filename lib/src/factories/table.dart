@@ -20,7 +20,7 @@ final class TableHtmlWidgetFactory
         ? _createColumnsFromThead(thead, unsupportedParser)
         : _createColumnsFromTbody(tbody!, unsupportedParser);
     final rows = _createRowsFromTbody(tbody!, unsupportedParser,
-        omitFirstRow: thead == null);
+        omitFirstRow: thead == null,);
 
     final maxColumns = columns.length;
 
@@ -86,7 +86,7 @@ final class TableHtmlWidgetFactory
             label: Expanded(
               child: Builder(
                   builder: unsupportedParser(e)?.builder ??
-                      (ctx) => const SizedBox.shrink()),
+                      (ctx) => const SizedBox.shrink(),),
             ),
             tooltip: e.attributes['title'] ?? e.text,
           ),
@@ -131,14 +131,14 @@ final class TableHtmlWidgetFactory
       trs.removeAt(0);
     }
 
-    final List<DataRow> rows = [];
+    final rows = <DataRow>[];
 
-    final Map<int, Map<int, DataCell>> fillRowWith = {};
+    final fillRowWith = <int, Map<int, DataCell>>{};
 
     for (final trIndexed in trs.indexed) {
       final (index, tr) = trIndexed;
       final tds = tr.nodes.whereType<dom.Element>().toList();
-      final List<DataCell> cells = fillRowWith[index]?.values.toList() ?? [];
+      final cells = fillRowWith[index]?.values.toList() ?? [];
       for (final tdIndexed in tds.indexed) {
         final (jindex, td) = tdIndexed;
         final rowSpan = int.tryParse(td.attributes['rowspan'] ?? '1') ?? 1;
@@ -164,8 +164,8 @@ final class TableHtmlWidgetFactory
               index + i: {
                 ...fillRowWith[index + i] ?? {},
                 jindex: cells.last,
-              }
-            }
+              },
+            },
           });
         }
       }

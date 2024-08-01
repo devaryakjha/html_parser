@@ -3,8 +3,7 @@ import 'package:html_to_flutter/html_to_flutter.dart';
 
 final class ListHtmlWidget extends StatelessWidget implements IHtmlWidget {
   const ListHtmlWidget({
-    super.key,
-    required this.children,
+    required this.children, super.key,
     this.styles,
   });
 

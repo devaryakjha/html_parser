@@ -3,11 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html_to_flutter/html_to_flutter.dart';
 
+/// A factory for creating a [ContainerHtmlWidget].
 final class ContainerHtmlWidgetFactory
     implements IHtmlWidgetFactory<ContainerHtmlWidget> {
+  /// Creates a new instance of [ContainerHtmlWidgetFactory].
   const ContainerHtmlWidgetFactory(this._builder);
 
-  static ContainerType _createContainerType(final dom.Node node) {
+  /// Creates a new instance of [ContainerHtmlWidgetFactory] from a [dom.Node].
+  factory ContainerHtmlWidgetFactory.fromNode(
+    dom.Node node,
+    UnsupportedParser unsupportedParser,
+  ) {
+    final children = node.nodes.map(unsupportedParser).whereNotNull().toList();
+    return ContainerHtmlWidgetFactory(
+      (context) => ContainerHtmlWidget(
+        children: children.map((e) => e.builder).toList(),
+        type: _createContainerType(node),
+      ),
+    );
+  }
+
+  static ContainerType _createContainerType(dom.Node node) {
     final classses = node.attributes['class'];
     final styles = node.attributes['style'];
 
@@ -20,17 +36,6 @@ final class ContainerHtmlWidgetFactory
             false
         ? ContainerType.row
         : ContainerType.column;
-  }
-
-  factory ContainerHtmlWidgetFactory.fromNode(
-    final dom.Node node,
-    final UnsupportedParser unsupportedParser,
-  ) {
-    final children = node.nodes.map(unsupportedParser).whereNotNull().toList();
-    return ContainerHtmlWidgetFactory((context) => ContainerHtmlWidget(
-          children: children.map((e) => e.builder).toList(),
-          type: _createContainerType(node),
-        ));
   }
 
   /// The [WidgetBuilder] to use for the widget.

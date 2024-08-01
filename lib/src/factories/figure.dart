@@ -7,11 +7,9 @@ final class FigureHtmlWidgetFactory
     implements IHtmlWidgetFactory<FigureHtmlWidget> {
   const FigureHtmlWidgetFactory(this._builder);
 
-  final WidgetBuilder _builder;
-
   factory FigureHtmlWidgetFactory.fromNode(
-    final dom.Node node,
-    final UnsupportedParser unsupportedParser,
+    dom.Node node,
+    UnsupportedParser unsupportedParser,
   ) {
     final children = node.nodes.map(unsupportedParser).whereNotNull().toList();
     return FigureHtmlWidgetFactory(
@@ -28,6 +26,8 @@ final class FigureHtmlWidgetFactory
       },
     );
   }
+
+  final WidgetBuilder _builder;
 
   @override
   WidgetBuilder get builder => _builder;

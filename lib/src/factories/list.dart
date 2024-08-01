@@ -6,10 +6,7 @@ final class ListHtmlWidgetFactory
     implements IHtmlWidgetFactory<ListHtmlWidget> {
   const ListHtmlWidgetFactory(this._builder);
 
-  factory ListHtmlWidgetFactory.fromNode(
-    final dom.Node node,
-    final UnsupportedParser unsupportedParser,
-  ) {
+  factory ListHtmlWidgetFactory.fromNode(dom.Node node) {
     if (node is! dom.Element) {
       throw UnsupportedError(
         'ListHtmlWidgetFactory only supports dom.Element nodes',

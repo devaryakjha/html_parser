@@ -9,14 +9,9 @@ final class TextHtmlWidgetFactory
     implements IHtmlWidgetFactory<TextHtmlWidget> {
   const TextHtmlWidgetFactory(this._builder);
 
-  final TextHtmlWidget Function(BuildContext) _builder;
-
-  @override
-  WidgetBuilder get builder => _builder;
-
   factory TextHtmlWidgetFactory.fromNode(
-    final dom.Node node,
-    final UnsupportedParser unsupportedParser,
+    dom.Node node,
+    UnsupportedParser unsupportedParser,
   ) {
     return TextHtmlWidgetFactory(
       (context) {
@@ -32,6 +27,11 @@ final class TextHtmlWidgetFactory
       },
     );
   }
+
+  final TextHtmlWidget Function(BuildContext) _builder;
+
+  @override
+  WidgetBuilder get builder => _builder;
 
   static TextSpan _createAnchor(
     final dom.Element node,
@@ -92,13 +92,15 @@ final class TextHtmlWidgetFactory
 
     if (node.isUnspported) {
       return WidgetSpan(
-        child: Builder(builder: (context) {
-          final child = unsupportedParser(node)?.builder(context);
-          return _wrapInGestureDetectorIfNeed(
-            child ?? Text('Unsupported tag: ${node.localName}'),
-            recognizer,
-          );
-        }),
+        child: Builder(
+          builder: (context) {
+            final child = unsupportedParser(node)?.builder(context);
+            return _wrapInGestureDetectorIfNeed(
+              child ?? Text('Unsupported tag: ${node.localName}'),
+              recognizer,
+            );
+          },
+        ),
         style: style?.textStyle,
       );
     }

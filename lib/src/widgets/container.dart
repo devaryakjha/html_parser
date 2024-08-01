@@ -1,15 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:html_to_flutter/html_to_flutter.dart';
 
+/// The type of container to render.
 enum ContainerType {
+  /// A column container.
   column,
+
+  /// A row container.
   row;
 
+  /// Returns `true` if this is a column container.
   bool get isColumn => this == ContainerType.column;
+
+  /// Returns `true` if this is a row container.
   bool get isRow => this == ContainerType.row;
 }
 
+/// A widget that is used to represent `div` or `container` elements.
+///
+/// This widget is used to render a container with children.
+///
+/// The children are rendered in a column or row based on the [type].
 final class ContainerHtmlWidget extends StatelessWidget implements IHtmlWidget {
+  /// Creates a new instance of [ContainerHtmlWidget].
   const ContainerHtmlWidget({
     super.key,
     this.style,
@@ -52,9 +65,13 @@ final class ContainerHtmlWidget extends StatelessWidget implements IHtmlWidget {
   Widget build(BuildContext context) {
     return switch (type) {
       ContainerType.column => _buildColumn(
-          context, children.map((builder) => builder(context)).toList()),
+          context,
+          children.map((builder) => builder(context)).toList(),
+        ),
       ContainerType.row => _buildRow(
-          context, children.map((builder) => builder(context)).toList()),
+          context,
+          children.map((builder) => builder(context)).toList(),
+        ),
     };
   }
 

@@ -3,16 +3,15 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart' as webview;
 import 'package:html_to_flutter/html_to_flutter.dart';
 
 final class IframeHtmlWidget extends StatelessWidget implements IHtmlWidget {
-  final String src;
-  final double? width;
-  final double? height;
 
   const IframeHtmlWidget({
-    super.key,
-    required this.src,
+    required this.src, super.key,
     this.width,
     this.height,
   });
+  final String src;
+  final double? width;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {

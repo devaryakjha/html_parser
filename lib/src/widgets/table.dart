@@ -3,9 +3,7 @@ import 'package:html_to_flutter/html_to_flutter.dart';
 
 final class TableHtmlWidget extends StatelessWidget implements IHtmlWidget {
   const TableHtmlWidget({
-    super.key,
-    required this.columns,
-    required this.rows,
+    required this.columns, required this.rows, super.key,
   });
 
   @override

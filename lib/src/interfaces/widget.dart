@@ -5,12 +5,12 @@ abstract interface class IHtmlWidget extends Widget {
   /// Creates a new instance of [IHtmlWidget].
   const IHtmlWidget({super.key, this.margin, this.padding});
 
+  /// A placeholder widget.
+  const factory IHtmlWidget.placeholder() = _Placeholder;
+
   final EdgeInsets? margin;
 
   final EdgeInsets? padding;
-
-  /// A placeholder widget.
-  const factory IHtmlWidget.placeholder() = _Placeholder;
 }
 
 final class _Placeholder extends StatelessWidget implements IHtmlWidget {

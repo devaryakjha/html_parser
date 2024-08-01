@@ -2,9 +2,21 @@ import 'package:flutter/foundation.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 import 'package:html_to_flutter/html_to_flutter.dart'
-    show IHtmlWidget, IHtmlWidgetFactory, IHtmlParser, HtmlConfig;
+    show HtmlConfig, IHtmlParser, IHtmlWidget, IHtmlWidgetFactory;
 
+/// {@template html_parser}
+/// A parser for HTML content.
+///
+/// `config` is the configuration to use for parsing the HTML content.
+///
+/// see also:
+/// [HtmlConfig].
+///
+///{@endtemplate}
 final class HtmlParser implements IHtmlParser {
+  /// Creates a new instance of [HtmlParser].
+  ///
+  /// {@macro html_parser}
   const HtmlParser(this._config);
 
   final HtmlConfig _config;
@@ -27,12 +39,14 @@ final class HtmlParser implements IHtmlParser {
 
   /// Creates a factory for the given [node].
   IHtmlWidgetFactory<IHtmlWidget>? _createFactory(
-    final dom.Node node,
-    final HtmlConfig config,
+    dom.Node node,
+    HtmlConfig config,
   ) {
     if (node is dom.Text) {
       return config.getFactory('text')!(
-          node, (node) => _createFactory(node, config));
+        node,
+        (node) => _createFactory(node, config),
+      );
     }
 
     if (node is dom.Element) {

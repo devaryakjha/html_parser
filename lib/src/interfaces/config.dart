@@ -2,8 +2,62 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:html_to_flutter/html_to_flutter.dart';
 
-@immutable
+/// {@template html_config}
+/// A configuration for the HTML widget.
+///
+/// `customFactories` is a map of [WidgetFactoryMapValue] to
+/// use for creating widgets.
+///
+/// `styles` is the styles to use for the widgets.
+///
+/// `onLinkTap` is a callback that is called when a link is tapped.
+///
+/// `defaultTextStyle` is the default text style to use.
+///
+/// The `customFactories` map is a map of tag names to factories.
+/// The key is the tag name of the element, and the value is the factory for
+/// creating instances of [IHtmlWidget].
+///
+/// e.g.
+/// ```dart
+/// final config = HtmlConfig(
+///  customFactories: {
+///     'custom': (node, _) => CustomHtmlWidgetFactory.fromNode(node),
+///   },
+///   styles: MyHtmlStyles(),
+///   onLinkTap: (href) {
+///       if (href != null) {
+///         final uri = Uri.tryParse(href);
+///         if (uri != null) {
+///           url_launcher.canLaunchUrl(uri).then((canLaunch) {
+///           if (canLaunch) {
+///             url_launcher.launchUrl(uri);
+///           } else {
+///             log('Could not launch $href');
+///           }
+///         });
+///       }
+///     }
+///     log('Tapped on anchor: $href');
+///   }
+/// );
+/// ```
+///
+/// {@endtemplate}
 class HtmlConfig extends Equatable {
+  /// Creates a new instance of [HtmlConfig].
+  ///
+  /// {@macro html_config}
+  HtmlConfig({
+    WidgetFactoryMap customFactories = const {},
+    this.styles = const IHtmlStyles.emptyStyles(),
+    this.onLinkTap,
+    this.defaultTextStyle = const TextStyle(
+      fontSize: 16,
+      color: Colors.black,
+    ),
+  }) : _factories = _createDefaultFactories(customFactories);
+
   /// A list of factories for creating instances of [IHtmlWidget].
   ///
   /// The key is the tag name of the element, and the value is the factory for
@@ -26,37 +80,29 @@ class HtmlConfig extends Equatable {
   /// height of 1.4 will be used.
   final TextStyle defaultTextStyle;
 
-  /// Creates a new instance of [HtmlConfig].
-  HtmlConfig({
-    WidgetFactoryMap customFactories = const {},
-    this.styles = const IHtmlStyles.emptyStyles(),
-    this.onLinkTap,
-    this.defaultTextStyle = const TextStyle(
-      fontSize: 16,
-      color: Colors.black,
-    ),
-  }) : _factories = _createDefaultFactories(customFactories);
-
   /// generates the default factories.
   ///
   /// and merges them with the custom factories.
   static WidgetFactoryMap _createDefaultFactories(WidgetFactoryMap? custom) {
     return {
-      ...Map.fromEntries(TextHtmlWidgetFactory.tags.map((tag) {
-        return MapEntry(tag, TextHtmlWidgetFactory.fromNode);
-      })),
-      'hr': HrHtmlWidgetFactory.fromNode,
+      ...Map.fromEntries(
+        TextHtmlWidgetFactory.tags.map((tag) {
+          return MapEntry(tag, TextHtmlWidgetFactory.fromNode);
+        }),
+      ),
+      'hr': (_, __) => HrHtmlWidgetFactory.fromNode(),
       'figure': FigureHtmlWidgetFactory.fromNode,
-      'img': ImageHtmlWidgetFactory.fromNode,
+      'img': (node, _) => ImageHtmlWidgetFactory.fromNode(node),
       'div': ContainerHtmlWidgetFactory.fromNode,
       'table': TableHtmlWidgetFactory.fromNode,
-      'ol': ListHtmlWidgetFactory.fromNode,
-      'ul': ListHtmlWidgetFactory.fromNode,
-      'iframe': IframeHtmlWidgetFactory.fromNode,
+      'ol': (node, _) => ListHtmlWidgetFactory.fromNode(node),
+      'ul': (node, _) => ListHtmlWidgetFactory.fromNode(node),
+      'iframe': (node, _) => IframeHtmlWidgetFactory.fromNode(node),
       ...?custom,
     };
   }
 
+  /// Gets the [HtmlConfig] from the given [context].
   static HtmlConfig? maybeOf(BuildContext context) {
     return context
         .dependOnInheritedWidgetOfExactType<HtmlConfigProvider>()
@@ -64,6 +110,8 @@ class HtmlConfig extends Equatable {
   }
 
   /// Gets the [HtmlConfig] from the given [context].
+  ///
+  /// Throws an exception if no [HtmlConfig] is found.
   static HtmlConfig of(BuildContext context) {
     final config = maybeOf(context);
     if (config == null) {
@@ -86,15 +134,15 @@ class HtmlConfig extends Equatable {
 
 /// A provider for the [HtmlConfig].
 final class HtmlConfigProvider extends InheritedWidget {
-  /// The [HtmlConfig] to provide.
-  final HtmlConfig config;
-
   /// Creates a new instance of [HtmlConfigProvider].
   const HtmlConfigProvider({
     required this.config,
     required super.child,
     super.key,
   });
+
+  /// The [HtmlConfig] to provide.
+  final HtmlConfig config;
 
   @override
   bool updateShouldNotify(HtmlConfigProvider oldWidget) {

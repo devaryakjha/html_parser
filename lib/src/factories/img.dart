@@ -6,12 +6,7 @@ final class ImageHtmlWidgetFactory
     implements IHtmlWidgetFactory<ImageHtmlWidget> {
   const ImageHtmlWidgetFactory(this._builder);
 
-  final WidgetBuilder _builder;
-
-  factory ImageHtmlWidgetFactory.fromNode(
-    final dom.Node node,
-    final UnsupportedParser unsupportedParser,
-  ) {
+  factory ImageHtmlWidgetFactory.fromNode(dom.Node node) {
     final src = node.attributes['src'];
     final alt = node.attributes['alt'];
     final title = node.attributes['title'];
@@ -36,6 +31,8 @@ final class ImageHtmlWidgetFactory
       },
     );
   }
+
+  final WidgetBuilder _builder;
 
   @override
   WidgetBuilder get builder => _builder;

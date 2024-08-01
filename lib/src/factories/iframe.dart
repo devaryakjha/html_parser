@@ -8,7 +8,6 @@ final class IframeHtmlWidgetFactory
 
   factory IframeHtmlWidgetFactory.fromNode(
     final dom.Node node,
-    final UnsupportedParser unsupported,
   ) {
     final src = node.attributes['src'] ?? '';
     final width = double.tryParse(node.attributes['width'] ?? '');

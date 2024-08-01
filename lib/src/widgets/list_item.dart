@@ -3,18 +3,15 @@ import 'package:html/dom.dart' as dom;
 import 'package:html_to_flutter/html_to_flutter.dart';
 
 final class ListItemHtmlWidget extends StatelessWidget {
+
+  const ListItemHtmlWidget({
+    required this.title, required this.index, required this.source, super.key,
+    this.isOrdered = false,
+  });
   final int index;
   final String title;
   final bool isOrdered;
   final dom.Node source;
-
-  const ListItemHtmlWidget({
-    super.key,
-    required this.title,
-    required this.index,
-    this.isOrdered = false,
-    required this.source,
-  });
 
   @override
   Widget build(BuildContext context) {

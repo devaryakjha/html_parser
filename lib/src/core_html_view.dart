@@ -9,7 +9,7 @@ class Html extends StatefulWidget {
     this.input, {
     super.key,
     HtmlConfig? config,
-    final HtmlParser? parser,
+    HtmlParser? parser,
   })  : config = config ?? HtmlConfig(),
         parser = parser ?? HtmlParser(config ?? HtmlConfig());
 
