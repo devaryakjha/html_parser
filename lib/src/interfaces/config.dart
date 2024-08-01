@@ -23,6 +23,7 @@ import 'package:widgets_from_html/widgets_from_html.dart';
 /// final config = HtmlConfig(
 ///  customFactories: {
 ///     'custom': (node, _) => CustomHtmlWidgetFactory.fromNode(node),
+///     'iframe': (node, _) => IframeHtmlWidgetFactory.fromNode(node),
 ///   },
 ///   styles: MyHtmlStyles(),
 ///   onLinkTap: (href) {
