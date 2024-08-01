@@ -146,7 +146,10 @@ final class TableHtmlWidgetFactory
           DataCell(
             Builder(
               builder: (ctx) => Padding(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8,
+                  vertical: 16,
+                ),
                 child: SizedBox(
                   width: 300,
                   child: unsupportedParser(td)?.builder(ctx),
