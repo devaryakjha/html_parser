@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:html_to_flutter/html_to_flutter.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
+import 'blog_styles.dart';
+
 class ExamplePage extends StatefulWidget {
   const ExamplePage({
     super.key,
