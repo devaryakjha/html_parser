@@ -10,10 +10,10 @@ abstract interface class IHtmlWidgetFactory<Widget extends IHtmlWidget>
   /// Creates a new instance of [IHtmlWidgetFactory].
   const IHtmlWidgetFactory(this.builder);
 
-  const factory IHtmlWidgetFactory.unsupported(final dom.Node node) =
+  const factory IHtmlWidgetFactory.unsupported(dom.Node node) =
       UnsupportedHtmlWidgetFactory;
 
-  /// Creates a new instance of [IHtmlWidget] from the given [node].
+  /// Creates a new instance of [IHtmlWidget] from the given [dom.Node].
   final WidgetBuilder builder;
 
   @override

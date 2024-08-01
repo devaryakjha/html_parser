@@ -34,9 +34,9 @@ final class TextHtmlWidgetFactory
   WidgetBuilder get builder => _builder;
 
   static TextSpan _createAnchor(
-    final dom.Element node,
-    final BuildContext context,
-    final UnsupportedParser unsupportedParser,
+    dom.Element node,
+    BuildContext context,
+    UnsupportedParser unsupportedParser,
   ) {
     final config = HtmlConfig.of(context);
     final recogniser = config.onLinkTap != null
@@ -61,8 +61,8 @@ final class TextHtmlWidgetFactory
   }
 
   static Widget _wrapInGestureDetectorIfNeed(
-    final Widget child,
-    final GestureRecognizer? recognizer,
+    Widget child,
+    GestureRecognizer? recognizer,
   ) {
     if (recognizer is TapGestureRecognizer) {
       return GestureDetector(
@@ -74,10 +74,10 @@ final class TextHtmlWidgetFactory
   }
 
   static InlineSpan? _createSpan(
-    final dom.Node node,
-    final BuildContext context,
-    final UnsupportedParser unsupportedParser, [
-    final GestureRecognizer? recognizer,
+    dom.Node node,
+    BuildContext context,
+    UnsupportedParser unsupportedParser, [
+    GestureRecognizer? recognizer,
   ]) {
     final config = HtmlConfig.of(context);
 
