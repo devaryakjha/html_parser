@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html_to_flutter/html_to_flutter.dart';
 
+/// A widget that is used to render an [IframeHtmlWidget].
+///
+/// represents `<iframe>` tag.
 final class IframeHtmlWidgetFactory
     implements IHtmlWidgetFactory<IframeHtmlWidget> {
+  /// Creates a new instance of [IframeHtmlWidgetFactory].
   const IframeHtmlWidgetFactory(this._builder);
 
-  factory IframeHtmlWidgetFactory.fromNode(
-    final dom.Node node,
-  ) {
+  /// Creates a new instance of [IframeHtmlWidgetFactory] from a [dom.Node].
+  factory IframeHtmlWidgetFactory.fromNode(dom.Node node) {
     final src = node.attributes['src'] ?? '';
     final width = double.tryParse(node.attributes['width'] ?? '');
     final height = double.tryParse(node.attributes['height'] ?? '');

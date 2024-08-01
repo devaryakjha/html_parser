@@ -2,15 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart' as webview;
 import 'package:html_to_flutter/html_to_flutter.dart';
 
+/// A widget that is used to render an `<iframe>` tag.
+///
 final class IframeHtmlWidget extends StatelessWidget implements IHtmlWidget {
-
+  /// Creates a new instance of [IframeHtmlWidget].
   const IframeHtmlWidget({
-    required this.src, super.key,
+    required this.src,
+    super.key,
     this.width,
     this.height,
   });
+
+  /// The source of the iframe.
   final String src;
+
+  /// The width of the iframe.
   final double? width;
+
+  /// The height of the iframe.
   final double? height;
 
   @override
