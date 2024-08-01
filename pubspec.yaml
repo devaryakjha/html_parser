@@ -10,7 +10,6 @@ environment:
 
 dependencies:
   collection: ^1.18.0
-  csslib: ^1.0.0
   equatable: ^2.0.5
   flutter:
     sdk: flutter
