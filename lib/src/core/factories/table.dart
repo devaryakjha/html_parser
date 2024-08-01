@@ -131,9 +131,9 @@ final class TableHtmlWidgetFactory
       trs.removeAt(0);
     }
 
-    List<DataRow> rows = [];
+    final List<DataRow> rows = [];
 
-    Map<int, Map<int, DataCell>> fillRowWith = {};
+    final Map<int, Map<int, DataCell>> fillRowWith = {};
 
     for (final trIndexed in trs.indexed) {
       final (index, tr) = trIndexed;
