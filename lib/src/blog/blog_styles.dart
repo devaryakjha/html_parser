@@ -79,7 +79,6 @@ final class BlogStyles implements IHtmlStyles {
         ),
       'td' => Styles(
           textStyle: defaultTextStyle,
-          maxLines: 5,
         ),
       _ => Styles(
           textStyle: defaultTextStyle,

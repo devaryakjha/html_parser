@@ -148,7 +148,7 @@ final class TableHtmlWidgetFactory
               builder: (ctx) => Padding(
                 padding: const EdgeInsets.all(8),
                 child: SizedBox(
-                  width: 200,
+                  width: 300,
                   child: unsupportedParser(td)?.builder(ctx),
                 ),
               ),

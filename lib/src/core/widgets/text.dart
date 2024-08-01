@@ -10,7 +10,7 @@ final class TextHtmlWidget extends Text implements IHtmlWidget {
     super.textDirection,
     super.locale,
     super.softWrap,
-    super.overflow = TextOverflow.ellipsis,
+    super.overflow,
     super.textScaler,
     this.maxLinesAllowed,
     super.semanticsLabel,
