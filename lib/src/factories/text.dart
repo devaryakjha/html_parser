@@ -140,6 +140,7 @@ final class TextHtmlWidgetFactory
   @override
   bool? get stringify => true;
 
+  /// The list of supported tags.
   static const List<String> tags = [
     'a',
     'text',
