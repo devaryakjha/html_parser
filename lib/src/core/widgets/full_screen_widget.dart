@@ -54,7 +54,7 @@ class FullScreenWidget extends StatelessWidget {
         ),
       );
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 

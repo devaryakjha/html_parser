@@ -54,6 +54,7 @@ final class HtmlConfig extends Equatable {
       'table': TableHtmlWidgetFactory.fromNode,
       'ol': ListHtmlWidgetFactory.fromNode,
       'ul': ListHtmlWidgetFactory.fromNode,
+      'iframe': IframeHtmlWidgetFactory.fromNode,
       ...?custom,
     };
   }
