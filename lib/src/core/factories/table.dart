@@ -133,12 +133,12 @@ final class TableHtmlWidgetFactory
 
     List<DataRow> rows = [];
 
-    Map<int, Map<int, DataCell>> fillWith = {};
+    Map<int, Map<int, DataCell>> fillRowWith = {};
 
     for (final trIndexed in trs.indexed) {
       final (index, tr) = trIndexed;
       final tds = tr.nodes.whereType<dom.Element>().toList();
-      final List<DataCell> cells = fillWith[index]?.values.toList() ?? [];
+      final List<DataCell> cells = fillRowWith[index]?.values.toList() ?? [];
       for (final tdIndexed in tds.indexed) {
         final (jindex, td) = tdIndexed;
         final rowSpan = int.tryParse(td.attributes['rowspan'] ?? '1') ?? 1;
@@ -156,10 +156,10 @@ final class TableHtmlWidgetFactory
           ),
         );
         if (rowSpan > 1) {
-          fillWith.addAll({
+          fillRowWith.addAll({
             for (int i = 1; i < rowSpan; i++) ...{
               index + i: {
-                ...fillWith[index + i] ?? {},
+                ...fillRowWith[index + i] ?? {},
                 jindex: cells.last,
               }
             }
