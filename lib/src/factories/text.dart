@@ -5,10 +5,19 @@ import 'package:flutter/widgets.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html_to_flutter/html_to_flutter.dart';
 
+/// A factory for creating instances of [TextHtmlWidgetFactory].
+///
+/// represents `<text>`, `<p>`, `<h1>`, `<h2>`, `<h3>`, `<h4>`, `<h5>`, `<h6>`,
+/// `<span>`, `<sup>`, `<sub>`, `<b>`, `<strong>`, `<i>`, `<em>`, `<br>`, `<a>`,
+/// `<table>`, `<tr>`, `<td>`, `<th>`, `<tbody>`, `<thead>` tags.
+///
+///
 final class TextHtmlWidgetFactory
     implements IHtmlWidgetFactory<TextHtmlWidget> {
+  /// Creates a new instance of [TextHtmlWidgetFactory].
   const TextHtmlWidgetFactory(this._builder);
 
+  /// Creates a new instance of [TextHtmlWidgetFactory] from a [dom.Node].
   factory TextHtmlWidgetFactory.fromNode(
     dom.Node node,
     UnsupportedParser unsupportedParser,
