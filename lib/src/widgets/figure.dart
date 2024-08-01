@@ -1,7 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:html_to_flutter/html_to_flutter.dart';
 
+/// A widget that is used to represent `figure` elements.
 final class FigureHtmlWidget extends StatelessWidget implements IHtmlWidget {
+  /// Creates a new instance of [FigureHtmlWidget].
   const FigureHtmlWidget({
     super.key,
     this.style,
@@ -10,6 +12,8 @@ final class FigureHtmlWidget extends StatelessWidget implements IHtmlWidget {
 
   /// The [Styles] to use for the widget.
   final Styles? style;
+
+  /// The children to render.
   final List<WidgetBuilder> children;
 
   @override

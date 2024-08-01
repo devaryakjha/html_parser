@@ -3,10 +3,14 @@ import 'package:flutter/widgets.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html_to_flutter/html_to_flutter.dart';
 
+///  A factory for creating instances of [FigureHtmlWidgetFactory].
+///
 final class FigureHtmlWidgetFactory
     implements IHtmlWidgetFactory<FigureHtmlWidget> {
+  /// Creates a new instance of [FigureHtmlWidgetFactory].
   const FigureHtmlWidgetFactory(this._builder);
 
+  /// Creates a new instance of [FigureHtmlWidgetFactory] from a [dom.Node].
   factory FigureHtmlWidgetFactory.fromNode(
     dom.Node node,
     UnsupportedParser unsupportedParser,
