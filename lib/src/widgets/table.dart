@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:html_to_flutter/html_to_flutter.dart';
 
+/// A widget that is used to render a table.
+///
+/// represents `<table>` tag.
 final class TableHtmlWidget extends StatelessWidget implements IHtmlWidget {
+  /// Creates a new instance of [TableHtmlWidget].
   const TableHtmlWidget({
-    required this.columns, required this.rows, super.key,
+    required this.columns,
+    required this.rows,
+    super.key,
   });
 
   @override

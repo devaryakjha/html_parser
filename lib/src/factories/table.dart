@@ -5,13 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html_to_flutter/html_to_flutter.dart';
 
+/// A factory that is used to render a [TableHtmlWidget].
+///
+/// represents `<table>` tag.
 final class TableHtmlWidgetFactory
     implements IHtmlWidgetFactory<TableHtmlWidget> {
+  /// Creates a new instance of [TableHtmlWidgetFactory].
   const TableHtmlWidgetFactory(this._builder);
 
+  /// Creates a new instance of [TableHtmlWidgetFactory] from a [dom.Node].
   factory TableHtmlWidgetFactory.fromNode(
-    final dom.Node node,
-    final UnsupportedParser unsupportedParser,
+    dom.Node node,
+    UnsupportedParser unsupportedParser,
   ) {
     final allNodes = node.nodes.whereType<dom.Element>().toList();
     final thead = allNodes.firstWhereOrNull((e) => e.localName == 'thead');
@@ -19,8 +24,11 @@ final class TableHtmlWidgetFactory
     final columns = thead != null
         ? _createColumnsFromThead(thead, unsupportedParser)
         : _createColumnsFromTbody(tbody!, unsupportedParser);
-    final rows = _createRowsFromTbody(tbody!, unsupportedParser,
-        omitFirstRow: thead == null,);
+    final rows = _createRowsFromTbody(
+      tbody!,
+      unsupportedParser,
+      omitFirstRow: thead == null,
+    );
 
     final maxColumns = columns.length;
 
@@ -73,8 +81,8 @@ final class TableHtmlWidgetFactory
 
   /// Creates the columns from the HTML nodes.
   static List<DataColumn> _createColumnsFromThead(
-    final dom.Element nodes,
-    final UnsupportedParser unsupportedParser,
+    dom.Element nodes,
+    UnsupportedParser unsupportedParser,
   ) {
     final tr = nodes.nodes
         .whereType<dom.Element>()
@@ -85,8 +93,9 @@ final class TableHtmlWidgetFactory
           (e) => DataColumn(
             label: Expanded(
               child: Builder(
-                  builder: unsupportedParser(e)?.builder ??
-                      (ctx) => const SizedBox.shrink(),),
+                builder: unsupportedParser(e)?.builder ??
+                    (ctx) => const SizedBox.shrink(),
+              ),
             ),
             tooltip: e.attributes['title'] ?? e.text,
           ),
@@ -95,8 +104,8 @@ final class TableHtmlWidgetFactory
   }
 
   static List<DataColumn> _createColumnsFromTbody(
-    final dom.Element nodes,
-    final UnsupportedParser unsupportedParser,
+    dom.Element nodes,
+    UnsupportedParser unsupportedParser,
   ) {
     final tr = nodes.nodes
         .whereType<dom.Element>()
@@ -121,8 +130,8 @@ final class TableHtmlWidgetFactory
   }
 
   static List<DataRow> _createRowsFromTbody(
-    final dom.Element nodes,
-    final UnsupportedParser unsupportedParser, {
+    dom.Element nodes,
+    UnsupportedParser unsupportedParser, {
     bool omitFirstRow = false,
   }) {
     final trs = nodes.nodes.whereType<dom.Element>().toList();
