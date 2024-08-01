@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:html/dom.dart' as dom;
 import 'package:html_to_flutter/html_to_flutter.dart';
 
