@@ -1,3 +1,5 @@
+export 'package:html/dom.dart' show Document, Element, Node, Text;
+
 export 'src/core_html_parser.dart';
 export 'src/core_html_view.dart';
 export 'src/factories/factories.dart';
