@@ -13,31 +13,11 @@ abstract interface class IHtmlWidgetFactory<Widget extends IHtmlWidget>
   /// Creates a new instance of [IHtmlWidget] from the given [node].
   final WidgetBuilder builder;
 
-  const factory IHtmlWidgetFactory.withBuilder(
-    final WidgetBuilder builder,
-  ) = _CustomHtmlWidgetFactory;
-
   const factory IHtmlWidgetFactory.unsupported(final dom.Node node) =
       UnsupportedHtmlWidgetFactory;
 
   @override
   List<Object?> get props => [builder];
-}
-
-class _CustomHtmlWidgetFactory<T extends IHtmlWidget>
-    implements IHtmlWidgetFactory<T> {
-  const _CustomHtmlWidgetFactory(this._builder);
-
-  final WidgetBuilder _builder;
-
-  @override
-  WidgetBuilder get builder => _builder;
-
-  @override
-  List<Object?> get props => [builder];
-
-  @override
-  bool? get stringify => true;
 }
 
 /// A factory for creating unsupported instances of [IHtmlWidget].
