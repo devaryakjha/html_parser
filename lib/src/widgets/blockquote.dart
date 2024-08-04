@@ -32,10 +32,11 @@ final class BlockquoteHtmlWidget extends StatelessWidget
     if (renderSliver) {
       return SliverPadding(
         padding: margin,
-        sliver: SliverList.list(
-          children: children.map((e) {
-            return e(context);
-          }).toList(),
+        sliver: SliverList.builder(
+          itemBuilder: (context, index) {
+            return children[index](context);
+          },
+          itemCount: children.length,
         ),
       );
     }
