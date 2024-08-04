@@ -10,6 +10,7 @@ final class ListItemHtmlWidget extends StatelessWidget {
     required this.title,
     required this.index,
     required this.source,
+    required this.unsupportedParser,
     super.key,
     this.isOrdered = false,
   });
@@ -26,31 +27,25 @@ final class ListItemHtmlWidget extends StatelessWidget {
   /// The source of the list item.
   final HtmlNode source;
 
+  /// The unsupported parser.
+  final UnsupportedParser unsupportedParser;
+
   @override
   Widget build(BuildContext context) {
     final config = HtmlConfig.of(context);
-    final style = config.styles.getStyle('li', config.defaultTextStyle);
-    final childrenSpans = source.nodes.whereType<HtmlElement>().map((element) {
-      return TextSpan(
-        text: element.text,
-        style: config.styles
-            .getStyle(element.localName, config.defaultTextStyle)
-            ?.textStyle,
-      );
-    }).toList();
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (isOrdered) Text('${index + 1}.  '),
         if (!isOrdered) const Text('• '),
         Expanded(
-          child: TextHtmlWidget(
-            TextSpan(
-              text: childrenSpans.isEmpty ? source.text : null,
-              children: childrenSpans,
-              style: style?.textStyle,
-            ),
-          ),
+          child: config
+              .getFactory('text')!(
+                HtmlElement.tag('text')..nodes.addAll(source.nodes),
+                unsupportedParser,
+              )
+              .builder(context),
         ),
       ],
     );

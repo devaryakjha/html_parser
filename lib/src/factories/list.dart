@@ -10,7 +10,8 @@ final class ListHtmlWidgetFactory
   const ListHtmlWidgetFactory(this._builder, this._sliverBuilder);
 
   /// Creates a new instance of [ListHtmlWidgetFactory] from a [HtmlNode].
-  factory ListHtmlWidgetFactory.fromNode(HtmlNode node) {
+  factory ListHtmlWidgetFactory.fromNode(
+      HtmlNode node, UnsupportedParser unsupportedParser) {
     if (node is! HtmlElement) {
       throw UnsupportedError(
         'ListHtmlWidgetFactory only supports HtmlElement nodes',
@@ -32,6 +33,7 @@ final class ListHtmlWidgetFactory
               index: index,
               isOrdered: isOrdered,
               source: node,
+              unsupportedParser: unsupportedParser,
             );
           }).toList(),
         );
@@ -48,6 +50,7 @@ final class ListHtmlWidgetFactory
               index: index,
               isOrdered: isOrdered,
               source: node,
+              unsupportedParser: unsupportedParser,
             );
           }).toList(),
         );
