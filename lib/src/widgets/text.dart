@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:widgets_from_html/src/widgets/alignment_provider.dart';
 import 'package:widgets_from_html/widgets_from_html.dart';
 
 /// A widget that is used to render text.
@@ -8,32 +7,23 @@ import 'package:widgets_from_html/widgets_from_html.dart';
 /// `<span>`, `<sup>`, `<sub>`, `<b>`, `<strong>`, `<i>`, `<em>`, `<br>`, `<a>`,
 /// `<table>`, `<tr>`, `<td>`, `<th>`, `<tbody>`, `<thead>` tags.
 ///
-final class TextHtmlWidget extends Text with IHtmlWidget {
+final class TextHtmlWidget extends StatelessWidget with IHtmlWidget {
   /// Creates a new instance of [TextHtmlWidget].
   const TextHtmlWidget(
-    super.textSpan, {
+    this.textSpan, {
     super.key,
-    super.strutStyle,
-    super.textAlign,
-    super.textDirection,
-    super.locale,
-    super.softWrap,
-    super.overflow,
-    super.textScaler,
-    this.maxLinesAllowed,
-    super.semanticsLabel,
-    super.textWidthBasis,
-    super.textHeightBehavior,
-    super.selectionColor,
     Styles? styles,
     this.textStyle,
-  })  : styles = styles ?? const Styles.empty(),
-        super.rich();
+    this.maxLinesAllowed,
+  }) : styles = styles ?? const Styles.empty();
+
+  /// Inlinespan to use for the text.
+  final InlineSpan textSpan;
 
   /// The [TextSpan] to use for the text.
   final int? maxLinesAllowed;
 
-  @override
+  /// The maximum number of lines to display.
   int? get maxLines => maxLinesAllowed ?? styles.maxLines;
 
   /// The [TextStyle] to use for the text.
@@ -43,12 +33,12 @@ final class TextHtmlWidget extends Text with IHtmlWidget {
   @override
   final Styles styles;
 
-  @override
+  /// Effective [TextStyle] to use for the text.
   TextStyle? get style => textStyle ?? styles.textStyle;
 
   @override
   Widget build(BuildContext context) {
-    if (textSpan!.toPlainText().trim().isEmpty) {
+    if (textSpan.toPlainText().trim().isEmpty) {
       return const SizedBox.shrink();
     }
 
@@ -56,10 +46,13 @@ final class TextHtmlWidget extends Text with IHtmlWidget {
       Builder(
         builder: (context) {
           final defaultAlignment = DefaultAlignment.of(context);
-          return DefaultTextStyle(
-            textAlign: defaultAlignment.textAlign,
-            style: const TextStyle(),
-            child: wrapInMargin(super.build(context)),
+          return wrapInMargin(
+            Text.rich(
+              textSpan,
+              textAlign: defaultAlignment.textAlign,
+              style: style,
+              maxLines: maxLines,
+            ),
           );
         },
       ),

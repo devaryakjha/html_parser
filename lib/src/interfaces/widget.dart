@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:widgets_from_html/src/widgets/alignment_provider.dart';
 import 'package:widgets_from_html/widgets_from_html.dart';
 
 /// An interface for creating instances of [Widget].
