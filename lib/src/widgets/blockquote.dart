@@ -52,10 +52,4 @@ final class BlockquoteHtmlWidget extends StatelessWidget with IHtmlWidget {
       ),
     );
   }
-
-  @override
-  EdgeInsets get margin => styles.margin ?? EdgeInsets.zero;
-
-  @override
-  EdgeInsets get padding => styles.padding ?? EdgeInsets.zero;
 }
