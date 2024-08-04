@@ -104,8 +104,8 @@ class HtmlConfig extends Equatable {
       'container': ContainerHtmlWidgetFactory.fromNode,
       'blockquote': BlockquoteHtmlWidgetFactory.fromNode,
       'table': TableHtmlWidgetFactory.fromNode,
-      'ol': (node, _) => ListHtmlWidgetFactory.fromNode(node),
-      'ul': (node, _) => ListHtmlWidgetFactory.fromNode(node),
+      'ol': ListHtmlWidgetFactory.fromNode,
+      'ul': ListHtmlWidgetFactory.fromNode,
       ...?custom,
     };
   }
