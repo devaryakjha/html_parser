@@ -4,7 +4,7 @@ import 'package:widgets_from_html/widgets_from_html.dart';
 /// A widget that is used to render a list item.
 ///
 /// represents `<li>` tag.
-final class ListItemHtmlWidget extends StatelessWidget {
+final class ListItemHtmlWidget extends StatefulWidget {
   /// Creates a new instance of [ListItemHtmlWidget].
   const ListItemHtmlWidget({
     required this.title,
@@ -31,22 +31,21 @@ final class ListItemHtmlWidget extends StatelessWidget {
   final UnsupportedParser unsupportedParser;
 
   @override
-  Widget build(BuildContext context) {
-    final config = HtmlConfig.of(context);
+  State<ListItemHtmlWidget> createState() => _ListItemHtmlWidgetState();
+}
 
+class _ListItemHtmlWidgetState extends State<ListItemHtmlWidget> {
+  @override
+  Widget build(BuildContext context) {
+    final child = HtmlConfig.of(context)
+        .getFactory('text')!(widget.source, widget.unsupportedParser)
+        .builder(context);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (isOrdered) Text('${index + 1}.  '),
-        if (!isOrdered) const Text('• '),
-        Expanded(
-          child: config
-              .getFactory('text')!(
-                HtmlElement.tag('text')..nodes.addAll(source.nodes),
-                unsupportedParser,
-              )
-              .builder(context),
-        ),
+        if (widget.isOrdered) Text('${widget.index + 1}.  '),
+        if (!widget.isOrdered) const Text('• '),
+        Expanded(child: child),
       ],
     );
   }

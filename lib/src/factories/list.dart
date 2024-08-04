@@ -11,7 +11,9 @@ final class ListHtmlWidgetFactory
 
   /// Creates a new instance of [ListHtmlWidgetFactory] from a [HtmlNode].
   factory ListHtmlWidgetFactory.fromNode(
-      HtmlNode node, UnsupportedParser unsupportedParser) {
+    HtmlNode node,
+    UnsupportedParser unsupportedParser,
+  ) {
     if (node is! HtmlElement) {
       throw UnsupportedError(
         'ListHtmlWidgetFactory only supports HtmlElement nodes',
@@ -26,15 +28,16 @@ final class ListHtmlWidgetFactory
         return ListHtmlWidget(
           styles:
               config.styles.getStyle(node.localName, config.defaultTextStyle),
-          children: node.nodes.whereType<HtmlElement>().indexed.map((element) {
-            final (index, node) = element;
-            return ListItemHtmlWidget(
-              title: node.text,
-              index: index,
-              isOrdered: isOrdered,
-              source: node,
-              unsupportedParser: unsupportedParser,
-            );
+          children: node.nodes.whereType<HtmlElement>().map((node) {
+            return (BuildContext context, int index) {
+              return ListItemHtmlWidget(
+                title: node.text,
+                index: index,
+                isOrdered: isOrdered,
+                source: node,
+                unsupportedParser: unsupportedParser,
+              );
+            };
           }).toList(),
         );
       },
@@ -43,15 +46,16 @@ final class ListHtmlWidgetFactory
         return ListHtmlWidget.sliver(
           styles:
               config.styles.getStyle(node.localName, config.defaultTextStyle),
-          children: node.nodes.whereType<HtmlElement>().indexed.map((element) {
-            final (index, node) = element;
-            return ListItemHtmlWidget(
-              title: node.text,
-              index: index,
-              isOrdered: isOrdered,
-              source: node,
-              unsupportedParser: unsupportedParser,
-            );
+          children: node.nodes.whereType<HtmlElement>().map((node) {
+            return (BuildContext context, int index) {
+              return ListItemHtmlWidget(
+                title: node.text,
+                index: index,
+                isOrdered: isOrdered,
+                source: node,
+                unsupportedParser: unsupportedParser,
+              );
+            };
           }).toList(),
         );
       },

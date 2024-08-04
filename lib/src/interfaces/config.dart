@@ -135,7 +135,7 @@ class HtmlConfig extends Equatable {
   }
 
   @override
-  List<Object?> get props => [_factories];
+  List<Object?> get props => [_factories, styles, onLinkTap, defaultTextStyle];
 
   @override
   bool? get stringify => true;

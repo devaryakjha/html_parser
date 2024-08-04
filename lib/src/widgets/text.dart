@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:widgets_from_html/widgets_from_html.dart';
 
@@ -11,20 +12,21 @@ final class TextHtmlWidget extends StatelessWidget with IHtmlWidget {
   /// Creates a new instance of [TextHtmlWidget].
   const TextHtmlWidget(
     this.textSpan, {
+    required this.source,
     super.key,
     Styles? styles,
     this.textStyle,
     this.maxLinesAllowed,
   }) : styles = styles ?? const Styles.empty();
 
+  /// The source of the text.
+  final HtmlNode source;
+
   /// Inlinespan to use for the text.
   final InlineSpan textSpan;
 
   /// The [TextSpan] to use for the text.
   final int? maxLinesAllowed;
-
-  /// The maximum number of lines to display.
-  int? get maxLines => maxLinesAllowed ?? styles.maxLines;
 
   /// The [TextStyle] to use for the text.
   final TextStyle? textStyle;
@@ -33,12 +35,26 @@ final class TextHtmlWidget extends StatelessWidget with IHtmlWidget {
   @override
   final Styles styles;
 
-  /// Effective [TextStyle] to use for the text.
-  TextStyle? get style => textStyle ?? styles.textStyle;
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<HtmlNode>('source', source))
+      ..add(DiagnosticsProperty<Styles>('styles', styles))
+      ..add(DiagnosticsProperty<TextStyle>('textStyle', textStyle))
+      ..add(DiagnosticsProperty<int>('maxLinesAllowed', maxLinesAllowed))
+      ..add(DiagnosticsProperty<InlineSpan>('textSpan', textSpan));
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (textSpan.toPlainText().trim().isEmpty) {
+    final maxLines = maxLinesAllowed ?? styles.maxLines;
+    final style = textStyle ?? styles.textStyle;
+    final isOnlyNewLine = textSpan is TextSpan &&
+        (textSpan.toPlainText() == '\n' ||
+            textSpan.toPlainText().split('').every((val) => val == '\n'));
+
+    if (isOnlyNewLine) {
       return const SizedBox.shrink();
     }
 

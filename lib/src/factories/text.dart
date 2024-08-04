@@ -27,16 +27,17 @@ final class TextHtmlWidgetFactory
         final styles = node is HtmlElement
             ? config.styles.getStyle(node.localName, config.defaultTextStyle)
             : null;
-
+        final span = _createSpan(node, context, unsupportedParser)!;
         return TextHtmlWidget(
-          _createSpan(node, context, unsupportedParser)!,
+          span,
+          source: node,
           styles: styles,
         );
       },
     );
   }
 
-  final TextHtmlWidget Function(BuildContext) _builder;
+  final WidgetBuilder _builder;
 
   @override
   WidgetBuilder get builder => _builder;
@@ -163,6 +164,7 @@ final class TextHtmlWidgetFactory
     'th',
     'tbody',
     'thead',
+    'li',
   ];
 
   /// Creates a map of factories for the supported tags.
@@ -182,7 +184,7 @@ extension on HtmlElement {
   /// Whether the element is a line break.
   bool get isBreak => localName == 'br';
 
-  /// Whether the element is a paragraph.
+  /// Whether the element is not supported.
   bool get isUnspported => !TextHtmlWidgetFactory.tags.contains(localName);
 
   /// Whether the element is a paragraph.

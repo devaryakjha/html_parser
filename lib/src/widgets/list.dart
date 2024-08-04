@@ -28,7 +28,7 @@ final class ListHtmlWidget extends StatelessWidget with IHtmlWidget {
   Styles get styles => _styles ?? super.styles;
 
   /// The children to render.
-  final List<ListItemHtmlWidget> children;
+  final List<IndexedWidgetBuilder> children;
 
   /// Whether to render as sliver.
   final bool renderSliver;
@@ -39,7 +39,13 @@ final class ListHtmlWidget extends StatelessWidget with IHtmlWidget {
       renderSliver
           ? SliverPadding(
               padding: margin,
-              sliver: SliverList.list(children: children),
+              sliver: SliverList.builder(
+                itemCount: children.length,
+                itemBuilder: (context, index) {
+                  final child = children[index];
+                  return child(context, index);
+                },
+              ),
             )
           : Padding(
               padding: margin,
@@ -48,7 +54,9 @@ final class ListHtmlWidget extends StatelessWidget with IHtmlWidget {
                 padding: padding,
                 shrinkWrap: true,
                 itemCount: children.length,
-                itemBuilder: (context, index) => children[index],
+                itemBuilder: (context, index) {
+                  return children[index](context, index);
+                },
               ),
             ),
     );

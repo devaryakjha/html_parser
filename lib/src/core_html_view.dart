@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:widgets_from_html/widgets_from_html.dart';
 
@@ -32,58 +31,64 @@ class _HtmlState extends State<Html> {
 
   HtmlConfig get config => widget.config;
 
-  late final List<IHtmlWidgetFactory> _widgetsFactories;
+  late List<IHtmlWidgetFactory> _widgetsFactories;
 
-  void _initialise() {
+  late _HtmlRenderer _renderer;
+
+  void _reinitialise() {
     _widgetsFactories = parser.parse(input);
+    final renderMode = config.renderMode;
+    _renderer = switch (renderMode) {
+      HtmlRenderMode.column => _RenderHtmlColumn(
+          itemCount: _widgetsFactories.length,
+          height: config.height,
+          itemBuilder: (context, index) {
+            final factory = _widgetsFactories[index];
+            return factory.builder(context);
+          },
+        ),
+      HtmlRenderMode.list => _RenderListView(
+          itemCount: _widgetsFactories.length,
+          height: config.height,
+          itemBuilder: (context, index) {
+            final factory = _widgetsFactories[index];
+            return factory.builder(context);
+          },
+        ),
+      HtmlRenderMode.sliver => _RenderSliver(
+          itemCount: _widgetsFactories.length,
+          height: config.height,
+          itemBuilder: (context, index) {
+            final factory = _widgetsFactories[index];
+            return factory.sliverBuilder(context);
+          },
+        ),
+    };
     setState(() {});
   }
 
   @override
   void initState() {
     super.initState();
-    _initialise();
+    _reinitialise();
+  }
+
+  @override
+  void didUpdateWidget(covariant Html oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.input != widget.input || oldWidget.config != widget.config) {
+      _reinitialise();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final factories = kDebugMode ? parser.parse(input) : _widgetsFactories;
-    final renderMode = config.renderMode;
     return DefaultTextStyle(
       style: config.defaultTextStyle,
       child: HtmlConfigProvider(
         config: config,
         child: Builder(
-          builder: (context) {
-            return switch (renderMode) {
-              HtmlRenderMode.column => _RenderHtmlColumn(
-                  itemCount: factories.length,
-                  height: config.height,
-                  itemBuilder: (context, index) {
-                    final factory = factories[index];
-                    return factory.builder(context);
-                  },
-                ),
-              HtmlRenderMode.list => _RenderListView(
-                  itemCount: factories.length,
-                  height: config.height,
-                  itemBuilder: (context, index) {
-                    final factory = factories[index];
-                    return factory.builder(context);
-                  },
-                ),
-              HtmlRenderMode.sliver => _RenderSliver(
-                  itemCount: factories.length,
-                  height: config.height,
-                  itemBuilder: (context, index) {
-                    final factory = factories[index];
-                    return factory.sliverBuilder(context);
-                  },
-                ),
-            }
-                // ignore: invalid_use_of_protected_member
-                .build(context);
-          },
+          builder: _renderer.buildWidget,
         ),
       ),
     );
@@ -102,6 +107,8 @@ abstract class _HtmlRenderer extends StatelessWidget {
   final int itemCount;
 
   final double? height;
+
+  Widget buildWidget(BuildContext context) => build(context);
 }
 
 class _RenderHtmlColumn extends _HtmlRenderer {
