@@ -14,11 +14,14 @@ final class HrHtmlWidgetFactory implements IHtmlWidgetFactory {
   /// Creates a new instance of [HrHtmlWidgetFactory] from a [HtmlNode].
   factory HrHtmlWidgetFactory.fromNode() {
     return HrHtmlWidgetFactory(
-      (context) => const Divider(
-        thickness: 2,
-        height: 1,
-        color: Colors.black,
-      ),
+      (context) {
+        final color = HtmlConfig.of(context).defaultTextStyle.color;
+        return Divider(
+          thickness: 2,
+          height: 1,
+          color: color,
+        );
+      },
     );
   }
 
