@@ -15,21 +15,23 @@ final class TableHtmlWidget extends StatelessWidget with IHtmlWidget {
   @override
   Widget build(BuildContext context) {
     final config = HtmlConfig.of(context);
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          Padding(padding: EdgeInsets.only(left: margin.left)),
-          DataTable(
-            columns: columns,
-            rows: rows,
-            border: TableBorder.all(
-              color: config.defaultTextStyle.color ?? Colors.black,
+    return wrapInAlignment(
+      SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            Padding(padding: EdgeInsets.only(left: margin.left)),
+            DataTable(
+              columns: columns,
+              rows: rows,
+              border: TableBorder.all(
+                color: config.defaultTextStyle.color ?? Colors.black,
+              ),
+              dataRowMaxHeight: double.infinity,
             ),
-            dataRowMaxHeight: double.infinity,
-          ),
-          Padding(padding: EdgeInsets.only(right: margin.right)),
-        ],
+            Padding(padding: EdgeInsets.only(right: margin.right)),
+          ],
+        ),
       ),
     );
   }

@@ -89,12 +89,15 @@ final class ContainerHtmlWidget extends StatelessWidget with IHtmlWidget {
   @override
   Widget build(BuildContext context) {
     final builtChildren = children.map((builder) => builder(context)).toList();
-    return switch (type) {
-      ContainerType.column => _buildColumn(context, builtChildren),
-      ContainerType.sliverColumn => _buildSliverColumn(context, builtChildren),
-      ContainerType.row => _buildRow(context, builtChildren),
-      ContainerType.sliverRow => _buildSliverRow(context, builtChildren),
-    };
+    return wrapInAlignment(
+      switch (type) {
+        ContainerType.column => _buildColumn(context, builtChildren),
+        ContainerType.sliverColumn =>
+          _buildSliverColumn(context, builtChildren),
+        ContainerType.row => _buildRow(context, builtChildren),
+        ContainerType.sliverRow => _buildSliverRow(context, builtChildren),
+      },
+    );
   }
 
   @override

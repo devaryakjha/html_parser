@@ -33,23 +33,24 @@ final class FigureHtmlWidget extends StatelessWidget with IHtmlWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (renderSliver) {
-      return SliverPadding(
-        padding: margin,
-        sliver: SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, i) => children[i](context),
-            childCount: children.length,
-          ),
-        ),
-      );
-    }
-    return Padding(
-      padding: margin,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: children.map((e) => e(context)).toList(),
-      ),
+    return wrapInAlignment(
+      renderSliver
+          ? SliverPadding(
+              padding: margin,
+              sliver: SliverList.builder(
+                itemCount: children.length,
+                itemBuilder: (context, index) {
+                  return children[index](context);
+                },
+              ),
+            )
+          : Padding(
+              padding: margin,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: children.map((e) => e(context)).toList(),
+              ),
+            ),
     );
   }
 }

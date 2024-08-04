@@ -1,3 +1,4 @@
+export 'alignment_provider.dart';
 export 'blockquote.dart';
 export 'container.dart';
 export 'figure.dart';

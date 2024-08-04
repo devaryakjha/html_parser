@@ -48,6 +48,20 @@ final class Styles with EquatableMixin {
   /// The alignment of the widget.
   final Alignment? alignment;
 
+  TextAlign? get textAlign => alignment == null
+      ? null
+      : switch (alignment) {
+          Alignment.topLeft ||
+          Alignment.centerLeft ||
+          Alignment.bottomLeft =>
+            TextAlign.left,
+          Alignment.centerRight ||
+          Alignment.topRight ||
+          Alignment.bottomRight =>
+            TextAlign.right,
+          _ => TextAlign.center,
+        };
+
   /// Creates a new instance of [Styles].
   const Styles({
     this.margin,

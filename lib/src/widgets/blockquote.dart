@@ -33,23 +33,24 @@ final class BlockquoteHtmlWidget extends StatelessWidget with IHtmlWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (renderSliver) {
-      return SliverPadding(
-        padding: margin,
-        sliver: SliverList.builder(
-          itemBuilder: (context, index) {
-            return children[index](context);
-          },
-          itemCount: children.length,
-        ),
-      );
-    }
-    return Padding(
-      padding: margin,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: children.map((e) => e(context)).toList(),
-      ),
+    return wrapInAlignment(
+      renderSliver
+          ? SliverPadding(
+              padding: margin,
+              sliver: SliverList.builder(
+                itemBuilder: (context, index) {
+                  return children[index](context);
+                },
+                itemCount: children.length,
+              ),
+            )
+          : Padding(
+              padding: margin,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: children.map((e) => e(context)).toList(),
+              ),
+            ),
     );
   }
 }

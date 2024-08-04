@@ -43,39 +43,41 @@ final class ImageHtmlWidget extends StatelessWidget with IHtmlWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(
-      src ?? '',
-      errorBuilder: (context, error, stackTrace) {
-        if (alt == null || alt!.isEmpty) {
-          return SizedBox(
-            width: MediaQuery.sizeOf(context).width,
-            child: const Icon(Icons.error, color: Colors.red),
+    return wrapInAlignment(
+      Image.network(
+        src ?? '',
+        errorBuilder: (context, error, stackTrace) {
+          if (alt == null || alt!.isEmpty) {
+            return SizedBox(
+              width: MediaQuery.sizeOf(context).width,
+              child: const Icon(Icons.error, color: Colors.red),
+            );
+          }
+
+          return Text(alt ?? '');
+        },
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) {
+            return child;
+          }
+
+          return _wrapInAspectRation(_loader(loadingProgress));
+        },
+        frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+          if (wasSynchronouslyLoaded) {
+            return _wrapInAspectRation(child);
+          }
+
+          return _wrapInAspectRation(
+            AnimatedOpacity(
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeOut,
+              opacity: frame == null ? 0 : 1,
+              child: child,
+            ),
           );
-        }
-
-        return Text(alt ?? '');
-      },
-      loadingBuilder: (context, child, loadingProgress) {
-        if (loadingProgress == null) {
-          return child;
-        }
-
-        return _wrapInAspectRation(_loader(loadingProgress));
-      },
-      frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-        if (wasSynchronouslyLoaded) {
-          return _wrapInAspectRation(child);
-        }
-
-        return _wrapInAspectRation(
-          AnimatedOpacity(
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.easeOut,
-            opacity: frame == null ? 0 : 1,
-            child: child,
-          ),
-        );
-      },
+        },
+      ),
     );
   }
 

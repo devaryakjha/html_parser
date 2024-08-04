@@ -15,27 +15,30 @@ final class FigureHtmlWidgetFactory
     UnsupportedParser unsupportedParser,
   ) {
     final children = node.nodes.map(unsupportedParser).whereNotNull().toList();
-    return FigureHtmlWidgetFactory((context) {
-      final config = HtmlConfig.of(context);
-      final styles = node is HtmlElement
-          ? config.styles.getStyle(node.localName, config.defaultTextStyle)
-          : null;
+    return FigureHtmlWidgetFactory(
+      (context) {
+        final config = HtmlConfig.of(context);
+        final styles = node is HtmlElement
+            ? config.styles.getStyle(node.localName, config.defaultTextStyle)
+            : null;
 
-      return FigureHtmlWidget(
-        style: styles,
-        children: children.map((e) => e.builder).toList(),
-      );
-    }, (context) {
-      final config = HtmlConfig.of(context);
-      final styles = node is HtmlElement
-          ? config.styles.getStyle(node.localName, config.defaultTextStyle)
-          : null;
+        return FigureHtmlWidget(
+          style: styles,
+          children: children.map((e) => e.builder).toList(),
+        );
+      },
+      (context) {
+        final config = HtmlConfig.of(context);
+        final styles = node is HtmlElement
+            ? config.styles.getStyle(node.localName, config.defaultTextStyle)
+            : null;
 
-      return FigureHtmlWidget.sliver(
-        style: styles,
-        children: children.map((e) => e.builder).toList(),
-      );
-    });
+        return FigureHtmlWidget.sliver(
+          style: styles,
+          children: children.map((e) => e.sliverBuilder).toList(),
+        );
+      },
+    );
   }
 
   final WidgetBuilder _builder;

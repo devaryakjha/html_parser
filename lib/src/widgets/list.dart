@@ -35,21 +35,22 @@ final class ListHtmlWidget extends StatelessWidget with IHtmlWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (renderSliver) {
-      return SliverPadding(
-        padding: margin,
-        sliver: SliverList.list(children: children),
-      );
-    }
-    return Padding(
-      padding: margin,
-      child: ListView.builder(
-        physics: const NeverScrollableScrollPhysics(),
-        padding: padding,
-        shrinkWrap: true,
-        itemCount: children.length,
-        itemBuilder: (context, index) => children[index],
-      ),
+    return wrapInAlignment(
+      renderSliver
+          ? SliverPadding(
+              padding: margin,
+              sliver: SliverList.list(children: children),
+            )
+          : Padding(
+              padding: margin,
+              child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                padding: padding,
+                shrinkWrap: true,
+                itemCount: children.length,
+                itemBuilder: (context, index) => children[index],
+              ),
+            ),
     );
   }
 }

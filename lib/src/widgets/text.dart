@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:widgets_from_html/src/widgets/alignment_provider.dart';
 import 'package:widgets_from_html/widgets_from_html.dart';
 
 /// A widget that is used to render text.
@@ -45,23 +46,23 @@ final class TextHtmlWidget extends Text with IHtmlWidget {
   @override
   TextStyle? get style => textStyle ?? styles.textStyle;
 
-  Widget _wrapInMarginIfNeeded(Widget child) {
-    if (margin == EdgeInsets.zero) {
-      return child;
-    }
-
-    return Padding(
-      padding: margin,
-      child: child,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     if (textSpan!.toPlainText().trim().isEmpty) {
       return const SizedBox.shrink();
     }
 
-    return _wrapInMarginIfNeeded(super.build(context));
+    return wrapInAlignment(
+      Builder(
+        builder: (context) {
+          final defaultAlignment = DefaultAlignment.of(context);
+          return DefaultTextStyle(
+            textAlign: defaultAlignment.textAlign,
+            style: const TextStyle(),
+            child: wrapInMargin(super.build(context)),
+          );
+        },
+      ),
+    );
   }
 }
