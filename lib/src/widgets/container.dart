@@ -6,8 +6,14 @@ enum ContainerType {
   /// A column container.
   column,
 
+  /// A sliver column container.
+  sliverColumn,
+
   /// A row container.
-  row;
+  row,
+
+  /// A sliver row container.
+  sliverRow;
 
   /// Returns `true` if this is a column container.
   bool get isColumn => this == ContainerType.column;
@@ -48,6 +54,15 @@ final class ContainerHtmlWidget extends StatelessWidget implements IHtmlWidget {
     );
   }
 
+  Widget _buildSliverColumn(BuildContext context, List<Widget> children) {
+    return SliverPadding(
+      padding: margin,
+      sliver: SliverList(
+        delegate: SliverChildListDelegate(children),
+      ),
+    );
+  }
+
   Widget _buildRow(BuildContext context, List<Widget> children) {
     return Padding(
       padding: EdgeInsets.only(top: margin.top, bottom: margin.bottom),
@@ -61,6 +76,12 @@ final class ContainerHtmlWidget extends StatelessWidget implements IHtmlWidget {
     );
   }
 
+  Widget _buildSliverRow(BuildContext context, List<Widget> children) {
+    return SliverToBoxAdapter(
+      child: _buildRow(context, children),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return switch (type) {
@@ -68,7 +89,15 @@ final class ContainerHtmlWidget extends StatelessWidget implements IHtmlWidget {
           context,
           children.map((builder) => builder(context)).toList(),
         ),
+      ContainerType.sliverColumn => _buildSliverColumn(
+          context,
+          children.map((builder) => builder(context)).toList(),
+        ),
       ContainerType.row => _buildRow(
+          context,
+          children.map((builder) => builder(context)).toList(),
+        ),
+      ContainerType.sliverRow => _buildSliverRow(
           context,
           children.map((builder) => builder(context)).toList(),
         ),

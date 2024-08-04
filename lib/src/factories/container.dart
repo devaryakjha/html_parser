@@ -17,12 +17,15 @@ final class ContainerHtmlWidgetFactory
     return ContainerHtmlWidgetFactory(
       (context) => ContainerHtmlWidget(
         children: children.map((e) => e.builder).toList(),
-        type: _createContainerType(node),
+        type: _createContainerType(node, HtmlConfig.of(context).renderMode),
       ),
     );
   }
 
-  static ContainerType _createContainerType(HtmlNode node) {
+  static ContainerType _createContainerType(
+    HtmlNode node,
+    HtmlRenderMode mode,
+  ) {
     final classses = node.attributes['class'];
     final styles = node.attributes['style'];
 
@@ -33,8 +36,12 @@ final class ContainerHtmlWidgetFactory
             styles?.contains('flex-direction: row;') ??
             styles?.contains('flex-direction: row-reverse;') ??
             false
-        ? ContainerType.row
-        : ContainerType.column;
+        ? mode.isSliver
+            ? ContainerType.sliverRow
+            : ContainerType.row
+        : mode.isSliver
+            ? ContainerType.sliverColumn
+            : ContainerType.column;
   }
 
   /// The [WidgetBuilder] to use for the widget.
@@ -42,6 +49,9 @@ final class ContainerHtmlWidgetFactory
 
   @override
   WidgetBuilder get builder => _builder;
+
+  @override
+  WidgetBuilder get sliverBuilder => _builder;
 
   @override
   List<Object?> get props => [_builder];

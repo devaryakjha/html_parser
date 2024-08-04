@@ -64,7 +64,15 @@ class _HtmlState extends State<Html> {
                     return factory.builder(context);
                   },
                 ),
-              _ => _RenderHtmlColumn(
+              HtmlRenderMode.sliver => _RenderSliver(
+                  itemCount: factories.length,
+                  height: config.height,
+                  itemBuilder: (context, index) {
+                    final factory = factories[index];
+                    return factory.builder(context);
+                  },
+                ),
+              HtmlRenderMode.column => _RenderHtmlColumn(
                   itemCount: factories.length,
                   height: config.height,
                   itemBuilder: (context, index) {
@@ -126,6 +134,24 @@ class _RenderListView extends _HtmlRenderer {
     return ListView.builder(
       itemCount: itemCount,
       itemBuilder: itemBuilder,
+    );
+  }
+}
+
+class _RenderSliver extends _HtmlRenderer {
+  const _RenderSliver({
+    required super.itemBuilder,
+    required super.itemCount,
+    super.height,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        itemBuilder,
+        childCount: itemCount,
+      ),
     );
   }
 }

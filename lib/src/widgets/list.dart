@@ -10,7 +10,14 @@ final class ListHtmlWidget extends StatelessWidget implements IHtmlWidget {
     required this.children,
     super.key,
     this.styles,
-  });
+  }) : renderSliver = false;
+
+  /// Creates a new instance of [ListHtmlWidget] for sliver.
+  const ListHtmlWidget.sliver({
+    required this.children,
+    super.key,
+    this.styles,
+  }) : renderSliver = true;
 
   /// The [Styles] to use for the widget.
   final Styles? styles;
@@ -18,8 +25,22 @@ final class ListHtmlWidget extends StatelessWidget implements IHtmlWidget {
   /// The children to render.
   final List<ListItemHtmlWidget> children;
 
+  /// Whether to render as sliver.
+  final bool renderSliver;
+
   @override
   Widget build(BuildContext context) {
+    if (renderSliver) {
+      return SliverPadding(
+        padding: margin,
+        sliver: SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, i) => children[i],
+            childCount: children.length,
+          ),
+        ),
+      );
+    }
     return Padding(
       padding: margin,
       child: ListView.builder(

@@ -25,6 +25,11 @@ final class HrHtmlWidgetFactory implements IHtmlWidgetFactory {
   final HrHtmlWidget _builder;
 
   @override
+  WidgetBuilder get sliverBuilder => (context) => SliverToBoxAdapter(
+        child: _builder(context),
+      );
+
+  @override
   WidgetBuilder get builder => _builder;
 
   @override

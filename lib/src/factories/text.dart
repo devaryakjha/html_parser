@@ -171,6 +171,11 @@ final class TextHtmlWidgetFactory
       for (final tag in tags) tag: TextHtmlWidgetFactory.fromNode,
     };
   }
+
+  @override
+  WidgetBuilder get sliverBuilder => (context) => SliverToBoxAdapter(
+        child: _builder(context),
+      );
 }
 
 extension on HtmlElement {

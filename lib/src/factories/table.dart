@@ -191,4 +191,9 @@ final class TableHtmlWidgetFactory
 
   @override
   bool? get stringify => true;
+
+  @override
+  WidgetBuilder get sliverBuilder => (context) => SliverToBoxAdapter(
+        child: _builder(context),
+      );
 }

@@ -46,6 +46,11 @@ final class CustomImageFactory implements IHtmlWidgetFactory<ImageHtmlWidget> {
   WidgetBuilder get builder => _builder;
 
   @override
+  WidgetBuilder get sliverBuilder => (context) => SliverToBoxAdapter(
+        child: builder(context),
+      );
+
+  @override
   List<Object?> get props => [_builder];
 
   @override

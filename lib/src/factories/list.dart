@@ -7,7 +7,7 @@ import 'package:widgets_from_html/widgets_from_html.dart';
 final class ListHtmlWidgetFactory
     implements IHtmlWidgetFactory<ListHtmlWidget> {
   /// Creates a new instance of [ListHtmlWidgetFactory].
-  const ListHtmlWidgetFactory(this._builder);
+  const ListHtmlWidgetFactory(this._builder, this._sliverBuilder);
 
   /// Creates a new instance of [ListHtmlWidgetFactory] from a [HtmlNode].
   factory ListHtmlWidgetFactory.fromNode(HtmlNode node) {
@@ -36,13 +36,34 @@ final class ListHtmlWidgetFactory
           }).toList(),
         );
       },
+      (context) {
+        final config = HtmlConfig.of(context);
+        return ListHtmlWidget.sliver(
+          styles:
+              config.styles.getStyle(node.localName, config.defaultTextStyle),
+          children: node.nodes.whereType<HtmlElement>().indexed.map((element) {
+            final (index, node) = element;
+            return ListItemHtmlWidget(
+              title: node.text,
+              index: index,
+              isOrdered: isOrdered,
+              source: node,
+            );
+          }).toList(),
+        );
+      },
     );
   }
 
   final WidgetBuilder _builder;
 
+  final WidgetBuilder _sliverBuilder;
+
   @override
   WidgetBuilder get builder => _builder;
+
+  @override
+  WidgetBuilder get sliverBuilder => _sliverBuilder;
 
   @override
   List<Object?> get props => [_builder];

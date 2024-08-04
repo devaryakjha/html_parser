@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:widgets_from_html/widgets_from_html.dart'
-    show HtmlNode, IHtmlWidget;
+    show HtmlNode, HtmlRenderMode, IHtmlWidget;
 
 /// An interface for creating instances of [IHtmlWidget].
 abstract interface class IHtmlWidgetFactory<Widget extends IHtmlWidget>
@@ -13,8 +13,14 @@ abstract interface class IHtmlWidgetFactory<Widget extends IHtmlWidget>
   const factory IHtmlWidgetFactory.unsupported(HtmlNode node) =
       UnsupportedHtmlWidgetFactory;
 
-  /// Creates a new instance of [IHtmlWidget] from the given [HtmlNode].
+  /// The [WidgetBuilder] for creating the [IHtmlWidget].
   final WidgetBuilder builder;
+
+  /// The [WidgetBuilder] for creating the [IHtmlWidget]
+  /// in case of renderMode is [HtmlRenderMode.sliver].
+  WidgetBuilder get sliverBuilder => (context) => SliverToBoxAdapter(
+        child: builder(context),
+      );
 
   @override
   List<Object?> get props => [builder];
@@ -29,6 +35,11 @@ class UnsupportedHtmlWidgetFactory<T extends IHtmlWidget>
 
   /// The node that is not supported.
   final HtmlNode node;
+
+  @override
+  WidgetBuilder get sliverBuilder => (context) => SliverToBoxAdapter(
+        child: builder(context),
+      );
 
   @override
   WidgetBuilder get builder => (context) => kDebugMode

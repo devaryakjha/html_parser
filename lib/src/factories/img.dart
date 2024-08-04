@@ -39,6 +39,11 @@ final class ImageHtmlWidgetFactory
   final WidgetBuilder _builder;
 
   @override
+  WidgetBuilder get sliverBuilder => (context) => SliverToBoxAdapter(
+        child: _builder(context),
+      );
+
+  @override
   WidgetBuilder get builder => _builder;
 
   @override
