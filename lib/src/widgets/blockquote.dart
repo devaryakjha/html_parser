@@ -9,7 +9,14 @@ final class BlockquoteHtmlWidget extends StatelessWidget
     super.key,
     this.children = const [],
     this.styles,
-  });
+  }) : renderSliver = false;
+
+  /// Creates a new instance of [BlockquoteHtmlWidget] as a sliver.
+  const BlockquoteHtmlWidget.sliver({
+    super.key,
+    this.children = const [],
+    this.styles,
+  }) : renderSliver = true;
 
   /// The children to render.
   final List<WidgetBuilder> children;
@@ -17,8 +24,21 @@ final class BlockquoteHtmlWidget extends StatelessWidget
   /// The styles to use for the widget.
   final Styles? styles;
 
+  /// Shows if the widget should be rendered as a sliver.
+  final bool renderSliver;
+
   @override
   Widget build(BuildContext context) {
+    if (renderSliver) {
+      return SliverPadding(
+        padding: margin,
+        sliver: SliverList.list(
+          children: children.map((e) {
+            return e(context);
+          }).toList(),
+        ),
+      );
+    }
     return Padding(
       padding: margin,
       child: Column(

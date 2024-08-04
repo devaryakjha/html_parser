@@ -9,7 +9,7 @@ import 'package:widgets_from_html/widgets_from_html.dart';
 final class BlockquoteHtmlWidgetFactory
     implements IHtmlWidgetFactory<BlockquoteHtmlWidget> {
   /// Creates a new instance of [BlockquoteHtmlWidgetFactory].
-  const BlockquoteHtmlWidgetFactory(this._builder);
+  const BlockquoteHtmlWidgetFactory(this._builder, this._sliverBuilder);
 
   /// Creates a new instance of [BlockquoteHtmlWidgetFactory] from a [HtmlNode].
   factory BlockquoteHtmlWidgetFactory.fromNode(
@@ -26,10 +26,19 @@ final class BlockquoteHtmlWidgetFactory
           styles: config.styles.getStyle('blockquote', config.defaultTextStyle),
         );
       },
+      (context) {
+        final config = HtmlConfig.of(context);
+        return BlockquoteHtmlWidget.sliver(
+          children: children.map((e) => e.builder).toList(),
+          styles: config.styles.getStyle('blockquote', config.defaultTextStyle),
+        );
+      },
     );
   }
 
   final WidgetBuilder _builder;
+
+  final WidgetBuilder _sliverBuilder;
 
   @override
   WidgetBuilder get builder => _builder;
@@ -38,9 +47,7 @@ final class BlockquoteHtmlWidgetFactory
   List<Object?> get props => [_builder];
 
   @override
-  WidgetBuilder get sliverBuilder => (context) {
-        return SliverToBoxAdapter(child: builder(context));
-      };
+  WidgetBuilder get sliverBuilder => _sliverBuilder;
 
   @override
   bool? get stringify => true;
