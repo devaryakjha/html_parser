@@ -101,6 +101,8 @@ class HtmlConfig extends Equatable {
       'figure': FigureHtmlWidgetFactory.fromNode,
       'img': (node, _) => ImageHtmlWidgetFactory.fromNode(node),
       'div': ContainerHtmlWidgetFactory.fromNode,
+      'container': ContainerHtmlWidgetFactory.fromNode,
+      'blockquote': BlockquoteHtmlWidgetFactory.fromNode,
       'table': TableHtmlWidgetFactory.fromNode,
       'ol': (node, _) => ListHtmlWidgetFactory.fromNode(node),
       'ul': (node, _) => ListHtmlWidgetFactory.fromNode(node),

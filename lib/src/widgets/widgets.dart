@@ -1,3 +1,4 @@
+export 'blockquote.dart';
 export 'container.dart';
 export 'figure.dart';
 export 'img.dart';
