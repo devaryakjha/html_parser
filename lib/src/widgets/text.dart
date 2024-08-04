@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:widgets_from_html/widgets_from_html.dart';
 
 /// A widget that is used to render text.
@@ -62,9 +62,12 @@ final class TextHtmlWidget extends StatelessWidget with IHtmlWidget {
       Builder(
         builder: (context) {
           final defaultAlignment = DefaultAlignment.of(context);
+          final effectiveSpan = textSpan;
           return wrapInMargin(
-            Text.rich(
-              textSpan,
+            SelectableText.rich(
+              effectiveSpan is TextSpan
+                  ? effectiveSpan
+                  : TextSpan(children: [effectiveSpan]),
               textAlign: defaultAlignment.textAlign,
               style: style,
               maxLines: maxLines,

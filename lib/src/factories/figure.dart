@@ -35,7 +35,7 @@ final class FigureHtmlWidgetFactory
 
         return FigureHtmlWidget.sliver(
           style: styles,
-          children: children.map((e) => e.sliverBuilder).toList(),
+          children: children.map((e) => e.builder).toList(),
         );
       },
     );
