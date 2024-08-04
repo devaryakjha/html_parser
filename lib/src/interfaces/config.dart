@@ -57,6 +57,8 @@ class HtmlConfig extends Equatable {
       fontSize: 16,
       color: Colors.black,
     ),
+    this.renderMode = HtmlRenderMode.column,
+    this.height,
   }) : _factories = _createDefaultFactories(customFactories);
 
   /// A list of factories for creating instances of [IHtmlWidget].
@@ -81,9 +83,17 @@ class HtmlConfig extends Equatable {
   /// height of 1.4 will be used.
   final TextStyle defaultTextStyle;
 
-  /// generates the default factories.
+  /// The rendering mode to use for the HTML.
   ///
-  /// and merges them with the custom factories.
+  /// If not provided, the default is [HtmlRenderMode.column].
+  final HtmlRenderMode renderMode;
+
+  /// The height of the HTML widget.
+  ///
+  /// If not provided, the height will be determined by the content.
+  final double? height;
+
+  // generates the default factories and merges them with the custom factories.
   static WidgetFactoryMap _createDefaultFactories(WidgetFactoryMap? custom) {
     return {
       ...TextHtmlWidgetFactory.createFactoryMap(),
@@ -127,6 +137,29 @@ class HtmlConfig extends Equatable {
 
   @override
   bool? get stringify => true;
+}
+
+/// Types of rendering modes for the HTML widget.
+///
+/// The rendering mode determines how the HTML is rendered.
+enum HtmlRenderMode {
+  /// Renders the HTML in a single column.
+  column,
+
+  /// Renders the HTML in a ListView.
+  list,
+
+  /// Renders the HTML in a SliverList.
+  sliver;
+
+  /// Returns `true` if the rendering mode is [HtmlRenderMode.column].
+  bool get isColumn => this == HtmlRenderMode.column;
+
+  /// Returns `true` if the rendering mode is [HtmlRenderMode.list].
+  bool get isList => this == HtmlRenderMode.list;
+
+  /// Returns `true` if the rendering mode is [HtmlRenderMode.sliver].
+  bool get isSliver => this == HtmlRenderMode.sliver;
 }
 
 /// A provider for the [HtmlConfig].
