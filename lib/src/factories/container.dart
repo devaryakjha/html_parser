@@ -14,18 +14,16 @@ final class ContainerHtmlWidgetFactory
     UnsupportedParser unsupportedParser,
   ) {
     final children = node.nodes.map(unsupportedParser).whereNotNull().toList();
-    return ContainerHtmlWidgetFactory(
-      (context) => ContainerHtmlWidget(
+    final containerType = _createContainerType(node);
+    return ContainerHtmlWidgetFactory((context) {
+      return ContainerHtmlWidget(
         children: children.map((e) => e.builder).toList(),
-        type: _createContainerType(node, HtmlConfig.of(context).renderMode),
-      ),
-    );
+        type: containerType,
+      );
+    });
   }
 
-  static ContainerType _createContainerType(
-    HtmlNode node,
-    HtmlRenderMode mode,
-  ) {
+  static ContainerType _createContainerType(HtmlNode node) {
     final classses = node.attributes['class'];
     final styles = node.attributes['style'];
 
@@ -36,12 +34,8 @@ final class ContainerHtmlWidgetFactory
             styles?.contains('flex-direction: row;') ??
             styles?.contains('flex-direction: row-reverse;') ??
             false
-        ? mode.isSliver
-            ? ContainerType.sliverRow
-            : ContainerType.row
-        : mode.isSliver
-            ? ContainerType.sliverColumn
-            : ContainerType.column;
+        ? ContainerType.row
+        : ContainerType.column;
   }
 
   /// The [WidgetBuilder] to use for the widget.
@@ -51,10 +45,12 @@ final class ContainerHtmlWidgetFactory
   WidgetBuilder get builder => _builder;
 
   @override
-  WidgetBuilder get sliverBuilder => _builder;
+  WidgetBuilder get sliverBuilder => (context) {
+        return SliverToBoxAdapter(child: builder(context));
+      };
 
   @override
-  List<Object?> get props => [_builder];
+  List<Object?> get props => [builder, sliverBuilder];
 
   @override
   bool? get stringify => true;

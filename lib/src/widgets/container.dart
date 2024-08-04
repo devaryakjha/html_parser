@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:widgets_from_html/widgets_from_html.dart';
 
@@ -20,6 +22,13 @@ enum ContainerType {
 
   /// Returns `true` if this is a row container.
   bool get isRow => this == ContainerType.row;
+
+  /// Returns sliver version of the container type.
+  ContainerType toSliver() => switch (this) {
+        ContainerType.column => ContainerType.sliverColumn,
+        ContainerType.row => ContainerType.sliverRow,
+        ContainerType.sliverColumn || ContainerType.sliverRow => this,
+      };
 }
 
 /// A widget that is used to represent `div` or `container` elements.
@@ -55,11 +64,8 @@ final class ContainerHtmlWidget extends StatelessWidget implements IHtmlWidget {
   }
 
   Widget _buildSliverColumn(BuildContext context, List<Widget> children) {
-    return SliverPadding(
-      padding: margin,
-      sliver: SliverList(
-        delegate: SliverChildListDelegate(children),
-      ),
+    return SliverToBoxAdapter(
+      child: _buildColumn(context, children),
     );
   }
 
@@ -84,23 +90,13 @@ final class ContainerHtmlWidget extends StatelessWidget implements IHtmlWidget {
 
   @override
   Widget build(BuildContext context) {
+    log('ContainerHtmlWidget.build: type=$type, children=${children.length}');
+    final builtChildren = children.map((builder) => builder(context)).toList();
     return switch (type) {
-      ContainerType.column => _buildColumn(
-          context,
-          children.map((builder) => builder(context)).toList(),
-        ),
-      ContainerType.sliverColumn => _buildSliverColumn(
-          context,
-          children.map((builder) => builder(context)).toList(),
-        ),
-      ContainerType.row => _buildRow(
-          context,
-          children.map((builder) => builder(context)).toList(),
-        ),
-      ContainerType.sliverRow => _buildSliverRow(
-          context,
-          children.map((builder) => builder(context)).toList(),
-        ),
+      ContainerType.column => _buildColumn(context, builtChildren),
+      ContainerType.sliverColumn => _buildSliverColumn(context, builtChildren),
+      ContainerType.row => _buildRow(context, builtChildren),
+      ContainerType.sliverRow => _buildSliverRow(context, builtChildren),
     };
   }
 

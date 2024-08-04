@@ -33,12 +33,7 @@ final class ListHtmlWidget extends StatelessWidget implements IHtmlWidget {
     if (renderSliver) {
       return SliverPadding(
         padding: margin,
-        sliver: SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, i) => children[i],
-            childCount: children.length,
-          ),
-        ),
+        sliver: SliverList.list(children: children),
       );
     }
     return Padding(

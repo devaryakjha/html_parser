@@ -48,14 +48,22 @@ class _HtmlState extends State<Html> {
   @override
   Widget build(BuildContext context) {
     final factories = kDebugMode ? parser.parse(input) : _widgetsFactories;
+    final renderMode = config.renderMode;
     return DefaultTextStyle(
       style: config.defaultTextStyle,
       child: HtmlConfigProvider(
         config: config,
         child: Builder(
           builder: (context) {
-            final renderMode = config.renderMode;
-            final renderer = switch (renderMode) {
+            return switch (renderMode) {
+              HtmlRenderMode.column => _RenderHtmlColumn(
+                  itemCount: factories.length,
+                  height: config.height,
+                  itemBuilder: (context, index) {
+                    final factory = factories[index];
+                    return factory.builder(context);
+                  },
+                ),
               HtmlRenderMode.list => _RenderListView(
                   itemCount: factories.length,
                   height: config.height,
@@ -72,17 +80,9 @@ class _HtmlState extends State<Html> {
                     return factory.sliverBuilder(context);
                   },
                 ),
-              HtmlRenderMode.column => _RenderHtmlColumn(
-                  itemCount: factories.length,
-                  height: config.height,
-                  itemBuilder: (context, index) {
-                    final factory = factories[index];
-                    return factory.builder(context);
-                  },
-                ),
-            };
-            // ignore: invalid_use_of_protected_member
-            return renderer.build(context);
+            }
+                // ignore: invalid_use_of_protected_member
+                .build(context);
           },
         ),
       ),
@@ -147,11 +147,13 @@ class _RenderSliver extends _HtmlRenderer {
 
   @override
   Widget build(BuildContext context) {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        itemBuilder,
-        childCount: itemCount,
-      ),
+    return CustomScrollView(
+      slivers: [
+        ...List.generate(
+          itemCount,
+          (index) => itemBuilder(context, index),
+        ),
+      ],
     );
   }
 }
