@@ -69,7 +69,7 @@ class _HtmlState extends State<Html> {
                   height: config.height,
                   itemBuilder: (context, index) {
                     final factory = factories[index];
-                    return factory.builder(context);
+                    return factory.sliverBuilder(context);
                   },
                 ),
               HtmlRenderMode.column => _RenderHtmlColumn(
