@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:widgets_from_html/widgets_from_html.dart';
 
@@ -90,7 +88,6 @@ final class ContainerHtmlWidget extends StatelessWidget implements IHtmlWidget {
 
   @override
   Widget build(BuildContext context) {
-    log('ContainerHtmlWidget.build: type=$type, children=${children.length}');
     final builtChildren = children.map((builder) => builder(context)).toList();
     return switch (type) {
       ContainerType.column => _buildColumn(context, builtChildren),
