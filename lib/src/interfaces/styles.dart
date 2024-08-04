@@ -45,28 +45,41 @@ final class Styles with EquatableMixin {
   /// The maximum number of lines to display.
   final int? maxLines;
 
+  /// The alignment of the widget.
+  final Alignment? alignment;
+
   /// Creates a new instance of [Styles].
   const Styles({
     this.margin,
     this.padding,
     this.textStyle,
     this.maxLines,
+    this.alignment,
   });
 
+  const Styles.empty()
+      : margin = null,
+        padding = null,
+        textStyle = null,
+        maxLines = null,
+        alignment = null;
+
   @override
-  List<Object?> get props => [margin, padding, textStyle, maxLines];
+  List<Object?> get props => [margin, padding, textStyle, maxLines, alignment];
 
   Styles copyWith({
     EdgeInsets? margin,
     EdgeInsets? padding,
     TextStyle? textStyle,
     int? maxLines,
+    Alignment? alignment,
   }) {
     return Styles(
       margin: margin ?? this.margin,
       padding: padding ?? this.padding,
       textStyle: textStyle ?? this.textStyle,
       maxLines: maxLines ?? this.maxLines,
+      alignment: alignment ?? this.alignment,
     );
   }
 }

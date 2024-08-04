@@ -4,7 +4,7 @@ import 'package:widgets_from_html/widgets_from_html.dart';
 /// A widget that is used to render an image.
 ///
 /// represents `<img>` tag.
-final class ImageHtmlWidget extends StatelessWidget implements IHtmlWidget {
+final class ImageHtmlWidget extends StatelessWidget with IHtmlWidget {
   /// Creates a new instance of [ImageHtmlWidget].
   const ImageHtmlWidget({
     super.key,
@@ -95,8 +95,5 @@ final class ImageHtmlWidget extends StatelessWidget implements IHtmlWidget {
       width != null && height != null ? width! / height! : 16 / 9;
 
   @override
-  EdgeInsets? get margin => style?.margin;
-
-  @override
-  EdgeInsets? get padding => style?.padding;
+  Styles get styles => style ?? super.styles;
 }

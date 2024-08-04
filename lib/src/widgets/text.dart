@@ -7,7 +7,7 @@ import 'package:widgets_from_html/widgets_from_html.dart';
 /// `<span>`, `<sup>`, `<sub>`, `<b>`, `<strong>`, `<i>`, `<em>`, `<br>`, `<a>`,
 /// `<table>`, `<tr>`, `<td>`, `<th>`, `<tbody>`, `<thead>` tags.
 ///
-final class TextHtmlWidget extends Text implements IHtmlWidget {
+final class TextHtmlWidget extends Text with IHtmlWidget {
   /// Creates a new instance of [TextHtmlWidget].
   const TextHtmlWidget(
     super.textSpan, {
@@ -24,38 +24,34 @@ final class TextHtmlWidget extends Text implements IHtmlWidget {
     super.textWidthBasis,
     super.textHeightBehavior,
     super.selectionColor,
-    this.styles,
+    Styles? styles,
     this.textStyle,
-  }) : super.rich();
+  })  : styles = styles ?? const Styles.empty(),
+        super.rich();
 
   /// The [TextSpan] to use for the text.
   final int? maxLinesAllowed;
 
   @override
-  int? get maxLines => maxLinesAllowed ?? styles?.maxLines;
+  int? get maxLines => maxLinesAllowed ?? styles.maxLines;
 
   /// The [TextStyle] to use for the text.
   final TextStyle? textStyle;
 
   /// The [Styles] to use for the widget.
-  final Styles? styles;
+  @override
+  final Styles styles;
 
   @override
-  TextStyle? get style => textStyle ?? styles?.textStyle;
-
-  @override
-  EdgeInsets? get margin => styles?.margin;
-
-  @override
-  EdgeInsets? get padding => styles?.padding;
+  TextStyle? get style => textStyle ?? styles.textStyle;
 
   Widget _wrapInMarginIfNeeded(Widget child) {
-    if (margin == null) {
+    if (margin == EdgeInsets.zero) {
       return child;
     }
 
     return Padding(
-      padding: margin!,
+      padding: margin,
       child: child,
     );
   }

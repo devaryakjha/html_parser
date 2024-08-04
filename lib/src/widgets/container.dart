@@ -34,7 +34,7 @@ enum ContainerType {
 /// This widget is used to render a container with children.
 ///
 /// The children are rendered in a column or row based on the [type].
-final class ContainerHtmlWidget extends StatelessWidget implements IHtmlWidget {
+final class ContainerHtmlWidget extends StatelessWidget with IHtmlWidget {
   /// Creates a new instance of [ContainerHtmlWidget].
   const ContainerHtmlWidget({
     super.key,
@@ -98,8 +98,5 @@ final class ContainerHtmlWidget extends StatelessWidget implements IHtmlWidget {
   }
 
   @override
-  EdgeInsets get margin => style?.margin ?? EdgeInsets.zero;
-
-  @override
-  EdgeInsets get padding => style?.padding ?? EdgeInsets.zero;
+  Styles get styles => style ?? const Styles.empty();
 }

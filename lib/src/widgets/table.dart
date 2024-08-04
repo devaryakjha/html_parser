@@ -4,7 +4,7 @@ import 'package:widgets_from_html/widgets_from_html.dart';
 /// A widget that is used to render a table.
 ///
 /// represents `<table>` tag.
-final class TableHtmlWidget extends StatelessWidget implements IHtmlWidget {
+final class TableHtmlWidget extends StatelessWidget with IHtmlWidget {
   /// Creates a new instance of [TableHtmlWidget].
   const TableHtmlWidget({
     required this.columns,
@@ -39,10 +39,4 @@ final class TableHtmlWidget extends StatelessWidget implements IHtmlWidget {
 
   /// The rows in the table.
   final List<DataRow> rows;
-
-  @override
-  EdgeInsets get margin => EdgeInsets.zero;
-
-  @override
-  EdgeInsets get padding => EdgeInsets.zero;
 }

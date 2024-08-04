@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:widgets_from_html/widgets_from_html.dart';
 
 /// A widget that is used to represent `figure` elements.
-final class FigureHtmlWidget extends StatelessWidget implements IHtmlWidget {
+final class FigureHtmlWidget extends StatelessWidget with IHtmlWidget {
   /// Creates a new instance of [FigureHtmlWidget].
   const FigureHtmlWidget({
     super.key,
@@ -19,6 +19,9 @@ final class FigureHtmlWidget extends StatelessWidget implements IHtmlWidget {
 
   /// The [Styles] to use for the widget.
   final Styles? style;
+
+  @override
+  Styles get styles => style ?? super.styles;
 
   /// The children to render.
   final List<WidgetBuilder> children;
@@ -49,10 +52,4 @@ final class FigureHtmlWidget extends StatelessWidget implements IHtmlWidget {
       ),
     );
   }
-
-  @override
-  EdgeInsets get margin => style?.margin ?? EdgeInsets.zero;
-
-  @override
-  EdgeInsets? get padding => style?.padding;
 }

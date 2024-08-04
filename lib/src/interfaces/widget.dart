@@ -1,31 +1,24 @@
 import 'package:flutter/widgets.dart';
+import 'package:widgets_from_html/widgets_from_html.dart';
 
 /// An interface for creating instances of [Widget].
-abstract interface class IHtmlWidget extends Widget {
-  /// Creates a new instance of [IHtmlWidget].
-  const IHtmlWidget({super.key, this.margin, this.padding});
+mixin IHtmlWidget on Widget {
+  /// Placeholder widget.
+  static const placeholder = _Placeholder();
 
-  /// A placeholder widget.
-  const factory IHtmlWidget.placeholder() = _Placeholder;
+  /// The styles to use for the widget.
+  Styles get styles => const Styles.empty();
 
   /// The margin of the widget.
-  final EdgeInsets? margin;
+  EdgeInsets get margin => styles.margin ?? EdgeInsets.zero;
 
   /// The padding of the widget.
-  final EdgeInsets? padding;
+  EdgeInsets get padding => styles.padding ?? EdgeInsets.zero;
 }
 
-final class _Placeholder extends StatelessWidget implements IHtmlWidget {
+final class _Placeholder extends StatelessWidget with IHtmlWidget {
   const _Placeholder() : super();
 
   @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-
-  @override
-  EdgeInsets? get margin => null;
-
-  @override
-  EdgeInsets? get padding => null;
+  Widget build(BuildContext context) => const Placeholder();
 }
