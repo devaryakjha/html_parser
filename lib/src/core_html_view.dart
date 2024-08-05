@@ -163,11 +163,11 @@ abstract class _HtmlRenderer extends StatelessWidget {
     if (height != null) {
       return SizedBox(
         height: height,
-        child: build(context),
+        child: Builder(builder: build),
       );
     }
 
-    return build(context);
+    return Builder(builder: build);
   }
 }
 

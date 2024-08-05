@@ -27,7 +27,8 @@ final class TextHtmlWidgetFactory
         final styles = node is HtmlElement
             ? config.styles.getStyle(node.localName, config.defaultTextStyle)
             : null;
-        final span = _createSpan(node, context, unsupportedParser)!;
+        final span =
+            _createSpan(node, context, unsupportedParser) ?? const TextSpan();
         return TextHtmlWidget(
           span,
           source: node,
@@ -91,7 +92,10 @@ final class TextHtmlWidgetFactory
     final config = HtmlConfig.of(context);
 
     if (node is HtmlText) {
-      return TextSpan(text: node.text, recognizer: recognizer);
+      final span = TextSpan(text: node.text, recognizer: recognizer);
+      final shouldSkip =
+          config.shouldSkipRenderingText?.call(span, node) ?? false;
+      return shouldSkip ? null : span;
     }
 
     if (node is! HtmlElement) return null;
@@ -114,7 +118,12 @@ final class TextHtmlWidgetFactory
       );
     }
 
-    if (node.isBreak) return const TextSpan(text: '\n');
+    if (node.isBreak) {
+      const span = TextSpan(text: '\n');
+      final shouldSkip =
+          config.shouldSkipRenderingText?.call(span, node) ?? false;
+      return shouldSkip ? null : span;
+    }
 
     if (node.isAnchor) {
       return _createAnchor(node, context, unsupportedParser);
