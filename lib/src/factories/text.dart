@@ -92,7 +92,9 @@ final class TextHtmlWidgetFactory
     final config = HtmlConfig.of(context);
 
     if (node is HtmlText) {
-      final span = TextSpan(text: node.text, recognizer: recognizer);
+      var text = node.text;
+      if (text.startsWith('\n')) text = text.substring(1);
+      final span = TextSpan(text: text, recognizer: recognizer);
       final shouldSkip =
           config.shouldSkipRenderingText?.call(span, node) ?? false;
       return shouldSkip ? null : span;
