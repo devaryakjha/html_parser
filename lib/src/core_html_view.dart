@@ -108,7 +108,7 @@ class _HtmlState extends State<Html> {
   Widget _wrapInDefaultTextStle(HtmlConfig config, Widget child) {
     if (config.animateTextStyleChange) {
       return AnimatedDefaultTextStyle(
-        duration: const Duration(milliseconds: 300),
+        duration: config.animationDuration,
         style: config.defaultTextStyle,
         child: child,
       );

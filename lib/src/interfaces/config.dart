@@ -60,6 +60,7 @@ class HtmlConfig extends Equatable {
     this.renderMode = HtmlRenderMode.column,
     this.height,
     this.animateTextStyleChange = false,
+    this.animationDuration = Durations.short4,
   }) : _factories = _createDefaultFactories(customFactories);
 
   /// A list of factories for creating instances of [IHtmlWidget].
@@ -98,6 +99,11 @@ class HtmlConfig extends Equatable {
   ///
   /// default is `false`.
   final bool animateTextStyleChange;
+
+  /// The duration of the animation.
+  ///
+  /// If not provided, the default is 200 milliseconds.
+  final Duration animationDuration;
 
   // generates the default factories and merges them with the custom factories.
   static WidgetFactoryMap _createDefaultFactories(WidgetFactoryMap? custom) {
