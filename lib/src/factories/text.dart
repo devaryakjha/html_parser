@@ -33,6 +33,7 @@ final class TextHtmlWidgetFactory
           span,
           source: node,
           styles: styles,
+          textScaler: config.textScaler,
         );
       },
     );

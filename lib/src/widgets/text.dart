@@ -17,6 +17,7 @@ final class TextHtmlWidget extends StatelessWidget with IHtmlWidget {
     Styles? styles,
     this.textStyle,
     this.maxLinesAllowed,
+    this.textScaler,
   }) : styles = styles ?? const Styles.empty();
 
   /// The source of the text.
@@ -34,6 +35,8 @@ final class TextHtmlWidget extends StatelessWidget with IHtmlWidget {
   /// The [Styles] to use for the widget.
   @override
   final Styles styles;
+
+  final TextScaler? textScaler;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -71,6 +74,7 @@ final class TextHtmlWidget extends StatelessWidget with IHtmlWidget {
               textAlign: defaultAlignment.textAlign,
               style: style,
               maxLines: maxLines,
+              textScaler: textScaler,
             ),
           );
         },

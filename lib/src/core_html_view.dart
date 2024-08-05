@@ -106,7 +106,7 @@ class _HtmlState extends State<Html> {
     }
   }
 
-  Widget _wrapInDefaultTextStle(HtmlConfig config, Widget child) {
+  Widget _wrapInDefaultTextStyle(HtmlConfig config, Widget child) {
     if (config.animateTextStyleChange) {
       return AnimatedDefaultTextStyle(
         duration: config.animationDuration,
@@ -122,7 +122,7 @@ class _HtmlState extends State<Html> {
 
   @override
   Widget build(BuildContext context) {
-    return _wrapInDefaultTextStle(
+    return _wrapInDefaultTextStyle(
       config,
       HtmlConfigProvider(
         config: config,

@@ -62,6 +62,7 @@ class HtmlConfig extends Equatable {
     this.animateTextStyleChange = false,
     this.animationDuration = Durations.short4,
     this.shouldSkipRenderingText,
+    this.textScaler = TextScaler.noScaling,
   }) : _factories = _createDefaultFactories(customFactories);
 
   /// A list of factories for creating instances of [IHtmlWidget].
@@ -105,6 +106,9 @@ class HtmlConfig extends Equatable {
   ///
   /// If not provided, the default is 200 milliseconds.
   final Duration animationDuration;
+
+  /// Text scaler to use for scaling `text`.
+  final TextScaler textScaler;
 
   /// A callback that is called when a `text` is skipped.
   final bool Function(InlineSpan, HtmlNode)? shouldSkipRenderingText;
