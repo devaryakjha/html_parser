@@ -128,7 +128,16 @@ abstract class _HtmlRenderer extends StatelessWidget {
 
   final List<Widget> appendItems;
 
-  Widget buildWidget(BuildContext context) => build(context);
+  Widget buildWidget(BuildContext context) {
+    if (height != null) {
+      return SizedBox(
+        height: height,
+        child: build(context),
+      );
+    }
+
+    return build(context);
+  }
 }
 
 class _RenderHtmlColumn extends _HtmlRenderer {
@@ -143,10 +152,14 @@ class _RenderHtmlColumn extends _HtmlRenderer {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: List.generate(
-        itemCount,
-        (index) => itemBuilder(context, index),
-      ),
+      children: [
+        ...prependItems,
+        ...List.generate(
+          itemCount,
+          (index) => itemBuilder(context, index),
+        ),
+        ...appendItems,
+      ],
     );
   }
 }
@@ -163,8 +176,16 @@ class _RenderListView extends _HtmlRenderer {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: itemCount,
-      itemBuilder: itemBuilder,
+      itemCount: itemCount + prependItems.length + appendItems.length,
+      itemBuilder: (context, index) {
+        if (index < prependItems.length) {
+          return prependItems[index];
+        }
+        if (index < itemCount + prependItems.length) {
+          return itemBuilder(context, index - prependItems.length);
+        }
+        return appendItems[index - itemCount - prependItems.length];
+      },
     );
   }
 }
