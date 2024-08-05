@@ -9,6 +9,8 @@ class Html extends StatefulWidget {
     super.key,
     HtmlConfig? config,
     HtmlParser? parser,
+    this.appendItems = const [],
+    this.prependItems = const [],
   })  : config = config ?? HtmlConfig(),
         parser = parser ?? HtmlParser(config ?? HtmlConfig());
 
@@ -20,6 +22,12 @@ class Html extends StatefulWidget {
 
   /// The HTML string to display.
   final String input;
+
+  /// Widgets to prepend to the HTML content.
+  final List<Widget> prependItems;
+
+  /// Widgets to append to the HTML content.
+  final List<Widget> appendItems;
 
   @override
   State<Html> createState() => _HtmlState();
@@ -42,6 +50,8 @@ class _HtmlState extends State<Html> {
       HtmlRenderMode.column => _RenderHtmlColumn(
           itemCount: _widgetsFactories.length,
           height: config.height,
+          prependItems: widget.prependItems,
+          appendItems: widget.appendItems,
           itemBuilder: (context, index) {
             final factory = _widgetsFactories[index];
             return factory.builder(context);
@@ -50,6 +60,8 @@ class _HtmlState extends State<Html> {
       HtmlRenderMode.list => _RenderListView(
           itemCount: _widgetsFactories.length,
           height: config.height,
+          prependItems: widget.prependItems,
+          appendItems: widget.appendItems,
           itemBuilder: (context, index) {
             final factory = _widgetsFactories[index];
             return factory.builder(context);
@@ -58,6 +70,8 @@ class _HtmlState extends State<Html> {
       HtmlRenderMode.sliver => _RenderSliver(
           itemCount: _widgetsFactories.length,
           height: config.height,
+          prependItems: widget.prependItems,
+          appendItems: widget.appendItems,
           itemBuilder: (context, index) {
             final factory = _widgetsFactories[index];
             return factory.sliverBuilder(context);
@@ -99,6 +113,8 @@ abstract class _HtmlRenderer extends StatelessWidget {
   const _HtmlRenderer({
     required this.itemBuilder,
     required this.itemCount,
+    this.prependItems = const [],
+    this.appendItems = const [],
     this.height,
   });
 
@@ -108,6 +124,10 @@ abstract class _HtmlRenderer extends StatelessWidget {
 
   final double? height;
 
+  final List<Widget> prependItems;
+
+  final List<Widget> appendItems;
+
   Widget buildWidget(BuildContext context) => build(context);
 }
 
@@ -115,6 +135,8 @@ class _RenderHtmlColumn extends _HtmlRenderer {
   const _RenderHtmlColumn({
     required super.itemBuilder,
     required super.itemCount,
+    super.prependItems,
+    super.appendItems,
     super.height,
   });
 
@@ -133,6 +155,8 @@ class _RenderListView extends _HtmlRenderer {
   const _RenderListView({
     required super.itemBuilder,
     required super.itemCount,
+    super.prependItems,
+    super.appendItems,
     super.height,
   });
 
@@ -149,6 +173,8 @@ class _RenderSliver extends _HtmlRenderer {
   const _RenderSliver({
     required super.itemBuilder,
     required super.itemCount,
+    super.prependItems,
+    super.appendItems,
     super.height,
   });
 
@@ -156,10 +182,12 @@ class _RenderSliver extends _HtmlRenderer {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
+        ...prependItems,
         ...List.generate(
           itemCount,
           (index) => itemBuilder(context, index),
         ),
+        ...appendItems,
       ],
     );
   }
