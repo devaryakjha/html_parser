@@ -105,11 +105,25 @@ class _HtmlState extends State<Html> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _wrapInDefaultTextStle(HtmlConfig config, Widget child) {
+    if (config.animateTextStyleChange) {
+      return AnimatedDefaultTextStyle(
+        duration: const Duration(milliseconds: 300),
+        style: config.defaultTextStyle,
+        child: child,
+      );
+    }
     return DefaultTextStyle(
       style: config.defaultTextStyle,
-      child: HtmlConfigProvider(
+      child: child,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _wrapInDefaultTextStle(
+      config,
+      HtmlConfigProvider(
         config: config,
         child: _renderer.buildWidget(context),
       ),

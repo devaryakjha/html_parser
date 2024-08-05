@@ -59,6 +59,7 @@ class HtmlConfig extends Equatable {
     ),
     this.renderMode = HtmlRenderMode.column,
     this.height,
+    this.animateTextStyleChange = false,
   }) : _factories = _createDefaultFactories(customFactories);
 
   /// A list of factories for creating instances of [IHtmlWidget].
@@ -92,6 +93,11 @@ class HtmlConfig extends Equatable {
   ///
   /// If not provided, the height will be determined by the content.
   final double? height;
+
+  /// If `true`, the text style changes will be animated.
+  ///
+  /// default is `false`.
+  final bool animateTextStyleChange;
 
   // generates the default factories and merges them with the custom factories.
   static WidgetFactoryMap _createDefaultFactories(WidgetFactoryMap? custom) {
@@ -135,7 +141,15 @@ class HtmlConfig extends Equatable {
   }
 
   @override
-  List<Object?> get props => [_factories, styles, onLinkTap, defaultTextStyle];
+  List<Object?> get props => [
+        _factories,
+        styles,
+        onLinkTap,
+        defaultTextStyle,
+        animateTextStyleChange,
+        renderMode,
+        height,
+      ];
 
   @override
   bool? get stringify => true;
