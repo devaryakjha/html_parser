@@ -61,6 +61,7 @@ class HtmlConfig extends Equatable {
     this.height,
     this.animateTextStyleChange = false,
     this.animationDuration = Durations.short4,
+    this.shouldSkipRenderingText,
   }) : _factories = _createDefaultFactories(customFactories);
 
   /// A list of factories for creating instances of [IHtmlWidget].
@@ -104,6 +105,9 @@ class HtmlConfig extends Equatable {
   ///
   /// If not provided, the default is 200 milliseconds.
   final Duration animationDuration;
+
+  /// A callback that is called when a `text` is skipped.
+  final bool Function(InlineSpan, HtmlNode)? shouldSkipRenderingText;
 
   // generates the default factories and merges them with the custom factories.
   static WidgetFactoryMap _createDefaultFactories(WidgetFactoryMap? custom) {

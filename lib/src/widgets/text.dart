@@ -50,11 +50,11 @@ final class TextHtmlWidget extends StatelessWidget with IHtmlWidget {
   Widget build(BuildContext context) {
     final maxLines = maxLinesAllowed ?? styles.maxLines;
     final style = textStyle ?? styles.textStyle;
-    final isOnlyNewLine = textSpan is TextSpan &&
-        (textSpan.toPlainText() == '\n' ||
-            textSpan.toPlainText().split('').every((val) => val == '\n'));
+    final config = HtmlConfig.of(context);
+    final shouldSkip =
+        config.shouldSkipRenderingText?.call(textSpan, source) ?? false;
 
-    if (isOnlyNewLine) {
+    if (shouldSkip) {
       return const SizedBox.shrink();
     }
 
