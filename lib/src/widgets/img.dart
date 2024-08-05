@@ -35,8 +35,12 @@ final class ImageHtmlWidget extends StatelessWidget with IHtmlWidget {
   final double? height;
 
   Widget _wrapInAspectRation(Widget child) {
+    if (aspectRatio == null) {
+      return child;
+    }
+
     return AspectRatio(
-      aspectRatio: aspectRatio,
+      aspectRatio: aspectRatio!,
       child: child,
     );
   }
@@ -93,8 +97,8 @@ final class ImageHtmlWidget extends StatelessWidget with IHtmlWidget {
   }
 
   /// The aspect ratio of the image.
-  double get aspectRatio =>
-      width != null && height != null ? width! / height! : 16 / 9;
+  double? get aspectRatio =>
+      width != null && height != null ? width! / height! : null;
 
   @override
   Styles get styles => style ?? super.styles;
