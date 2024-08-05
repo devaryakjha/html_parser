@@ -77,6 +77,16 @@ class _HtmlState extends State<Html> {
             return factory.sliverBuilder(context);
           },
         ),
+      HtmlRenderMode.sliverList => _RenderSliverList(
+          itemCount: _widgetsFactories.length,
+          height: config.height,
+          prependItems: widget.prependItems,
+          appendItems: widget.appendItems,
+          itemBuilder: (context, index) {
+            final factory = _widgetsFactories[index];
+            return factory.builder(context);
+          },
+        ),
     };
     setState(() {});
   }
@@ -101,9 +111,7 @@ class _HtmlState extends State<Html> {
       style: config.defaultTextStyle,
       child: HtmlConfigProvider(
         config: config,
-        child: Builder(
-          builder: _renderer.buildWidget,
-        ),
+        child: _renderer.buildWidget(context),
       ),
     );
   }
@@ -210,6 +218,34 @@ class _RenderSliver extends _HtmlRenderer {
         ),
         ...appendItems,
       ],
+    );
+  }
+}
+
+class _RenderSliverList extends _HtmlRenderer {
+  const _RenderSliverList({
+    required super.itemBuilder,
+    required super.itemCount,
+    super.prependItems,
+    super.appendItems,
+    super.height,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (context, index) {
+          if (index < prependItems.length) {
+            return prependItems[index];
+          }
+          if (index < itemCount + prependItems.length) {
+            return itemBuilder(context, index - prependItems.length);
+          }
+          return appendItems[index - itemCount - prependItems.length];
+        },
+        childCount: itemCount + prependItems.length + appendItems.length,
+      ),
     );
   }
 }

@@ -151,8 +151,11 @@ enum HtmlRenderMode {
   /// Renders the HTML in a ListView.
   list,
 
+  /// Renders the HTML in a CustomScrollView.
+  sliver,
+
   /// Renders the HTML in a SliverList.
-  sliver;
+  sliverList;
 
   /// Returns `true` if the rendering mode is [HtmlRenderMode.column].
   bool get isColumn => this == HtmlRenderMode.column;
@@ -161,7 +164,10 @@ enum HtmlRenderMode {
   bool get isList => this == HtmlRenderMode.list;
 
   /// Returns `true` if the rendering mode is [HtmlRenderMode.sliver].
-  bool get isSliver => this == HtmlRenderMode.sliver;
+  bool get isSliver => this == HtmlRenderMode.sliver || isSliverList;
+
+  /// Returns `true` if the rendering mode is [HtmlRenderMode.sliverList].
+  bool get isSliverList => this == HtmlRenderMode.sliverList;
 }
 
 /// A provider for the [HtmlConfig].
