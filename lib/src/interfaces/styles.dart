@@ -48,6 +48,11 @@ final class Styles with EquatableMixin {
   /// The alignment of the widget.
   final Alignment? alignment;
 
+  /// The gap between the widgets.
+  ///
+  /// in case of a column or row or list widgets.
+  final double? gap;
+
   TextAlign? get textAlign => alignment == null
       ? null
       : switch (alignment) {
@@ -69,6 +74,7 @@ final class Styles with EquatableMixin {
     this.textStyle,
     this.maxLines,
     this.alignment,
+    this.gap,
   });
 
   const Styles.empty()
@@ -76,10 +82,18 @@ final class Styles with EquatableMixin {
         padding = null,
         textStyle = null,
         maxLines = null,
-        alignment = null;
+        alignment = null,
+        gap = null;
 
   @override
-  List<Object?> get props => [margin, padding, textStyle, maxLines, alignment];
+  List<Object?> get props => [
+        margin,
+        padding,
+        textStyle,
+        maxLines,
+        alignment,
+        gap,
+      ];
 
   Styles copyWith({
     EdgeInsets? margin,
@@ -87,6 +101,7 @@ final class Styles with EquatableMixin {
     TextStyle? textStyle,
     int? maxLines,
     Alignment? alignment,
+    double? gap,
   }) {
     return Styles(
       margin: margin ?? this.margin,
@@ -94,6 +109,7 @@ final class Styles with EquatableMixin {
       textStyle: textStyle ?? this.textStyle,
       maxLines: maxLines ?? this.maxLines,
       alignment: alignment ?? this.alignment,
+      gap: gap ?? this.gap,
     );
   }
 }

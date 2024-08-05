@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:gap/gap.dart';
 import 'package:widgets_from_html/widgets_from_html.dart';
 
 /// An interface for creating instances of [Widget].
@@ -17,6 +18,9 @@ mixin IHtmlWidget on Widget {
 
   /// The alignment of the widget.
   Alignment? get alignment => styles.alignment;
+
+  /// The gap between the widgets if any.
+  Gap get gap => styles.gap == null ? const Gap(0) : Gap(styles.gap!);
 
   /// Wraps the given [child] in a [Padding] widget.
   Widget wrapInAlignment(Widget child) {

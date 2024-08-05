@@ -39,7 +39,8 @@ final class ListHtmlWidget extends StatelessWidget with IHtmlWidget {
       renderSliver
           ? SliverPadding(
               padding: margin,
-              sliver: SliverList.builder(
+              sliver: SliverList.separated(
+                separatorBuilder: (context, index) => gap,
                 itemCount: children.length,
                 itemBuilder: (context, index) {
                   final child = children[index];
@@ -49,7 +50,8 @@ final class ListHtmlWidget extends StatelessWidget with IHtmlWidget {
             )
           : Padding(
               padding: margin,
-              child: ListView.builder(
+              child: ListView.separated(
+                separatorBuilder: (context, index) => gap,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: padding,
                 shrinkWrap: true,
