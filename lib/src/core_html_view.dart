@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:widgets_from_html/widgets_from_html.dart';
 
@@ -128,6 +129,14 @@ class _HtmlState extends State<Html> {
         child: _renderer.buildWidget(context),
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(StringProperty('input', input))
+      ..add(DiagnosticsProperty('config', config));
   }
 }
 
