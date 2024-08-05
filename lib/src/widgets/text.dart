@@ -36,6 +36,7 @@ final class TextHtmlWidget extends StatelessWidget with IHtmlWidget {
   @override
   final Styles styles;
 
+  /// The [TextScaler] to use for the widget.
   final TextScaler? textScaler;
 
   @override
