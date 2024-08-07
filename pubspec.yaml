@@ -1,20 +1,19 @@
 name: widgets_from_html
-description: "A package to render HTML content as Flutter widgets. Supports all basic HTML tags."
+description: "A package that exposes widgets_from_html_core and other extensions."
 version: 0.0.2-dev.1
-homepage: https://github.com/devaryakjha/html_parser
+homepage: https://aryak.dev/packages/widgets_from_html
 issue_tracker: https://github.com/devaryakjha/html_parser/issues
+publish_to: none
 
 environment:
-  sdk: '>=3.4.4 <4.0.0'
+  sdk: ^3.5.0
   flutter: '>=3.3.0'
 
 dependencies:
-  collection: ^1.18.0
-  equatable: ^2.0.5
   flutter:
     sdk: flutter
-  gap: ^3.0.1
-  html: ^0.15.4
+  widgets_from_html_core:
+    path: ./packages/widgets_from_html_core
 
 dev_dependencies:
   flutter_test:
