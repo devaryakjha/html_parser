@@ -1,6 +1,19 @@
-import 'package:flutter/material.dart';
-import 'package:widgets_from_html_example/lib.dart';
+import 'package:flutter/widgets.dart';
 
 void main() {
-  runApp(const HtmlToFlutterExample());
+  runApp(const WidgetsFromHtmlExample());
+}
+
+class WidgetsFromHtmlExample extends StatefulWidget {
+  const WidgetsFromHtmlExample({super.key});
+
+  @override
+  State<WidgetsFromHtmlExample> createState() => _WidgetsFromHtmlExampleState();
+}
+
+class _WidgetsFromHtmlExampleState extends State<WidgetsFromHtmlExample> {
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
 }
