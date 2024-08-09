@@ -26,7 +26,7 @@
 /// ```
 library widgets_from_html_core;
 
-export 'src/config.dart';
+export 'src/config/config.dart';
 export 'src/extension.dart';
 export 'src/html/html.dart';
 export 'src/parsed_result.dart';

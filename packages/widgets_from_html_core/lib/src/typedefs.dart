@@ -4,5 +4,5 @@ import 'package:widgets_from_html_core/widgets_from_html_core.dart';
 typedef OnLinkTap = void Function(
   String? url, [
   Map<String, String>? attributes,
-  Element? element,
+  HTMLElement? element,
 ]);

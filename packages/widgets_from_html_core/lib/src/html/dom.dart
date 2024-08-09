@@ -7,10 +7,10 @@ typedef Document = dom.Document;
 typedef Node = dom.Node;
 
 /// Alias for `package:html/dom.dart` [dom.Element].
-typedef Element = dom.Element;
+typedef HTMLElement = dom.Element;
 
 /// Alias for `package:html/dom.dart` [dom.Text].
-typedef Text = dom.Text;
+typedef HTMLText = dom.Text;
 
 /// Alias for `package:html/dom.dart` [dom.NodeList].
 typedef NodeList = dom.NodeList;
